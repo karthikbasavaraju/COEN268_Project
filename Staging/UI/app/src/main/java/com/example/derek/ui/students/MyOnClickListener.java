@@ -1,9 +1,9 @@
-package com.example.derek.ui;
+package com.example.derek.ui.students;
 
 import android.content.Intent;
-import android.util.Log;
 import android.view.View;
-import android.widget.Toast;
+
+import com.example.derek.ui.students.CourseIntroductionActivity;
 
 /**
  * Created by derek on 2018/3/7.

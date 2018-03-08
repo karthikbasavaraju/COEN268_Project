@@ -1,23 +1,19 @@
-package com.example.derek.ui;
+package com.example.derek.ui.students;
 
 import android.graphics.Color;
 import android.support.v4.app.Fragment;
-import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.widget.Toast;
 
 
+import com.example.derek.ui.R;
 import com.miguelcatalan.materialsearchview.MaterialSearchView;
-
-import java.util.ArrayList;
 
 public class HomeActivity extends AppCompatActivity {
 

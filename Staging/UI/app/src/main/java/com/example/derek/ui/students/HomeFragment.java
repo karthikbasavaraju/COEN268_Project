@@ -1,4 +1,4 @@
-package com.example.derek.ui;
+package com.example.derek.ui.students;
 
 
 import android.os.Bundle;
@@ -8,6 +8,8 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+
+import com.example.derek.ui.R;
 
 import java.util.ArrayList;
 

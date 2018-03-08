@@ -1,10 +1,12 @@
-package com.example.derek.ui;
+package com.example.derek.ui.students;
 
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+
+import com.example.derek.ui.R;
 
 import java.util.ArrayList;
 

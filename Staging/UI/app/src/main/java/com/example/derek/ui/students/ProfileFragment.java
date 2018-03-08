@@ -1,4 +1,4 @@
-package com.example.derek.ui;
+package com.example.derek.ui.students;
 
 import android.content.Context;
 import android.net.Uri;
@@ -7,6 +7,8 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+
+import com.example.derek.ui.R;
 
 public class ProfileFragment extends Fragment {
 

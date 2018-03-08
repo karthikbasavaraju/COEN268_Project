@@ -3,6 +3,8 @@ package com.example.derek.ui;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 
+import com.example.derek.ui.R;
+
 public class RegisterActivity extends AppCompatActivity {
 
     @Override

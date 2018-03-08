@@ -1,8 +1,12 @@
-package com.example.derek.ui;
+package com.example.derek.ui.students;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.widget.ListView;
+
+import com.example.derek.ui.Item;
+import com.example.derek.ui.ListViewAdapter;
+import com.example.derek.ui.R;
 
 import java.util.ArrayList;
 import java.util.List;
