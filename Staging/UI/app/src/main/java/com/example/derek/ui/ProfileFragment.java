@@ -1,4 +1,4 @@
-package com.example.derek.ui.students;
+package com.example.derek.ui;
 
 import android.content.Context;
 import android.net.Uri;

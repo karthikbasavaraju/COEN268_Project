@@ -2,6 +2,9 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.example.derek.ui">
 
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
@@ -16,10 +19,12 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".students.HomeActivity" />
+        <activity android:name=".HomeActivity" />
         <activity android:name=".RegisterActivity" />
         <activity android:name=".students.CourseIntroductionActivity" />
-        <activity android:name=".students.DateSelectionActivity"></activity>
+        <activity android:name=".students.DateSelectionActivity" />
+        <activity android:name=".teachers.T_AddCourseActivity" />
+        <activity android:name=".teachers.T_EditCourseActivity"></activity>
     </application>
 
 </manifest>
