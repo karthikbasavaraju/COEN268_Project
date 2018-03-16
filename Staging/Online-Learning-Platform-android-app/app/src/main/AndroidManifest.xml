@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     package="com.example.kbasa.teaching">
 
     <uses-permission android:name="android.permission.INTERNET" />
@@ -7,13 +8,17 @@
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
 
     <application
+
+        android:name="edu.scu.SDKManager"
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
-        android:roundIcon="@mipmap/ic_launcher_round"
         android:label="*_*"
+        android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
-        android:theme="@style/AppTheme">
-        <activity android:name=".LoginActivity">
+        android:theme="@style/AppTheme"
+        tools:replace="android:name">
+
+        <activity android:name="edu.scu.LoginActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -21,25 +26,25 @@
             </intent-filter>
         </activity>
 
-        <service android:name=".Notification">
+        <service android:name="edu.scu.Notification">
             <intent-filter>
                 <action android:name="com.google.firebase.INSTANCE_ID_EVENT" />
             </intent-filter>
         </service>
-        <service android:name=".RecevieMessage">
+        <service android:name="edu.scu.RecevieMessage">
             <intent-filter>
                 <action android:name="com.google.firebase.MESSAGING_EVENT" />
             </intent-filter>
         </service>
 
-        <activity android:name=".RegistrationActivity" />
-        <activity android:name=".teachers.T_AddCourseActivity" />
-        <activity android:name=".TeacherHomeActivity"/>
-        <activity android:name=".teachers.T_EditCourseActivity" />
-        <activity android:name=".students.CourseIntroductionActivity" />
-        <activity android:name=".StudentSearchActivity" />
-        <activity android:name=".teachers.ViewCourseActivity" />
-        <activity android:name=".students.EnrollActivity"></activity>
+        <activity android:name="edu.scu.RegistrationActivity" />
+        <activity android:name="edu.scu.teachers.T_AddCourseActivity" />
+        <activity android:name="edu.scu.TeacherHomeActivity" />
+        <activity android:name="edu.scu.teachers.T_EditCourseActivity" />
+        <activity android:name="edu.scu.students.CourseIntroductionActivity" />
+        <activity android:name="edu.scu.StudentSearchActivity" />
+        <activity android:name="edu.scu.teachers.ViewCourseActivity" />
+        <activity android:name="edu.scu.students.EnrollActivity"></activity>
     </application>
 
 </manifest>

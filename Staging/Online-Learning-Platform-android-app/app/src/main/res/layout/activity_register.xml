@@ -5,15 +5,15 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:weightSum="15"
-    tools:context="com.example.kbasa.teaching.LoginActivity">
+    tools:context="com.example.kbasa.teaching.edu.scu.LoginActivity">
 
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
-        android:layout_weight="2"
         android:layout_margin="7dp"
+        android:layout_weight="2"
         android:orientation="horizontal"
         android:padding="7dp">
 
@@ -169,8 +169,8 @@
             android:id="@+id/btn_teachers"
             android:layout_width="120dp"
             android:layout_height="wrap_content"
-            android:onClick="checkTeacher"
             android:layout_weight="1"
+            android:onClick="checkTeacher"
             android:textOff="Register as teachers"
             android:textOn="Registering as teachers" />
 
@@ -180,11 +180,11 @@
         android:id="@+id/btn_register"
         style="@style/Widget.AppCompat.Button.Colored"
         android:layout_width="120dp"
-        android:layout_weight="2"
         android:layout_height="50dp"
         android:layout_gravity="center_horizontal"
-        android:onClick="register"
         android:layout_marginHorizontal="20dp"
+        android:layout_weight="2"
+        android:onClick="register"
         android:text="Sign up"
         android:textSize="20dp" />
 

@@ -1,10 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.example.kbasa.teaching.LoginActivity">
+    tools:context="com.example.kbasa.teaching.edu.scu.LoginActivity">
 
 
     <EditText
@@ -13,11 +12,11 @@
         android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
-        android:text="karthik@mail.com"
         android:layout_marginTop="93dp"
         android:ems="10"
+        android:hint="Email ID"
         android:inputType="textPersonName"
-        android:hint="Email ID" />
+        android:text="karthik@mail.com" />
 
     <EditText
         android:id="@+id/passwordEditText"
@@ -25,41 +24,41 @@
         android:layout_height="wrap_content"
         android:layout_alignStart="@+id/emailEditText"
         android:layout_below="@+id/emailEditText"
-        android:text="k26616495"
         android:layout_marginTop="15dp"
         android:ems="10"
         android:hint="password"
-        android:inputType="textPassword" />
+        android:inputType="textPassword"
+        android:text="k26616495" />
 
     <Button
 
         android:id="@+id/btn_student_login"
         android:layout_width="329dp"
         android:layout_height="wrap_content"
+        android:layout_below="@+id/passwordEditText"
+        android:layout_centerHorizontal="true"
         android:onClick="toStudentHome"
         android:text="Student Login"
-        android:textAppearance="@style/TextAppearance.AppCompat"
-        android:layout_below="@+id/passwordEditText"
-        android:layout_centerHorizontal="true" />
+        android:textAppearance="@style/TextAppearance.AppCompat" />
 
     <Button
         android:id="@+id/btn_teacher_login"
         android:layout_width="329dp"
         android:layout_height="wrap_content"
+        android:layout_alignEnd="@+id/btn_student_login"
+        android:layout_below="@+id/btn_student_login"
         android:onClick="toTeacherHome"
         android:text="Teacher Login"
-        android:textAppearance="@style/TextAppearance.AppCompat"
-        android:layout_alignEnd="@+id/btn_student_login"
-        android:layout_below="@+id/btn_student_login" />
+        android:textAppearance="@style/TextAppearance.AppCompat" />
 
     <Button
         android:id="@+id/btn_login_google"
         android:layout_width="329dp"
         android:layout_height="wrap_content"
-        android:text="Login with Google"
-        android:textAppearance="@style/TextAppearance.AppCompat"
         android:layout_alignStart="@+id/btn_teacher_login"
-        android:layout_below="@+id/btn_teacher_login" />
+        android:layout_below="@+id/btn_teacher_login"
+        android:text="Login with Google"
+        android:textAppearance="@style/TextAppearance.AppCompat" />
 
     <Button
         android:id="@+id/btn_login_create"
