@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.example.derek.ui.students.CourseIntroductionActivity">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        >
+
+
+        <VideoView
+            android:id="@+id/videoView"
+            android:layout_width="match_parent"
+            android:layout_height="300dp" />
+
+        <Button
+            android:id="@+id/btn_reupload"
+            android:layout_width="200dp"
+            android:layout_height="wrap_content"
+            android:text="Reupload Video"
+            android:textColor="#FFFFFF"
+            android:layout_gravity="center"
+            android:gravity="center"
+            android:layout_margin="15dp"
+            android:background="@color/colorPrimary"/>
+
+        <TextView
+            android:id="@+id/textView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Course Introduction"
+            android:textSize="24sp"
+            android:textColor="@color/colorAccent"
+            android:paddingTop="10dp"
+            android:paddingLeft="10dp"/>
+
+        <EditText
+            android:id="@+id/tv_introduction"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Ciesoli tarar asohe oyataro dieye asecir? Yie nietahas ona dosasa lo tola, ore rerus menejil regar ure la oramem tiyed hisop. Sehecot ayotaca pelewet isodini pacar taholes cativ tomis epepitie pogu. Rinade lime hiebeweh olel acefoci. Ces ego pef libit egiye etagie sibeliq: Direlo topara ame palo odorelel togire otab. Rab rorienas iti, icihinod ripop ecac cedic edi. Nat enic tuzep he pevarem. Nilo fo rine hobeye tira ta epicad papicid emenohi oser. Ihewac nelem liepid etome; las le ugapara. Napom togicu nor anuma mocalel nute. Tavovep rib esubot sohori haha tere.
+
+            Ehativ rudalin harule yudat rid leren rariehe rasa. Cusesu royege niey? Wucer ecu uhoci rusil ra pogivas yenas erorie ne hicalie. Cotatam mamef owinivo yasa lumeseb lo; domisi edarir lan he miti wutelu. Vera tedire geto upot daroha teran uten? Merebo nepob oce lo ra tone cina ane leso.
+
+            "
+            android:textColor="@color/colorPrimaryDark"
+            android:padding="10dp"/>
+
+        <Button
+            android:id="@+id/btn_save"
+            android:layout_width="200dp"
+            android:layout_height="wrap_content"
+            android:text="Save Changes"
+            android:textColor="#FFFFFF"
+            android:layout_gravity="center"
+            android:gravity="center"
+            android:background="@color/colorPrimary"/>
+
+
+    </LinearLayout>
+
+</ScrollView>
