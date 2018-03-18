@@ -31,27 +31,41 @@ import java.util.Vector;
  * A simple {@link Fragment} subclass.
  */
 public class HomeFragment extends Fragment {
+    ListView list;
+    Vector<HashMap<String, String>> vector;
+    Vector<String> tagVector;
+    List<String> web;
+    Vector<HashMap<String, String>> courseCategories;
+    SearchView mSearchView;
     private RecyclerView recyclerView;
     private RecyclerView.LayoutManager layoutManager;
     private RecyclerView.Adapter adapter;
     private ArrayList<String> dataset;
 
-    ListView list;
-    Vector<HashMap<String, String>> vector;
-    Vector<String> tagVector;
-    List<String> web ;
-    Vector<HashMap<String, String>> courseCategories;
-    SearchView mSearchView;
-
 
     public HomeFragment() {
         // Required empty public constructor
         courseCategories = new Vector();
-        courseCategories.add(new HashMap<String,String>(){{put("courseName","Academics");put("resourceId",String.valueOf(R.drawable.academics));}});
-        courseCategories.add(new HashMap<String,String>(){{put("courseName","Music");put("resourceId",String.valueOf(R.drawable.music));}});
-        courseCategories.add(new HashMap<String,String>(){{put("courseName","Marketing");put("resourceId",String.valueOf(R.drawable.marketing));}});
-        courseCategories.add(new HashMap<String,String>(){{put("courseName","IT & Software");put("resourceId",String.valueOf(R.drawable.it));}});
-        courseCategories.add(new HashMap<String,String>(){{put("courseName","Health and Fitness");put("resourceId",String.valueOf(R.drawable.health));}});
+        courseCategories.add(new HashMap<String, String>() {{
+            put("courseName", "Academics");
+            put("resourceId", String.valueOf(R.drawable.academics));
+        }});
+        courseCategories.add(new HashMap<String, String>() {{
+            put("courseName", "Music");
+            put("resourceId", String.valueOf(R.drawable.music));
+        }});
+        courseCategories.add(new HashMap<String, String>() {{
+            put("courseName", "Marketing");
+            put("resourceId", String.valueOf(R.drawable.marketing));
+        }});
+        courseCategories.add(new HashMap<String, String>() {{
+            put("courseName", "IT & Software");
+            put("resourceId", String.valueOf(R.drawable.it));
+        }});
+        courseCategories.add(new HashMap<String, String>() {{
+            put("courseName", "Health and Fitness");
+            put("resourceId", String.valueOf(R.drawable.health));
+        }});
     }
 
 
@@ -75,44 +89,40 @@ public class HomeFragment extends Fragment {
                     String temp = dataSnapshot1.getKey();
                     HashMap<String, String> v = new HashMap<>();
                     v.put("courseId", temp);
-                    String professorName="";
+                    String professorName = "";
                     String courseName = "";
                     for (DataSnapshot dataSnapshot2 : dataSnapshot1.getChildren()) {
                         if (dataSnapshot2.getKey().equals("courseName")) {
                             v.put(dataSnapshot2.getKey(), dataSnapshot2.getValue(String.class));
                             courseName = dataSnapshot2.getValue(String.class);
-                        }
-                        else if (dataSnapshot2.getKey().equals("profileUri")) {
+                        } else if (dataSnapshot2.getKey().equals("profileUri")) {
                             v.put(dataSnapshot2.getKey(), dataSnapshot2.getValue(String.class));
-                        }
-                        else if (dataSnapshot2.getKey().equals("name")) {
+                        } else if (dataSnapshot2.getKey().equals("name")) {
                             v.put(dataSnapshot2.getKey(), dataSnapshot2.getValue(String.class));
-                            professorName =dataSnapshot2.getValue(String.class);
-                        }
-                        else if (dataSnapshot2.getKey().equals("tags")) {
-                            ArrayList tempTag = (ArrayList)dataSnapshot2.getValue();
-                            String tempString="";
-                            for(Object tags : tempTag){
+                            professorName = dataSnapshot2.getValue(String.class);
+                        } else if (dataSnapshot2.getKey().equals("tags")) {
+                            ArrayList tempTag = (ArrayList) dataSnapshot2.getValue();
+                            String tempString = "";
+                            for (Object tags : tempTag) {
                                 tempString += tags.toString() + " ";
                             }
-                            tempString = courseName+" "+professorName +" "+ tempString;
+                            tempString = courseName + " " + professorName + " " + tempString;
                             tagVector.add(tempString);
                         }
                     }
                     vector.add(v);
                 }
                 web = new LinkedList();
-                for(int i=0;i<tagVector.size();i++){
+                for (int i = 0; i < tagVector.size(); i++) {
                     web.add(tagVector.elementAt(i));
                 }
 
                 recyclerView = view.findViewById(R.id.recycler_view_recommended);
                 recyclerView.setHasFixedSize(true);
-                layoutManager = new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL,false);
+                layoutManager = new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false);
                 recyclerView.setLayoutManager(layoutManager);
-                adapter = new MyRecylcerViewAdapter(vector,getContext(),R.layout.student_recommended_view);
+                adapter = new MyRecylcerViewAdapter(vector, getContext(), R.layout.student_recommended_view);
                 recyclerView.setAdapter(adapter);
-
 
 
                 DatabaseReference student = FirebaseDatabase.getInstance().getReference("Student");
@@ -121,11 +131,11 @@ public class HomeFragment extends Fragment {
                     @Override
                     public void onDataChange(DataSnapshot dataSnapshot) {
                         DataSnapshot courses = dataSnapshot.child(sId).child("courseTaken").child("schedules");
-                        Vector<HashMap<String,String>> myCourseVector = new Vector<>();
-                        for(DataSnapshot dataSnapshot1 : courses.getChildren()){
+                        Vector<HashMap<String, String>> myCourseVector = new Vector<>();
+                        for (DataSnapshot dataSnapshot1 : courses.getChildren()) {
                             String key = dataSnapshot1.getKey();
-                            for(HashMap<String ,String> temp : vector){
-                                if(temp.get("courseId").equals(key)){
+                            for (HashMap<String, String> temp : vector) {
+                                if (temp.get("courseId").equals(key)) {
                                     myCourseVector.add(temp);
                                 }
                             }
@@ -133,9 +143,9 @@ public class HomeFragment extends Fragment {
 
                         recyclerView = (RecyclerView) view.findViewById(R.id.recycler_view_ongoing);
                         recyclerView.setHasFixedSize(true);
-                        layoutManager = new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL,false);
+                        layoutManager = new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false);
                         recyclerView.setLayoutManager(layoutManager);
-                        adapter = new MyRecylcerViewAdapter(myCourseVector,getContext(),R.layout.student_recommended_view);
+                        adapter = new MyRecylcerViewAdapter(myCourseVector, getContext(), R.layout.student_recommended_view);
                         recyclerView.setAdapter(adapter);
 
                     }
@@ -147,12 +157,11 @@ public class HomeFragment extends Fragment {
                 });
 
 
-
                 recyclerView = view.findViewById(R.id.recycler_view_category);
                 recyclerView.setHasFixedSize(true);
-                layoutManager = new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL,false);
+                layoutManager = new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false);
                 recyclerView.setLayoutManager(layoutManager);
-                adapter = new MyRecylcerViewAdapter(courseCategories,getContext(),R.layout.student_category_view);
+                adapter = new MyRecylcerViewAdapter(courseCategories, getContext(), R.layout.student_category_view);
                 recyclerView.setAdapter(adapter);
 
             }

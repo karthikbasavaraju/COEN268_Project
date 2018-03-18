@@ -16,8 +16,6 @@ import com.example.kbasa.teaching.DataTypes.MyDate;
 import com.example.kbasa.teaching.DataTypes.Schedule;
 import com.example.kbasa.teaching.ListViewAdapter;
 import com.example.kbasa.teaching.R;
-import com.example.kbasa.teaching.StudentSearchActivity;
-import com.example.kbasa.teaching.teachers.T_EditCourseActivity;
 import com.example.kbasa.teaching.teachers.ViewCourseActivity;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
@@ -26,32 +24,25 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.Date;
 import java.util.HashMap;
-import java.util.LinkedList;
-import java.util.List;
 import java.util.Map;
 import java.util.Vector;
 
 public class ScheduleFragment extends Fragment {
 
+    String user;
+    String buttonId = null;
+    Map<String, Map<String, String>> vector;
+    Vector<String> tagVector;
+    Map<String, String> onGoing;
+    private ListView lvProduct;
+    private ListViewAdapter adapter;
+    private Vector<Map<String, String>> past;
+    private Vector<Map<String, String>> upcoming;
     public ScheduleFragment() {
         // Required empty public constructor
     }
-    String user;
-    private ListView lvProduct;
-    private ListViewAdapter adapter;
-    String buttonId=null;
-    private Vector<Map<String,String>> past;
-    private Vector<Map<String,String>> upcoming;
-    Map<String,Map<String, String>> vector;
-    Vector<String> tagVector;
-    Map<String,String> onGoing;
-
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -60,7 +51,9 @@ public class ScheduleFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_schedule, container, false);
         past = new Vector<>();
         upcoming = new Vector<>();
-        onGoing = new HashMap(){{put("courseName","No on-going");}};
+        onGoing = new HashMap() {{
+            put("courseName", "No on-going");
+        }};
 
         DatabaseReference course = FirebaseDatabase.getInstance().getReference("Course");
 
@@ -95,14 +88,13 @@ public class ScheduleFragment extends Fragment {
                             tagVector.add(tempString);
                         }
                     }
-                    vector.put(temp,v);
+                    vector.put(temp, v);
                 }
                 Bundle b = getActivity().getIntent().getExtras();
                 user = b.getString("user");
-                if(user.equalsIgnoreCase("student")){
+                if (user.equalsIgnoreCase("student")) {
                     user = "Student";
-                }
-                else
+                } else
                     user = "Teacher";
 
                 DatabaseReference student = FirebaseDatabase.getInstance().getReference(user);
@@ -110,21 +102,19 @@ public class ScheduleFragment extends Fragment {
                     @Override
                     public void onDataChange(DataSnapshot dataSnapshot) {
                         DataSnapshot scheduleList = dataSnapshot.child(FirebaseAuth.getInstance().getUid()).child("courseTaken").child("schedules");
-                        Log.i("Schedule count",String.valueOf(scheduleList.getChildrenCount()));
+                        Log.i("Schedule count", String.valueOf(scheduleList.getChildrenCount()));
 
 
-                        for(DataSnapshot dataSnapshot1 : scheduleList.getChildren()){
+                        for (DataSnapshot dataSnapshot1 : scheduleList.getChildren()) {
                             Schedule details = dataSnapshot1.getValue(Schedule.class);
                             MyDate myDate = details.getMyDate();
                             int type = myDate.compare(60);
-                            if(type==0){
+                            if (type == 0) {
                                 onGoing = new HashMap(vector.get(dataSnapshot1.getKey()));
                                 buttonId = details.getOtherPersonsId();
-                            }
-                            else if(type==1){
+                            } else if (type == 1) {
                                 upcoming.add(vector.get(dataSnapshot1.getKey()));
-                            }
-                            else
+                            } else
                                 past.add(vector.get(dataSnapshot1.getKey()));
 
                         }
@@ -136,14 +126,12 @@ public class ScheduleFragment extends Fragment {
                     }
                 });
             }
+
             @Override
             public void onCancelled(DatabaseError databaseError) {
 
             }
         });
-
-
-
 
 
         // get the past courses from database
@@ -164,13 +152,11 @@ public class ScheduleFragment extends Fragment {
                 lvProduct.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                     @Override
                     public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                        if(user.equalsIgnoreCase("student")) {
+                        if (user.equalsIgnoreCase("student")) {
                             Intent intent = new Intent(getActivity().getApplicationContext(), EnrollActivity.class);
                             intent.putExtra("courseId", (past.get(i)).get("courseId"));
                             startActivity(intent);
-                        }
-                        else
-                        {
+                        } else {
                             Intent intent = new Intent(getActivity().getApplicationContext(), ViewCourseActivity.class);
                             intent.putExtra("courseId", (past.get(i)).get("courseId"));
                             startActivity(intent);
@@ -186,13 +172,15 @@ public class ScheduleFragment extends Fragment {
             public void onClick(View view) {
                 // get the past courses from database
                 adapter.clearList();
-                adapter.setList(new Vector<Map<String, String>>(){{add(onGoing);}});
+                adapter.setList(new Vector<Map<String, String>>() {{
+                    add(onGoing);
+                }});
                 lvProduct.setAdapter(adapter);
                 lvProduct.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                     @Override
                     public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
                         // Get teacher/student buttonID from 11Sight
-                        if(user.equals("Teacher") && buttonId!=null){
+                        if (user.equals("Teacher") && buttonId != null) {
 
 
                             DatabaseReference student = FirebaseDatabase.getInstance().getReference("Student").child(buttonId).child("elevenUserName");
@@ -200,8 +188,7 @@ public class ScheduleFragment extends Fragment {
                             student.addValueEventListener(new ValueEventListener() {
                                 @Override
                                 public void onDataChange(DataSnapshot dataSnapshot) {
-                                    String otherButtonId =dataSnapshot.getValue(String.class);
-
+                                    String otherButtonId = dataSnapshot.getValue(String.class);
 
                                     IISightSDKManager.getInstance().makeCall(otherButtonId,
                                             getContext());
@@ -213,14 +200,13 @@ public class ScheduleFragment extends Fragment {
                                 }
                             });
 
-                        }
-                        else if(buttonId!=null){
+                        } else if (buttonId != null) {
                             DatabaseReference student = FirebaseDatabase.getInstance().getReference("Teacher").child(buttonId).child("elevenUserName");
 
                             student.addValueEventListener(new ValueEventListener() {
                                 @Override
                                 public void onDataChange(DataSnapshot dataSnapshot) {
-                                    String otherButtonId =dataSnapshot.getValue(String.class);
+                                    String otherButtonId = dataSnapshot.getValue(String.class);
                                 }
 
                                 @Override
@@ -247,13 +233,11 @@ public class ScheduleFragment extends Fragment {
                 lvProduct.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                     @Override
                     public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                        if(user.equalsIgnoreCase("student")) {
+                        if (user.equalsIgnoreCase("student")) {
                             Intent intent = new Intent(getActivity().getApplicationContext(), EnrollActivity.class);
                             intent.putExtra("courseId", (past.get(i)).get("courseId"));
                             startActivity(intent);
-                        }
-                        else
-                        {
+                        } else {
                             Intent intent = new Intent(getActivity().getApplicationContext(), ViewCourseActivity.class);
                             intent.putExtra("courseId", (past.get(i)).get("courseId"));
                             startActivity(intent);
@@ -266,7 +250,6 @@ public class ScheduleFragment extends Fragment {
 
         return view;
     }
-
 
 
 }

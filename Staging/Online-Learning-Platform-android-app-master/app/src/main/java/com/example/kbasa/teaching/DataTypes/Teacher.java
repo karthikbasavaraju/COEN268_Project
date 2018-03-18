@@ -14,14 +14,6 @@ public class Teacher {
     CourseTaken courseTaken;
     String elevenUserName;
 
-    public String getElevenUserName() {
-        return elevenUserName;
-    }
-
-    public void setElevenUserName(String elevenUserName) {
-        this.elevenUserName = elevenUserName;
-    }
-
     public Teacher(PersonalDetails personalDetails, String aboutYou, String profileUri, List<Integer> courseOffered, CourseTaken courseTaken, String elevenUserName) {
 
         this.personalDetails = personalDetails;
@@ -47,6 +39,14 @@ public class Teacher {
         this.aboutYou = aboutYou;
         this.courseOffered = courseOffered;
         this.courseTaken = courseTaken;
+    }
+
+    public String getElevenUserName() {
+        return elevenUserName;
+    }
+
+    public void setElevenUserName(String elevenUserName) {
+        this.elevenUserName = elevenUserName;
     }
 
     public String getProfileUri() {

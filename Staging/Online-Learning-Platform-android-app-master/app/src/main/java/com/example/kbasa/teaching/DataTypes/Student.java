@@ -15,14 +15,6 @@ public class Student {
     CourseTaken courseTaken;
     String elevenUserName;
 
-    public String getElevenUserName() {
-        return elevenUserName;
-    }
-
-    public void setElevenUserName(String elevenUserName) {
-        this.elevenUserName = elevenUserName;
-    }
-
     public Student(PersonalDetails personalDetails, ArrayList<String> interests, String profileUri, CourseTaken courseTaken, String elevenUserName) {
 
         this.personalDetails = personalDetails;
@@ -48,6 +40,14 @@ public class Student {
         this.personalDetails = personalDetails;
         this.interests = interests;
         this.courseTaken = courseTaken;
+    }
+
+    public String getElevenUserName() {
+        return elevenUserName;
+    }
+
+    public void setElevenUserName(String elevenUserName) {
+        this.elevenUserName = elevenUserName;
     }
 
     public String getProfileUri() {

@@ -11,9 +11,9 @@ import com.android.volley.toolbox.Volley;
 
 public class RestApiHelper {
     private static RequestQueue instance;
-    public static RequestQueue getInstance(Context c)
-    {
-        if(instance == null)
+
+    public static RequestQueue getInstance(Context c) {
+        if (instance == null)
             instance = Volley.newRequestQueue(c);
         return instance;
     }

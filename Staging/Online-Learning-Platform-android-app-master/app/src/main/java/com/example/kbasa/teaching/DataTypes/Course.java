@@ -20,14 +20,9 @@ public class Course {
     List<MyDate> myDate;
     String professorTokenId;
     String elevenUserName;
-
-    public String getElevenUserName() {
-        return elevenUserName;
-    }
-
-    public void setElevenUserName(String elevenUserName) {
-        this.elevenUserName = elevenUserName;
-    }
+    List<String> tags;
+    String professorId;
+    List<HashMap<String, MyDate>> schedules;   //To store students id and their status(enrolled or complete)
 
     public Course(String name, String aboutProfessor, String courseName, String courseDetails, boolean available, String courseUri, String profileUri, List<MyDate> myDate, String professorTokenId, String elevenUserName, List<String> tags, String professorId, List<HashMap<String, MyDate>> schedules) {
 
@@ -45,15 +40,9 @@ public class Course {
         this.professorId = professorId;
         this.schedules = schedules;
     }
-
-    List<String> tags;
-    String professorId;
-    List<HashMap<String, MyDate>> schedules;   //To store students id and their status(enrolled or complete)
-
     public Course() {
         schedules = new LinkedList<HashMap<String, MyDate>>();
     }
-
     public Course(String name, String aboutProfessor, String courseName, String courseDetails, boolean available, String courseUri, String profileUri, List<MyDate> myDate, String professorTokenId, List<String> tags, String professorId, List<HashMap<String, MyDate>> schedules) {
 
         this.name = name;
@@ -68,6 +57,14 @@ public class Course {
         this.tags = tags;
         this.professorId = professorId;
         this.schedules = schedules;
+    }
+
+    public String getElevenUserName() {
+        return elevenUserName;
+    }
+
+    public void setElevenUserName(String elevenUserName) {
+        this.elevenUserName = elevenUserName;
     }
 
     public String getName() {

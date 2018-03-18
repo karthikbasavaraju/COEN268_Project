@@ -46,7 +46,6 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.StringTokenizer;
-import java.util.regex.Pattern;
 
 public class RegistrationActivity extends AppCompatActivity {
 
@@ -202,8 +201,8 @@ public class RegistrationActivity extends AppCompatActivity {
                                                         "SUCCESS_11Sight_REG", Toast.LENGTH_SHORT).show();
                                                 Log.d(Constants.LOG_TAG, response.toString());
                                                 String json = response.toString();
-                                                String strip = json.substring(json.indexOf("button_id"),json.length()-1);
-                                                String strip2 = strip.substring(strip.indexOf(":\"") + 2, strip.length() -1);
+                                                String strip = json.substring(json.indexOf("button_id"), json.length() - 1);
+                                                String strip2 = strip.substring(strip.indexOf(":\"") + 2, strip.length() - 1);
                                                 String buttonId = strip2.substring(0, strip2.indexOf("\""));
                                                 student.setElevenUserName(buttonId);
 
@@ -232,7 +231,6 @@ public class RegistrationActivity extends AppCompatActivity {
                                             }
                                         };
                                         RestApiHelper.getInstance(getApplicationContext()).add(req);
-
 
 
                                         Toast.makeText(RegistrationActivity.this, "Registration successful", Toast.LENGTH_SHORT).show();
@@ -297,8 +295,6 @@ public class RegistrationActivity extends AppCompatActivity {
                                         final String elevenUsername;
 
 
-
-
                                         String url = "https://sdktest.11sight.com/api/v2/users.json";
                                         String u = emailEditText.getText().toString();
                                         String pwd = passwordEditText.getText().toString();
@@ -335,11 +331,10 @@ public class RegistrationActivity extends AppCompatActivity {
                                                         "SUCCESS_11Sight_REG", Toast.LENGTH_SHORT).show();
                                                 Log.d(Constants.LOG_TAG, response.toString());
                                                 String json = response.toString();
-                                                String strip = json.substring(json.indexOf("button_id"),json.length()-1);
-                                                String strip2 = strip.substring(strip.indexOf(":\"") + 2, strip.length() -1);
+                                                String strip = json.substring(json.indexOf("button_id"), json.length() - 1);
+                                                String strip2 = strip.substring(strip.indexOf(":\"") + 2, strip.length() - 1);
                                                 String elevenUsername = strip2.substring(0, strip2.indexOf("\""));
                                                 teacher.setElevenUserName(elevenUsername);
-
 
 
                                                 HashMap hm = new HashMap();
@@ -392,8 +387,8 @@ public class RegistrationActivity extends AppCompatActivity {
     public void profilePic(View v) {
         Button imageView = findViewById(R.id.btn_profilePic);
 
-        if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-            if(ActivityCompat.checkSelfPermission(getApplicationContext(), android.Manifest.permission.READ_EXTERNAL_STORAGE)
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            if (ActivityCompat.checkSelfPermission(getApplicationContext(), android.Manifest.permission.READ_EXTERNAL_STORAGE)
                     != PackageManager.PERMISSION_GRANTED) {
                 requestPermissions(new String[]{android.Manifest.permission.READ_EXTERNAL_STORAGE}, 100);
                 return;

@@ -64,7 +64,7 @@ dependencies {
     compile 'com.nbsp:library:1.09'
 
 
-    implementation (name: 'sdkApp-amsip-engineering-debug', ext: 'aar')
+    implementation(name: 'sdkApp-amsip-engineering-debug', ext: 'aar')
     implementation 'com.jakewharton:butterknife:8.8.1'
     implementation 'com.android.support:multidex:1.0.3'
     implementation 'org.squirrelframework:squirrel-foundation:0.3.8'

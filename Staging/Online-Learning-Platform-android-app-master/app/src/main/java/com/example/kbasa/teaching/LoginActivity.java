@@ -184,7 +184,7 @@ public class LoginActivity extends AppCompatActivity {
             dialog.show();
             teacherFlag1 = true;
             auth.signInWithEmailAndPassword(emailEditText.getText().toString()
-                    ,passwordEditText.getText().toString())
+                    , passwordEditText.getText().toString())
                     .addOnSuccessListener(new OnSuccessListener<AuthResult>() {
                         @Override
                         public void onSuccess(AuthResult authResult) {
