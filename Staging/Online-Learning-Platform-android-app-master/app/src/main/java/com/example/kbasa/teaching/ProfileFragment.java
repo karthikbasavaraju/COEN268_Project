@@ -9,7 +9,9 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import com.elevensight.sdk.sdk.IISightSDKManager;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
@@ -106,10 +108,21 @@ public class ProfileFragment extends Fragment {
 
                 // 11Sight Logout
 
-                
+                IISightSDKManager.getInstance().logoutUser(new IISightSDKManager.ICallback() {
+                    @Override
+                    public void process(Object o) {
+                        Toast.makeText(getContext(),
+                                "Logout_Success", Toast.LENGTH_SHORT).show();
+                    }
+                }, new IISightSDKManager.ICallback() {
+                    @Override
+                    public void process(Object o) {
+                    }
+                });
 
 
                 Intent intent = new Intent(getActivity(), LoginActivity.class);
+                intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                 startActivity(intent);
                 getActivity().finish();
             }
