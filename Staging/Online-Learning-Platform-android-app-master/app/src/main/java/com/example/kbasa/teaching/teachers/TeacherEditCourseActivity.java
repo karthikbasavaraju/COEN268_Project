@@ -15,9 +15,9 @@ import android.widget.Toast;
 
 import com.example.kbasa.teaching.DataTypes.Course;
 import com.example.kbasa.teaching.DataTypes.MyDate;
-import com.example.kbasa.teaching.FieldsOk;
 import com.example.kbasa.teaching.InputFilterMinMax;
 import com.example.kbasa.teaching.R;
+import com.example.kbasa.teaching.ValidationHelper;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -32,7 +32,7 @@ import java.util.List;
 import java.util.StringTokenizer;
 
 
-public class T_EditCourseActivity extends AppCompatActivity {
+public class TeacherEditCourseActivity extends AppCompatActivity {
 
     static final int DATE_DIALOG_ID = 0;
     String courseId = "";
@@ -163,7 +163,7 @@ public class T_EditCourseActivity extends AppCompatActivity {
         enrollButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                boolean fieldsOK = FieldsOk.validate(new EditText[]{findViewById(R.id.courseNameTextView), findViewById(R.id.descriptionTextView), findViewById(R.id.tagTextView)});
+                boolean fieldsOK = ValidationHelper.validate(new EditText[]{findViewById(R.id.courseNameTextView), findViewById(R.id.descriptionTextView), findViewById(R.id.tagTextView)});
                 if (fieldsOK) {
 
                     String courseName = ((EditText) findViewById(R.id.courseNameTextView)).getText().toString();
@@ -211,13 +211,13 @@ public class T_EditCourseActivity extends AppCompatActivity {
 
 
                     DatabaseReference db = FirebaseDatabase.getInstance().getReference("Course");
-                    Toast.makeText(T_EditCourseActivity.this, "Changes Saved", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(TeacherEditCourseActivity.this, "Changes Saved", Toast.LENGTH_SHORT).show();
                     db.updateChildren(new HashMap<String, Object>() {{
                         put(courseId, course);
                     }});
 
                 } else {
-                    Toast.makeText(T_EditCourseActivity.this, "Please fill all the fields", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(TeacherEditCourseActivity.this, "Please fill all the fields", Toast.LENGTH_SHORT).show();
                 }
 
 
@@ -241,7 +241,7 @@ public class T_EditCourseActivity extends AppCompatActivity {
                                 MyDate myDate = dataSnapshot2.getValue(MyDate.class);
                                 int index = myDate.compare(0);
                                 if (index == 1) {
-                                    Toast.makeText(T_EditCourseActivity.this, "Students have enrolled. Cannot delete the course", Toast.LENGTH_SHORT).show();
+                                    Toast.makeText(TeacherEditCourseActivity.this, "Students have enrolled. Cannot delete the course", Toast.LENGTH_SHORT).show();
                                     flag = 1;
                                 }
                             }

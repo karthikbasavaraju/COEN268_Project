@@ -47,6 +47,8 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.StringTokenizer;
 
+import io.github.abhimanbhau.RestApiHelper;
+
 public class RegistrationActivity extends AppCompatActivity {
 
     private EditText firstNameEditText;
@@ -117,7 +119,7 @@ public class RegistrationActivity extends AppCompatActivity {
 
     public void studentRegister() {
 
-        boolean fieldsOK = FieldsOk.validate(new EditText[]{findViewById(R.id.input_first_name), findViewById(R.id.input_last_name), findViewById(R.id.input_password), findViewById(R.id.input_interests), findViewById(R.id.input_email)});
+        boolean fieldsOK = ValidationHelper.validate(new EditText[]{findViewById(R.id.input_first_name), findViewById(R.id.input_last_name), findViewById(R.id.input_password), findViewById(R.id.input_interests), findViewById(R.id.input_email)});
         if (fieldsOK && profile != null) {
             auth.createUserWithEmailAndPassword(emailEditText.getText().toString(), passwordEditText.getText().toString())
                     .addOnSuccessListener(new OnSuccessListener<AuthResult>() {
@@ -254,7 +256,7 @@ public class RegistrationActivity extends AppCompatActivity {
 
     public void teacherRegister() {
 
-        boolean fieldsOK = FieldsOk.validate(new EditText[]{findViewById(R.id.input_first_name), findViewById(R.id.input_last_name), findViewById(R.id.input_password), findViewById(R.id.input_interests), findViewById(R.id.input_email)});
+        boolean fieldsOK = ValidationHelper.validate(new EditText[]{findViewById(R.id.input_first_name), findViewById(R.id.input_last_name), findViewById(R.id.input_password), findViewById(R.id.input_interests), findViewById(R.id.input_email)});
         if (fieldsOK && profile != null) {
             auth.createUserWithEmailAndPassword(emailEditText.getText().toString(), passwordEditText.getText().toString())
                     .addOnSuccessListener(new OnSuccessListener<AuthResult>() {

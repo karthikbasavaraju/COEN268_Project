@@ -40,6 +40,7 @@ public class ScheduleFragment extends Fragment {
     private ListViewAdapter adapter;
     private Vector<Map<String, String>> past;
     private Vector<Map<String, String>> upcoming;
+
     public ScheduleFragment() {
         // Required empty public constructor
     }

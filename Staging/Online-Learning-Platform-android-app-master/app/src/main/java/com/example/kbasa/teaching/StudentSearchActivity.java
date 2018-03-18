@@ -86,8 +86,6 @@ public class StudentSearchActivity extends AppCompatActivity {
                     web.add(tagVector.elementAt(i));
 
                 }
-
-
                 final Vector<String> tempTag = new Vector();
                 final Vector<Map<String, String>> tempDetails = new Vector<>();
                 for (int i = 0; i < web.size(); i++) {
@@ -96,8 +94,6 @@ public class StudentSearchActivity extends AppCompatActivity {
                         tempDetails.add(vector.get(i));
                     }
                 }
-
-
                 final SearchPageDisplay adapter = new
                         SearchPageDisplay(StudentSearchActivity.this, tempTag, tempDetails);
                 list = (ListView) findViewById(R.id.wikiLinks);
@@ -107,17 +103,14 @@ public class StudentSearchActivity extends AppCompatActivity {
                     @Override
                     public void onItemClick(AdapterView<?> parent, View view,
                                             int position, long id) {
-
                         Intent intent = new Intent(StudentSearchActivity.this, EnrollActivity.class);
                         intent.putExtra("courseId", (tempDetails.get(position)).get("courseId"));
                         startActivity(intent);
                     }
                 });
-
                 SearchView sv = findViewById(R.id.searchButton);
                 sv.setQuery(tagQuery, false);
                 sv.clearFocus();
-
                 sv.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
                     @Override
                     public boolean onQueryTextSubmit(String query) {
@@ -129,8 +122,6 @@ public class StudentSearchActivity extends AppCompatActivity {
                                 tempDetails.add(vector.get(i));
                             }
                         }
-
-
                         SearchPageDisplay adapter1 = new
                                 SearchPageDisplay(StudentSearchActivity.this, tempTag, tempDetails);
                         list = (ListView) findViewById(R.id.wikiLinks);
@@ -140,14 +131,11 @@ public class StudentSearchActivity extends AppCompatActivity {
                             @Override
                             public void onItemClick(AdapterView<?> parent, View view,
                                                     int position, long id) {
-
                                 Intent intent = new Intent(StudentSearchActivity.this, EnrollActivity.class);
                                 intent.putExtra("courseId", (tempDetails.get(position)).get("courseId"));
                                 startActivity(intent);
-
                             }
                         });
-
                         return true;
                     }
 
@@ -160,7 +148,6 @@ public class StudentSearchActivity extends AppCompatActivity {
 
             @Override
             public void onCancelled(DatabaseError databaseError) {
-
             }
         });
     }

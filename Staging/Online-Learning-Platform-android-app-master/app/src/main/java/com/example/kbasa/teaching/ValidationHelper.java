@@ -7,7 +7,7 @@ import android.widget.TextView;
  * Created by kbasa on 3/15/2018.
  */
 
-public class FieldsOk {
+public class ValidationHelper {
 
     public static boolean validate(EditText[] fields) {
         for (int i = 0; i < fields.length; i++) {

@@ -88,7 +88,7 @@ public class ViewCourseActivity extends AppCompatActivity {
         enrollButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(ViewCourseActivity.this, T_EditCourseActivity.class);
+                Intent intent = new Intent(ViewCourseActivity.this, TeacherEditCourseActivity.class);
                 intent.putExtra("courseId", courseId);
                 startActivity(intent);
                 finish();

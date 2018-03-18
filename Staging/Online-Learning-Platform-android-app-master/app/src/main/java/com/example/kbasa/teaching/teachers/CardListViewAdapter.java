@@ -41,7 +41,7 @@ public class CardListViewAdapter extends RecyclerView.Adapter<CardListViewAdapte
         mOnClickListener = new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(v.getContext(), T_EditCourseActivity.class);
+                Intent intent = new Intent(v.getContext(), TeacherEditCourseActivity.class);
                 v.getContext().startActivity(intent);
             }
         };

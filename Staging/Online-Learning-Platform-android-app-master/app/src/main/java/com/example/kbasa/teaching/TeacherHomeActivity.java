@@ -18,8 +18,8 @@ import android.view.View;
 
 import com.example.kbasa.teaching.students.HomeFragment;
 import com.example.kbasa.teaching.students.ScheduleFragment;
-import com.example.kbasa.teaching.teachers.T_AddCourseActivity;
-import com.example.kbasa.teaching.teachers.T_HomeFragment;
+import com.example.kbasa.teaching.teachers.TeacherAddCourseActivity;
+import com.example.kbasa.teaching.teachers.TeacherHomeFragment;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
@@ -60,7 +60,7 @@ public class TeacherHomeActivity extends AppCompatActivity {
             if (role.equals("student")) {
                 transaction.add(R.id.Fragment, new HomeFragment());
             } else if (role.equals("teacher")) {
-                transaction.add(R.id.Fragment, new T_HomeFragment());
+                transaction.add(R.id.Fragment, new TeacherHomeFragment());
             }
             transaction.commit();
         }
@@ -137,7 +137,7 @@ public class TeacherHomeActivity extends AppCompatActivity {
                     switch (item.getItemId()) {
                         case R.id.action_home:
                             transaction = getSupportFragmentManager().beginTransaction();
-                            transaction.replace(R.id.Fragment, new T_HomeFragment());
+                            transaction.replace(R.id.Fragment, new TeacherHomeFragment());
                             transaction.addToBackStack(null);
                             transaction.commit();
                             break;
@@ -208,7 +208,7 @@ public class TeacherHomeActivity extends AppCompatActivity {
     }
 
     public void addCourse(View v) {
-        Intent intent = new Intent(TeacherHomeActivity.this, T_AddCourseActivity.class);
+        Intent intent = new Intent(TeacherHomeActivity.this, TeacherAddCourseActivity.class);
         startActivity(intent);
     }
 }

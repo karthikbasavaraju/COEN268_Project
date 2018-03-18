@@ -31,7 +31,7 @@ import java.util.Vector;
 /**
  * A simple {@link Fragment} subclass.
  */
-public class T_HomeFragment extends Fragment {
+public class TeacherHomeFragment extends Fragment {
 
     FirebaseAuth user;
     DatabaseReference db;
@@ -41,7 +41,7 @@ public class T_HomeFragment extends Fragment {
     private CardListViewAdapter adapter;
 
 
-    public T_HomeFragment() {
+    public TeacherHomeFragment() {
         // Required empty public constructor
     }
 

@@ -8,7 +8,7 @@
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
 
     <application
-        android:name=".SDKManager"
+        android:name="io.github.abhimanbhau.SDKManager"
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="*_*"
@@ -36,9 +36,9 @@
         </service>
 
         <activity android:name=".RegistrationActivity" />
-        <activity android:name=".teachers.T_AddCourseActivity" />
+        <activity android:name=".teachers.TeacherAddCourseActivity" />
         <activity android:name=".TeacherHomeActivity" />
-        <activity android:name=".teachers.T_EditCourseActivity" />
+        <activity android:name=".teachers.TeacherEditCourseActivity" />
         <activity android:name=".students.CourseIntroductionActivity" />
         <activity android:name=".StudentSearchActivity" />
         <activity android:name=".teachers.ViewCourseActivity" />

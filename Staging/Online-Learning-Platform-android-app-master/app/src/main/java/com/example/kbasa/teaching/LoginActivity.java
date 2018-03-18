@@ -78,7 +78,7 @@ public class LoginActivity extends AppCompatActivity {
         emailEditText = findViewById(R.id.emailEditText);
         passwordEditText = findViewById(R.id.passwordEditText);
 
-        boolean fieldsOK = FieldsOk.validate(new EditText[]{emailEditText, passwordEditText});
+        boolean fieldsOK = ValidationHelper.validate(new EditText[]{emailEditText, passwordEditText});
         if (fieldsOK) {
             final ProgressDialog dialog = new ProgressDialog(this);
             dialog.setMessage("Loading");
@@ -176,7 +176,7 @@ public class LoginActivity extends AppCompatActivity {
         emailEditText = findViewById(R.id.emailEditText);
         passwordEditText = findViewById(R.id.passwordEditText);
 
-        boolean fieldsOK = FieldsOk.validate(new EditText[]{emailEditText, passwordEditText});
+        boolean fieldsOK = ValidationHelper.validate(new EditText[]{emailEditText, passwordEditText});
         if (fieldsOK) {
             final ProgressDialog dialog = new ProgressDialog(this);
             dialog.setMessage("Loading");

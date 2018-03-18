@@ -1,6 +1,7 @@
-package com.example.kbasa.teaching;
+package io.github.abhimanbhau;
 
 import android.content.Context;
+import android.util.Log;
 
 import com.android.volley.RequestQueue;
 import com.android.volley.toolbox.Volley;
@@ -13,8 +14,10 @@ public class RestApiHelper {
     private static RequestQueue instance;
 
     public static RequestQueue getInstance(Context c) {
-        if (instance == null)
+        if (instance == null) {
+            Log.d(Constants.LOG_TAG_VISDUM, "First Instance of Volley");
             instance = Volley.newRequestQueue(c);
+        }
         return instance;
     }
 }

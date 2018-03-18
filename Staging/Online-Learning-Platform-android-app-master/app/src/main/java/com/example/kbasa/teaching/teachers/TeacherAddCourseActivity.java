@@ -24,9 +24,9 @@ import android.widget.Toast;
 
 import com.example.kbasa.teaching.DataTypes.Course;
 import com.example.kbasa.teaching.DataTypes.MyDate;
-import com.example.kbasa.teaching.FieldsOk;
 import com.example.kbasa.teaching.InputFilterMinMax;
 import com.example.kbasa.teaching.R;
+import com.example.kbasa.teaching.ValidationHelper;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
@@ -52,7 +52,7 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.StringTokenizer;
 
-public class T_AddCourseActivity extends AppCompatActivity {
+public class TeacherAddCourseActivity extends AppCompatActivity {
 
 
     static final int DATE_DIALOG_ID = 0;
@@ -118,7 +118,7 @@ public class T_AddCourseActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 new MaterialFilePicker()
-                        .withActivity(T_AddCourseActivity.this)
+                        .withActivity(TeacherAddCourseActivity.this)
                         // .withFilter(Pattern.compile(".*\\.(mp4|MP4|Mp4|mP4|avi|flv|wmv)$"))
                         .withRequestCode(1)
                         .start();
@@ -128,7 +128,7 @@ public class T_AddCourseActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 new MaterialFilePicker()
-                        .withActivity(T_AddCourseActivity.this)
+                        .withActivity(TeacherAddCourseActivity.this)
                         //.withFilter(Pattern.compile(".*\\.(jpg|png|gif|bmp)$"))
                         .withRequestCode(2)
                         .start();
@@ -180,17 +180,17 @@ public class T_AddCourseActivity extends AppCompatActivity {
         storage = FirebaseStorage.getInstance();
         storageRef = storage.getReference();
 
-        progressBar = new ProgressDialog(T_AddCourseActivity.this);
+        progressBar = new ProgressDialog(TeacherAddCourseActivity.this);
 
         btnUpload.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
 
-                boolean fieldsOK = FieldsOk.validate(new EditText[]{findViewById(R.id.courseNameTextView), findViewById(R.id.descriptionTextView), findViewById(R.id.tagTextView)});
-                boolean filesOk = FieldsOk.vlidate(new TextView[]{findViewById(R.id.tv_intro_video_name), findViewById(R.id.tv_intro_picture_name)});
+                boolean fieldsOK = ValidationHelper.validate(new EditText[]{findViewById(R.id.courseNameTextView), findViewById(R.id.descriptionTextView), findViewById(R.id.tagTextView)});
+                boolean filesOk = ValidationHelper.vlidate(new TextView[]{findViewById(R.id.tv_intro_video_name), findViewById(R.id.tv_intro_picture_name)});
                 if (fieldsOK && filesOk) {
 
-                    final ProgressDialog dialog = new ProgressDialog(T_AddCourseActivity.this);
+                    final ProgressDialog dialog = new ProgressDialog(TeacherAddCourseActivity.this);
                     dialog.setMessage("uploading your course");
                     dialog.setIndeterminate(true);
                     dialog.show();
@@ -234,13 +234,13 @@ public class T_AddCourseActivity extends AppCompatActivity {
                         @Override
                         public void onFailure(@NonNull Exception exception) {
                             dialog.dismiss();
-                            Toast.makeText(T_AddCourseActivity.this, "Failed", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(TeacherAddCourseActivity.this, "Failed", Toast.LENGTH_SHORT).show();
                         }
                     }).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
                         @Override
                         public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
                             dialog.dismiss();
-                            Toast.makeText(T_AddCourseActivity.this, "success", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(TeacherAddCourseActivity.this, "success", Toast.LENGTH_SHORT).show();
                             Uri videoUri = taskSnapshot.getDownloadUrl();
                             Log.i("louda upload", videoUri.toString());
 
@@ -335,7 +335,7 @@ public class T_AddCourseActivity extends AppCompatActivity {
                                 }
                             });
 
-                            Intent intent = new Intent(T_AddCourseActivity.this, ViewCourseActivity.class);
+                            Intent intent = new Intent(TeacherAddCourseActivity.this, ViewCourseActivity.class);
                             intent.putExtra("courseId", courseId);
                             startActivity(intent);
                             finish();
@@ -343,7 +343,7 @@ public class T_AddCourseActivity extends AppCompatActivity {
                         }
                     });
                 } else
-                    Toast.makeText(T_AddCourseActivity.this, "Please fill all the fields", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(TeacherAddCourseActivity.this, "Please fill all the fields", Toast.LENGTH_SHORT).show();
             }
         });
 
