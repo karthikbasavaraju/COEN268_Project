@@ -11,6 +11,8 @@ import android.os.Build;
 import android.support.v4.app.NotificationCompat;
 import android.util.Log;
 
+import com.elevensight.sdk.Constants;
+import com.elevensight.sdk.sdk.IISightSDKManager;
 import com.google.firebase.messaging.FirebaseMessagingService;
 import com.google.firebase.messaging.RemoteMessage;
 
@@ -28,6 +30,16 @@ public class RecevieMessage extends FirebaseMessagingService {
         // TODO(developer): Handle FCM messages here.
         // Not getting messages here? See why this may be: https://goo.gl/39bRNJ
         Log.d("Token", "From: " + remoteMessage.getFrom());
+
+        Log.e(Constants.LOG_TAG, "Response: " + remoteMessage.getData().get("message") + remoteMessage.toString());
+        boolean check = IISightSDKManager.getInstance().isIISightNotification(remoteMessage,
+                RecevieMessage.this);
+
+        if (check) {
+
+            Log.e(Constants.LOG_TAG, "Check is: " + Boolean.toString(check));
+            IISightSDKManager.getInstance().handleIISightNotification(remoteMessage);
+        }
 
         // Check if message contains a data payload.
         if (remoteMessage.getData().size() > 0) {
