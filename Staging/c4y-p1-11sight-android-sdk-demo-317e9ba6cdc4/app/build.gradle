@@ -1,0 +1,49 @@
+apply plugin: 'com.android.application'
+
+android {
+    compileSdkVersion 26
+    defaultConfig {
+        applicationId "com.iisight.iisightdemo"
+        minSdkVersion 21
+        targetSdkVersion 26
+        versionCode 1
+        versionName "1.0"
+        multiDexEnabled true
+    }
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+    }
+
+    dexOptions {
+
+        jumboMode true
+        javaMaxHeapSize "4g"
+
+    }
+}
+
+dependencies {
+    implementation fileTree(dir: 'libs', include: ['*.jar'])
+    implementation 'com.android.support:appcompat-v7:26.1.0'
+    implementation 'com.android.support.constraint:constraint-layout:1.0.2'
+    implementation 'com.jakewharton:butterknife:8.8.1'
+    implementation 'com.android.support:design:26.1.0'
+    implementation 'com.android.support:multidex:1.0.3'
+    implementation(name: 'sdkApp-amsip-engineering-debug', ext: 'aar')
+    implementation 'com.android.support:recyclerview-v7:26.+'
+    implementation 'com.android.support:support-v4:26.+'
+    implementation 'org.squirrelframework:squirrel-foundation:0.3.8'
+    implementation 'com.inrista.loggliest:loggliest:0.2'
+    implementation 'com.github.bumptech.glide:glide:3.6.1'
+    implementation 'com.loopj.android:android-async-http:1.4.9'
+    implementation 'org.slf4j:slf4j-api:1.7.5'
+    implementation 'com.google.code.gson:gson:2.8.1'
+    implementation 'com.google.firebase:firebase-core:11.8.0'
+    implementation 'com.google.firebase:firebase-messaging:11.8.0'
+    compile 'com.android.volley:volley:1.1.0'
+}
+
+apply plugin: 'com.google.gms.google-services'
