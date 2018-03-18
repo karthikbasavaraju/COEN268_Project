@@ -16,7 +16,7 @@ public class PersonalDetails {
 
 
     public PersonalDetails() {
-        Log.i("DataConstructors","In PersonalDetails");
+        Log.i("DataConstructors", "In PersonalDetails");
     }
 
     public PersonalDetails(String fullName, String email, List<String> topics) {

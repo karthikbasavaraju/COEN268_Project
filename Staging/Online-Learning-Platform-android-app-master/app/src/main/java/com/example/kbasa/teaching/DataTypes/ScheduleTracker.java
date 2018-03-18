@@ -17,6 +17,20 @@ public class ScheduleTracker {
     public String scheduled;
     public String date;
 
+    public ScheduleTracker() {
+    }
+
+    public ScheduleTracker(String courseId, String studentId, String professorId, String studentTokenId, String professorTokenId, String scheduled, String date) {
+
+        this.courseId = courseId;
+        this.studentId = studentId;
+        this.professorId = professorId;
+        this.studentTokenId = studentTokenId;
+        this.professorTokenId = professorTokenId;
+        this.scheduled = scheduled;
+        this.date = date;
+    }
+
     public String getCourseName() {
         return courseName;
     }
@@ -40,10 +54,6 @@ public class ScheduleTracker {
     public void setProfessorName(String professorName) {
         this.professorName = professorName;
     }
-
-
-
-    public ScheduleTracker(){}
 
     public String getCourseId() {
         return courseId;
@@ -98,17 +108,6 @@ public class ScheduleTracker {
     }
 
     public void setDate(String date) {
-        this.date = date;
-    }
-
-    public ScheduleTracker(String courseId, String studentId, String professorId, String studentTokenId, String professorTokenId, String scheduled, String date) {
-
-        this.courseId = courseId;
-        this.studentId = studentId;
-        this.professorId = professorId;
-        this.studentTokenId = studentTokenId;
-        this.professorTokenId = professorTokenId;
-        this.scheduled = scheduled;
         this.date = date;
     }
 }

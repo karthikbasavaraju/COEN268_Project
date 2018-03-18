@@ -1,9 +1,10 @@
 package com.example.kbasa.teaching;
 
 import android.content.Intent;
+import android.net.Uri;
+import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -16,25 +17,33 @@ import com.android.volley.Request;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
-import com.example.kbasa.teaching.DataTypes.Student;
-import com.example.kbasa.teaching.DataTypes.TeacherId;
+import com.elevensight.sdk.Constants;
 import com.example.kbasa.teaching.DataTypes.PersonalDetails;
+import com.example.kbasa.teaching.DataTypes.Student;
 import com.example.kbasa.teaching.DataTypes.Teacher;
-import com.example.kbasa.teaching.DataTypes.UserData;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
+import com.google.firebase.storage.UploadTask;
+import com.nbsp.materialfilepicker.MaterialFilePicker;
+import com.nbsp.materialfilepicker.ui.FilePickerActivity;
 
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.StringTokenizer;
+import java.util.regex.Pattern;
 
 public class RegistrationActivity extends AppCompatActivity {
 
@@ -46,8 +55,9 @@ public class RegistrationActivity extends AppCompatActivity {
     private ToggleButton studentToggleButton;
     private ToggleButton teacherToggleButton;
     private EditText interestsEditText;
-
+    private String profile;
     private FirebaseAuth auth;
+    private String profileuri;
     private DatabaseReference databaseReference;
 
     @Override
@@ -55,12 +65,11 @@ public class RegistrationActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_register);
 
- 
 
     }
 
 
-    public void register(View v){
+    public void register(View v) {
 
         auth = FirebaseAuth.getInstance();
 
@@ -74,12 +83,12 @@ public class RegistrationActivity extends AppCompatActivity {
         interestsEditText = findViewById(R.id.input_interests);
 
 
-        if(studentToggleButton.isChecked())
+        if (studentToggleButton.isChecked())
             studentRegister();
-        else if(teacherToggleButton.isChecked())
+        else if (teacherToggleButton.isChecked())
             teacherRegister();
         else
-            Toast.makeText(RegistrationActivity.this,"select which type of user",Toast.LENGTH_SHORT).show();
+            Toast.makeText(RegistrationActivity.this, "select which type of user", Toast.LENGTH_SHORT).show();
 
     }
 
@@ -88,7 +97,7 @@ public class RegistrationActivity extends AppCompatActivity {
         studentToggleButton = findViewById(R.id.btn_students);
         teacherToggleButton = findViewById(R.id.btn_teachers);
 
-        if(studentToggleButton.isChecked()) {
+        if (studentToggleButton.isChecked()) {
             teacherToggleButton.setChecked(false);
         }
     }
@@ -99,13 +108,15 @@ public class RegistrationActivity extends AppCompatActivity {
         studentToggleButton = findViewById(R.id.btn_students);
         teacherToggleButton = findViewById(R.id.btn_teachers);
 
-        if(teacherToggleButton.isChecked()) {
+        if (teacherToggleButton.isChecked()) {
             studentToggleButton.setChecked(false);
         }
     }
 
     public void studentRegister() {
-        if (passwordEditText.getText().toString().equals(repasswordEditText.getText().toString())) {
+
+        boolean fieldsOK = FieldsOk.validate(new EditText[]{findViewById(R.id.input_first_name), findViewById(R.id.input_last_name), findViewById(R.id.input_password), findViewById(R.id.input_interests), findViewById(R.id.input_email)});
+        if (fieldsOK && profile != null) {
             auth.createUserWithEmailAndPassword(emailEditText.getText().toString(), passwordEditText.getText().toString())
                     .addOnSuccessListener(new OnSuccessListener<AuthResult>() {
                         @Override
@@ -123,80 +134,109 @@ public class RegistrationActivity extends AppCompatActivity {
                             }
 
 
-                            Student student = new Student(personalDetails, interest, null);
-                            HashMap hm = new HashMap();
-                            hm.put(auth.getUid(), student);
-                            databaseReference.updateChildren(hm);
-                            Intent intent = new Intent(RegistrationActivity.this, LoginActivity.class);
-                            startActivity(intent);
-                            Toast.makeText(RegistrationActivity.this, "Registration successful", Toast.LENGTH_SHORT).show();
+                            final Student student = new Student(personalDetails, interest, null);
 
 
-                            String url = "https://sdktest.11sight.com/api/v2/users.json";
-                            String u = emailEditText.getText().toString();
-                            String pwd = passwordEditText.getText().toString();
+                            if (profile != null) {
+                                InputStream picStream = null;
+                                try {
+                                    picStream = new FileInputStream(new File(profile));
+                                } catch (Exception e) {
+                                    Log.i("louda upload", "path : " + picStream);
+                                }
 
-                            String fName = firstNameEditText.getText().toString();
-                            String lName = lastNameEditText.getText().toString();
+                                StorageReference mountainsRef = FirebaseStorage.getInstance().getReference();
 
-                            String jsonString = "{" +
-                                    "\"tos\": \"accepted\"," +
-                                    "\"user\" :{" +
-                                    "\"email\":\"" + u + "\"," +
-                                    "\"password\":\"" + pwd + "\"," +
+                                UploadTask picUploadTask = mountainsRef.child(FirebaseAuth.getInstance().getUid()).putStream(picStream);
+                                picUploadTask.addOnFailureListener(new OnFailureListener() {
+                                    @Override
+                                    public void onFailure(@NonNull Exception e) {
 
-                                    "\"profile_attributes\": {" +
-                                    "\"first_name\": \"" + fName + "\"," +
-                                    "\"last_name\": \"" + lName + "\"," +
-                                    "\"business_name\": \"SCU\"" +
-                                    "}" +
+                                    }
+                                }).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+                                    @Override
+                                    public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+                                        final Uri profileUri = taskSnapshot.getDownloadUrl();
+                                        student.setProfileUri(profileUri.toString());
 
-                                    "}" +
-                                    "}";
-                            JSONObject json = null;
-                            try {
-                                json = new JSONObject(jsonString);
-                            } catch (JSONException e) {
-                                e.printStackTrace();
+
+                                        HashMap hm = new HashMap();
+                                        hm.put(auth.getUid(), student);
+                                        databaseReference.updateChildren(hm);
+                                        Intent intent = new Intent(RegistrationActivity.this, LoginActivity.class);
+                                        startActivity(intent);
+
+
+                                        String url = "https://sdktest.11sight.com/api/v2/users.json";
+                                        String u = emailEditText.getText().toString();
+                                        String pwd = passwordEditText.getText().toString();
+
+                                        String fName = firstNameEditText.getText().toString();
+                                        String lName = lastNameEditText.getText().toString();
+
+                                        String jsonString = "{" +
+                                                "\"tos\": \"accepted\"," +
+                                                "\"user\" :{" +
+                                                "\"email\":\"" + u + "\"," +
+                                                "\"password\":\"" + pwd + "\"," +
+
+                                                "\"profile_attributes\": {" +
+                                                "\"first_name\": \"" + fName + "\"," +
+                                                "\"last_name\": \"" + lName + "\"," +
+                                                "\"business_name\": \"SCU\"" +
+                                                "}" +
+
+                                                "}" +
+                                                "}";
+                                        JSONObject json = null;
+                                        try {
+                                            json = new JSONObject(jsonString);
+                                        } catch (JSONException e) {
+                                            e.printStackTrace();
+                                        }
+
+
+                                        JsonObjectRequest req = new JsonObjectRequest(Request.Method.POST, url, json, new Response.Listener<JSONObject>() {
+                                            @Override
+                                            public void onResponse(JSONObject response) {
+                                                Toast.makeText(getApplicationContext(),
+                                                        "SUCCESS_11Sight_REG", Toast.LENGTH_SHORT).show();
+                                                Log.d(Constants.LOG_TAG, response.toString());
+                                                String json = response.toString();
+                                                String strip = json.substring(json.indexOf("button_id"),json.length()-1);
+                                                String strip2 = strip.substring(strip.indexOf(":\"") + 2, strip.length() -1);
+                                                String buttonId = strip2.substring(0, strip2.indexOf("\""));
+
+                                            }
+                                        }, new Response.ErrorListener() {
+                                            @Override
+                                            public void onErrorResponse(VolleyError error) {
+                                                Toast.makeText(getApplicationContext(),
+                                                        "ERROR_11Sight_REG", Toast.LENGTH_SHORT).show();
+                                                Log.d(Constants.LOG_TAG, new String(error.networkResponse.data));
+                                            }
+                                        }) {
+                                            /**
+                                             * Passing some request headers
+                                             */
+                                            @Override
+                                            public Map<String, String> getHeaders() throws AuthFailureError {
+                                                HashMap<String, String> headers = new HashMap<String, String>();
+                                                headers.put("S-Auth-Token", "rse75cohhbajx3x4tc3brhca");
+                                                headers.put("Content-Type", "application/json");
+                                                return headers;
+                                            }
+                                        };
+                                        RestApiHelper.getInstance(getApplicationContext()).add(req);
+
+
+
+                                        Toast.makeText(RegistrationActivity.this, "Registration successful", Toast.LENGTH_SHORT).show();
+                                        finish();
+
+                                    }
+                                });
                             }
-
-
-                            JsonObjectRequest req = new JsonObjectRequest(Request.Method.POST, url, json, new Response.Listener<JSONObject>() {
-                                @Override
-                                public void onResponse(JSONObject response) {
-                                    Toast.makeText(getApplicationContext(),
-                                            "SUCESS_11Sight_REG", Toast.LENGTH_SHORT).show();
-                                    Log.d("11SIGHTLOLBOI", response.toString());
-                                    String json = response.toString();
-                                    String strip = json.substring(json.indexOf("button_id"),json.length()-1);
-                                    String strip2 = strip.substring(strip.indexOf(":\"") + 2, strip.length() -1);
-                                    String buttonId = strip2.substring(0, strip2.indexOf("\""));
-
-                                }
-                            }, new Response.ErrorListener() {
-                                @Override
-                                public void onErrorResponse(VolleyError error) {
-                                    Toast.makeText(getApplicationContext(),
-                                            "ERROR_11Sight_REG", Toast.LENGTH_SHORT).show();
-                                    Log.d("11SIGHTLOLBOI", new String(error.networkResponse.data));
-                                }
-                            }) {
-                                /**
-                                 * Passing some request headers
-                                 */
-                                @Override
-                                public Map<String, String> getHeaders() throws AuthFailureError {
-                                    HashMap<String, String> headers = new HashMap<String, String>();
-                                    //headers.put("Content-Type", "application/json");
-                                    headers.put("S-Auth-Token", "rse75cohhbajx3x4tc3brhca");
-                                    headers.put("Content-Type", "application/json");
-                                    return headers;
-                                }
-                            };
-                            RestApi.getInstance(getApplicationContext()).add(req);
-
-                            finish();
-
                         }
                     })
                     .addOnFailureListener(new OnFailureListener() {
@@ -206,13 +246,14 @@ public class RegistrationActivity extends AppCompatActivity {
                         }
                     });
         } else {
-            Toast.makeText(RegistrationActivity.this, "Password doesnt match", Toast.LENGTH_SHORT).show();
+            Toast.makeText(RegistrationActivity.this, "Please fill all fields", Toast.LENGTH_SHORT).show();
         }
     }
 
     public void teacherRegister() {
 
-        if (passwordEditText.getText().toString().equals(repasswordEditText.getText().toString())) {
+        boolean fieldsOK = FieldsOk.validate(new EditText[]{findViewById(R.id.input_first_name), findViewById(R.id.input_last_name), findViewById(R.id.input_password), findViewById(R.id.input_interests), findViewById(R.id.input_email)});
+        if (fieldsOK && profile != null) {
             auth.createUserWithEmailAndPassword(emailEditText.getText().toString(), passwordEditText.getText().toString())
                     .addOnSuccessListener(new OnSuccessListener<AuthResult>() {
                         @Override
@@ -224,81 +265,42 @@ public class RegistrationActivity extends AppCompatActivity {
                             PersonalDetails personalDetails = new PersonalDetails(firstNameEditText.getText().toString() + " " + lastNameEditText.getText().toString(),
                                     emailEditText.getText().toString(), null);
 
-                            Teacher teacher = new Teacher(personalDetails, "I am professor", null, null);
-                            HashMap hm = new HashMap();
-                            hm.put(auth.getUid(), teacher);
-                            databaseReference.updateChildren(hm);
-                            Intent intent = new Intent(RegistrationActivity.this, LoginActivity.class);
-                            startActivity(intent);
+                            final Teacher teacher = new Teacher(personalDetails, "I am professor", null, null);
 
 
+                            if (profile != null) {
+                                InputStream picStream = null;
+                                try {
+                                    picStream = new FileInputStream(new File(profile));
+                                } catch (Exception e) {
+                                    Log.i("louda upload", "path : " + picStream);
+                                }
 
-                            String url = "https://sdktest.11sight.com/api/v2/users.json";
-                            String u = emailEditText.getText().toString();
-                            String pwd = passwordEditText.getText().toString();
+                                StorageReference mountainsRef = FirebaseStorage.getInstance().getReference();
 
-                            String fName = firstNameEditText.getText().toString();
-                            String lName = lastNameEditText.getText().toString();
+                                UploadTask picUploadTask = mountainsRef.child(FirebaseAuth.getInstance().getUid()).putStream(picStream);
+                                picUploadTask.addOnFailureListener(new OnFailureListener() {
+                                    @Override
+                                    public void onFailure(@NonNull Exception e) {
 
-                            String jsonString = "{" +
-                                    "\"tos\": \"accepted\"," +
-                                    "\"user\" :{" +
-                                    "\"email\":\"" + u + "\"," +
-                                    "\"password\":\"" + pwd + "\"," +
+                                    }
+                                }).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+                                    @Override
+                                    public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+                                        final Uri profileUri = taskSnapshot.getDownloadUrl();
+                                        teacher.setProfileUri(profileUri.toString());
 
-                                    "\"profile_attributes\": {" +
-                                    "\"first_name\": \"" + fName + "\"," +
-                                    "\"last_name\": \"" + lName + "\"," +
-                                    "\"business_name\": \"SCU\"" +
-                                    "}" +
 
-                                    "}" +
-                                    "}";
-                            JSONObject json = null;
-                            try {
-                                json = new JSONObject(jsonString);
-                            } catch (JSONException e) {
-                                e.printStackTrace();
+                                        HashMap hm = new HashMap();
+                                        hm.put(auth.getUid(), teacher);
+                                        databaseReference.updateChildren(hm);
+                                        Intent intent = new Intent(RegistrationActivity.this, LoginActivity.class);
+                                        startActivity(intent);
+                                        Toast.makeText(RegistrationActivity.this, "Registration successful", Toast.LENGTH_SHORT).show();
+
+                                    }
+                                });
                             }
-
-
-                            JsonObjectRequest req = new JsonObjectRequest(Request.Method.POST, url, json, new Response.Listener<JSONObject>() {
-                                @Override
-                                public void onResponse(JSONObject response) {
-                                    Toast.makeText(getApplicationContext(),
-                                            "SUCESS_11Sight_REG", Toast.LENGTH_SHORT).show();
-                                    Log.d("11SIGHTLOLBOI", response.toString());
-                                    String json = response.toString();
-                                    String strip = json.substring(json.indexOf("button_id"),json.length()-1);
-                                    String strip2 = strip.substring(strip.indexOf(":\"") + 2, strip.length() -1);
-                                    String buttonId = strip2.substring(0, strip2.indexOf("\""));
-
-                                }
-                            }, new Response.ErrorListener() {
-                                @Override
-                                public void onErrorResponse(VolleyError error) {
-                                    Toast.makeText(getApplicationContext(),
-                                            "ERROR_11Sight_REG", Toast.LENGTH_SHORT).show();
-                                    Log.d("11SIGHTLOLBOI", new String(error.networkResponse.data));
-                                }
-                            }) {
-                                /**
-                                 * Passing some request headers
-                                 */
-                                @Override
-                                public Map<String, String> getHeaders() throws AuthFailureError {
-                                    HashMap<String, String> headers = new HashMap<String, String>();
-                                    //headers.put("Content-Type", "application/json");
-                                    headers.put("S-Auth-Token", "rse75cohhbajx3x4tc3brhca");
-                                    headers.put("Content-Type", "application/json");
-                                    return headers;
-                                }
-                            };
-                            RestApi.getInstance(getApplicationContext()).add(req);
-
-
-
-                            Toast.makeText(RegistrationActivity.this, "Registration successful", Toast.LENGTH_SHORT).show();
                         }
                     })
                     .addOnFailureListener(new OnFailureListener() {
@@ -308,9 +310,35 @@ public class RegistrationActivity extends AppCompatActivity {
                         }
                     });
         } else {
-            Toast.makeText(RegistrationActivity.this, "Password doesnt match", Toast.LENGTH_SHORT).show();
+            Toast.makeText(RegistrationActivity.this, "Please fill all fields", Toast.LENGTH_SHORT).show();
         }
     }
+
+    public void profilePic(View v) {
+        Button imageView = findViewById(R.id.btn_profilePic);
+
+        imageView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                new MaterialFilePicker().withActivity(RegistrationActivity.this)
+                        .withFilter(Pattern.compile("[a-z]+.(jpg|png|gif|bmp)$"))
+                        .withRequestCode(1)
+                        .start();
+            }
+        });
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        //  super.onActivityResult(requestCode, resultCode, data);
+
+        if (requestCode == 1 && resultCode == -1) {
+            File f = new File(data.getStringExtra(FilePickerActivity.RESULT_FILE_PATH));
+            profile = f.getAbsolutePath();
+
+        }
+    }
+
 }
 
 

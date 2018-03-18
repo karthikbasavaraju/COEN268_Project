@@ -2,9 +2,6 @@ package com.example.kbasa.teaching.DataTypes;
 
 import android.util.Log;
 
-import com.example.kbasa.teaching.DataTypes.CourseTaken;
-import com.example.kbasa.teaching.DataTypes.PersonalDetails;
-
 import java.util.ArrayList;
 
 /**
@@ -14,16 +11,33 @@ import java.util.ArrayList;
 public class Student {
     PersonalDetails personalDetails;
     ArrayList<String> interests;
+    String profileUri;
     CourseTaken courseTaken;
 
-    public Student(){
-        Log.i("DataConstructors","In students");
+    public Student(PersonalDetails personalDetails, ArrayList<String> interests, String profileUri, CourseTaken courseTaken) {
+
+        this.personalDetails = personalDetails;
+        this.interests = interests;
+        this.profileUri = profileUri;
+        this.courseTaken = courseTaken;
+    }
+
+    public Student() {
+        Log.i("DataConstructors", "In students");
     }
 
     public Student(PersonalDetails personalDetails, ArrayList<String> interests, CourseTaken courseTaken) {
         this.personalDetails = personalDetails;
         this.interests = interests;
         this.courseTaken = courseTaken;
+    }
+
+    public String getProfileUri() {
+        return profileUri;
+    }
+
+    public void setProfileUri(String profileUri) {
+        this.profileUri = profileUri;
     }
 
     public ArrayList<String> getInterests() {

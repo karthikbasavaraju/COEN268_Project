@@ -1,8 +1,5 @@
 package com.example.kbasa.teaching.DataTypes;
 
-import android.net.Uri;
-import android.util.Log;
-
 import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
@@ -24,10 +21,26 @@ public class Course {
     String professorTokenId;
     List<String> tags;
     String professorId;
-    List<HashMap<String,MyDate>> schedules;   //To store students id and their status(enrolled or complete)
+    List<HashMap<String, MyDate>> schedules;   //To store students id and their status(enrolled or complete)
 
-    public Course(){
+    public Course() {
         schedules = new LinkedList<HashMap<String, MyDate>>();
+    }
+
+    public Course(String name, String aboutProfessor, String courseName, String courseDetails, boolean available, String courseUri, String profileUri, List<MyDate> myDate, String professorTokenId, List<String> tags, String professorId, List<HashMap<String, MyDate>> schedules) {
+
+        this.name = name;
+        this.aboutProfessor = aboutProfessor;
+        this.courseName = courseName;
+        this.courseDetails = courseDetails;
+        this.available = available;
+        this.courseUri = courseUri;
+        this.profileUri = profileUri;
+        this.myDate = myDate;
+        this.professorTokenId = professorTokenId;
+        this.tags = tags;
+        this.professorId = professorId;
+        this.schedules = schedules;
     }
 
     public String getName() {
@@ -123,22 +136,6 @@ public class Course {
     }
 
     public void setSchedules(List<HashMap<String, MyDate>> schedules) {
-        this.schedules = schedules;
-    }
-
-    public Course(String name, String aboutProfessor, String courseName, String courseDetails, boolean available, String courseUri, String profileUri, List<MyDate> myDate, String professorTokenId, List<String> tags, String professorId, List<HashMap<String, MyDate>> schedules) {
-
-        this.name = name;
-        this.aboutProfessor = aboutProfessor;
-        this.courseName = courseName;
-        this.courseDetails = courseDetails;
-        this.available = available;
-        this.courseUri = courseUri;
-        this.profileUri = profileUri;
-        this.myDate = myDate;
-        this.professorTokenId = professorTokenId;
-        this.tags = tags;
-        this.professorId = professorId;
         this.schedules = schedules;
     }
 }

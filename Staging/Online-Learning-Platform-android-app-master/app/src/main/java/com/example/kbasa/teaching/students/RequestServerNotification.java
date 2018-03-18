@@ -1,8 +1,9 @@
 package com.example.kbasa.teaching.students;
-import org.apache.http.*;
+
 import android.os.AsyncTask;
 import android.util.Log;
 
+import org.apache.http.HttpResponse;
 import org.apache.http.client.HttpClient;
 import org.apache.http.client.methods.HttpPost;
 import org.apache.http.entity.StringEntity;
@@ -14,10 +15,14 @@ import java.io.UnsupportedEncodingException;
 
 class RequestServerNotification extends AsyncTask<Void, Void, Void> {
 
-    String tokenId="";
+    String tokenId = "";
+    String studentName = "";
+    String courseName = "";
 
-    RequestServerNotification(String tokenId){
-        this.tokenId =tokenId;
+    RequestServerNotification(String tokenId, String studentName, String courseName) {
+        this.tokenId = tokenId;
+        this.courseName = courseName;
+        this.studentName = studentName;
     }
 
     @Override
@@ -32,12 +37,12 @@ class RequestServerNotification extends AsyncTask<Void, Void, Void> {
         httpost.addHeader("Authorization", "key=AAAACb5Mbek:APA91bGAinMM_9jxiBBo38GAJ4gDpJyGql2V-cSG3dRuJRyUF3nc_lZu0LG7FzepDWm42YZWhsLKrEMkwj9kFjFPAVA6Moe6PVZM-6prUlfwruimIiaLRa8ikxYSaAjgqeAfFdPwzeD3");
         JSONObject object = new JSONObject();
 
-     //   tokenId = "ewTvZQEcACA:APA91bFiCgbQ9ogc2SS7GXjJn-zKt3bPqc7SdFzAVQvzbj2NejU9R2h70y0EI0b1pi6WJ9GBOSW60UxvFomEWJQTAnybClatTwt7oc_EP3nVWdeLld-VrmLHo5o0oqwjHISClYajdWVF";
-        Log.i("tokenId",tokenId);
+        //   tokenId = "ewTvZQEcACA:APA91bFiCgbQ9ogc2SS7GXjJn-zKt3bPqc7SdFzAVQvzbj2NejU9R2h70y0EI0b1pi6WJ9GBOSW60UxvFomEWJQTAnybClatTwt7oc_EP3nVWdeLld-VrmLHo5o0oqwjHISClYajdWVF";
+        Log.i("tokenId", tokenId);
         try {
-            StringEntity paramsEntity = new StringEntity("{\"to\":\""+ tokenId+"\",\"notification\":{\"body\":\"Some one enrolled in your class\",\"title\":\"Hurrah\"}}");
+            StringEntity paramsEntity = new StringEntity("{\"to\":\"" + tokenId + "\",\"notification\":{\"body\":\"" + studentName + " enrolled in your " + courseName + " class\",\"title\":\"You have a new student\"}}");
             httpost.setEntity(paramsEntity);
-        }catch (UnsupportedEncodingException exception) {
+        } catch (UnsupportedEncodingException exception) {
             exception.printStackTrace();
         }
         try {
@@ -46,7 +51,7 @@ class RequestServerNotification extends AsyncTask<Void, Void, Void> {
 
         } catch (Exception exception) {
             exception.printStackTrace();
-            Log.i("Vamshik", " Some exceotuon");
+            Log.i("Karthik", " Some exceotuon");
         }
         return null;
     }

@@ -8,7 +8,7 @@ import com.elevensight.sdk.Constants;
 import com.elevensight.sdk.sdk.IISightSDKManager;
 
 /**
- * Created by akolte on 3/16/18.
+ * Created by akolte on 3/17/18.
  */
 
 public class SDKManager extends Application {

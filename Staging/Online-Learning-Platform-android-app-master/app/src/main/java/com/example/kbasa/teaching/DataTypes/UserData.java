@@ -8,11 +8,11 @@ public class UserData {
     public String fullName;
     public String email;
 
-    public UserData(){
+    public UserData() {
 
     }
 
-    public UserData(String fullName, String email){
+    public UserData(String fullName, String email) {
         this.fullName = fullName;
         this.email = email;
     }

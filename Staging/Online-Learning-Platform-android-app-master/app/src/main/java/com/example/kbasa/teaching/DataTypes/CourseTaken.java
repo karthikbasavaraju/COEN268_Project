@@ -13,7 +13,7 @@ public class CourseTaken {
     List<Schedule> schedules;
 
     public CourseTaken() {
-        Log.i("DataConstructors","In CourseTaken");
+        Log.i("DataConstructors", "In CourseTaken");
     }
 
     public CourseTaken(List<Integer> past, List<Schedule> schedules) {

@@ -6,10 +6,10 @@ import com.android.volley.RequestQueue;
 import com.android.volley.toolbox.Volley;
 
 /**
- * Created by akolte on 3/16/18.
+ * Created by akolte on 3/17/18.
  */
 
-public class RestApi {
+public class RestApiHelper {
     private static RequestQueue instance;
     public static RequestQueue getInstance(Context c)
     {

@@ -1,5 +1,4 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical">
@@ -16,7 +15,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="Past" />
+            android:text="Past"
+            android:textSize="13sp" />
 
         <Button
             android:id="@+id/btn_ongoing"
@@ -24,7 +24,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="Ongoing" />
+            android:text="Ongoing"
+            android:textSize="13dp" />
 
         <Button
             android:id="@+id/btn_upcoming"
@@ -32,12 +33,14 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="Upcoming" />
+            android:text="Upcoming"
+            android:textSize="13sp" />
     </LinearLayout>
 
     <ListView
         android:id="@+id/listview"
         android:layout_width="match_parent"
-        android:layout_height="match_parent" />
+        android:layout_height="match_parent"
+        android:layout_marginHorizontal="20dp" />
 
 </LinearLayout>

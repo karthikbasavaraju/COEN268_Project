@@ -106,11 +106,11 @@ public class HomeFragment extends Fragment {
                     web.add(tagVector.elementAt(i));
                 }
 
-                recyclerView = (RecyclerView) view.findViewById(R.id.recycler_view_recommended);
+                recyclerView = view.findViewById(R.id.recycler_view_recommended);
                 recyclerView.setHasFixedSize(true);
                 layoutManager = new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL,false);
                 recyclerView.setLayoutManager(layoutManager);
-                adapter = new MyRecylcerViewAdapter(vector,getContext(),R.layout.row);
+                adapter = new MyRecylcerViewAdapter(vector,getContext(),R.layout.student_recommended_view);
                 recyclerView.setAdapter(adapter);
 
 
@@ -135,7 +135,7 @@ public class HomeFragment extends Fragment {
                         recyclerView.setHasFixedSize(true);
                         layoutManager = new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL,false);
                         recyclerView.setLayoutManager(layoutManager);
-                        adapter = new MyRecylcerViewAdapter(myCourseVector,getContext(),R.layout.row);
+                        adapter = new MyRecylcerViewAdapter(myCourseVector,getContext(),R.layout.student_recommended_view);
                         recyclerView.setAdapter(adapter);
 
                     }
@@ -152,7 +152,7 @@ public class HomeFragment extends Fragment {
                 recyclerView.setHasFixedSize(true);
                 layoutManager = new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL,false);
                 recyclerView.setLayoutManager(layoutManager);
-                adapter = new MyRecylcerViewAdapter(courseCategories,getContext(),R.layout.category);
+                adapter = new MyRecylcerViewAdapter(courseCategories,getContext(),R.layout.student_category_view);
                 recyclerView.setAdapter(adapter);
 
             }

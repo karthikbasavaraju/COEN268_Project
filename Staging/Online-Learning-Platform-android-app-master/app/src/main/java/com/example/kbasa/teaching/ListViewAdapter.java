@@ -6,10 +6,6 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.TextView;
 
-
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 import java.util.Vector;
 
@@ -20,9 +16,9 @@ import java.util.Vector;
 public class ListViewAdapter extends BaseAdapter {
 
     private Context context;
-    private Vector<Map<String,String>> list;
+    private Vector<Map<String, String>> list;
 
-    public ListViewAdapter(Context context, Vector<Map<String,String>> list) {
+    public ListViewAdapter(Context context, Vector<Map<String, String>> list) {
         this.context = context;
         this.list = list;
     }
@@ -43,15 +39,14 @@ public class ListViewAdapter extends BaseAdapter {
     }
 
 
-
-    public void setList(Vector<Map<String,String>> list) {
+    public void setList(Vector<Map<String, String>> list) {
         this.list = list;
     }
 
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
         View v = View.inflate(context, R.layout.item, null);
-        Map<String,String> details = list.get(position);
+        Map<String, String> details = list.get(position);
 
         TextView tvName = (TextView) v.findViewById(R.id.title);
 

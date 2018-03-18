@@ -52,7 +52,7 @@ public class MyRecylcerViewAdapter extends RecyclerView.Adapter<MyRecylcerViewAd
 
         final HashMap<String, String> temp = dataset.get(position);
         holder.mTitle.setText(temp.get("courseName"));
-        if (card == R.layout.category) {
+        if (card == R.layout.student_category_view) {
             holder.imageView.setImageResource(Integer.parseInt(temp.get("resourceId")));
         } else {
             Uri uri = Uri.parse(temp.get("profileUri"));
@@ -63,7 +63,7 @@ public class MyRecylcerViewAdapter extends RecyclerView.Adapter<MyRecylcerViewAd
             @Override
             public void onClick(View view) {
 
-                if (card == R.layout.category) {
+                if (card == R.layout.student_category_view) {
 
                 } else {
                     Intent intent = new Intent(context,EnrollActivity.class);

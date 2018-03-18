@@ -11,11 +11,11 @@ public class MainNode {
     Teacher teacher;
     Course course;
 
-    public MainNode(){
-        Log.i("DataConstructors","In MainNode");
+    public MainNode() {
+        Log.i("DataConstructors", "In MainNode");
     }
 
-    public MainNode(Student student, Teacher teacher, Course courses){
+    public MainNode(Student student, Teacher teacher, Course courses) {
         this.student = student;
         this.teacher = teacher;
         this.course = courses;

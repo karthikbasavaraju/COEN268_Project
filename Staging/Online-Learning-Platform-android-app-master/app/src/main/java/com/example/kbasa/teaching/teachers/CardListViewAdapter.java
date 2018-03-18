@@ -2,10 +2,7 @@ package com.example.kbasa.teaching.teachers;
 
 import android.content.Context;
 import android.content.Intent;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.graphics.drawable.Drawable;
-import android.net.Uri;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -14,12 +11,9 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-
-import com.example.kbasa.teaching.DownloadImageTask;
 import com.example.kbasa.teaching.R;
 
 import java.io.InputStream;
-import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.Map;
@@ -31,15 +25,14 @@ import java.util.Vector;
 
 public class CardListViewAdapter extends RecyclerView.Adapter<CardListViewAdapter.ViewHolder> {
 
-    private ArrayList<String> dataset;
     private final View.OnClickListener mOnClickListener;
     Context context;
-    Vector<Map<String,String>> course;
+    Vector<Map<String, String>> course;
     LayoutInflater inflter;
+    private ArrayList<String> dataset;
 
 
-
-    public CardListViewAdapter(ArrayList<String> dataset,Context applicationContext, Vector<Map<String,String>> course) {
+    public CardListViewAdapter(ArrayList<String> dataset, Context applicationContext, Vector<Map<String, String>> course) {
         this.context = applicationContext;
         this.course = course;
         inflter = (LayoutInflater.from(applicationContext));
@@ -58,7 +51,6 @@ public class CardListViewAdapter extends RecyclerView.Adapter<CardListViewAdapte
     public CardListViewAdapter.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
 
 
-
         View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.teacher_course, parent, false);
         v.setOnClickListener(mOnClickListener);
         ViewHolder vh = new ViewHolder(v);
@@ -67,30 +59,29 @@ public class CardListViewAdapter extends RecyclerView.Adapter<CardListViewAdapte
 
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
-try{
-        URL url = new URL((course.get(position)).get("profileUri"));
-        ImageView imageView = holder.imageView;
-       // imageView.setImageURI(url);
+        try {
+            URL url = new URL((course.get(position)).get("profileUri"));
+            ImageView imageView = holder.imageView;
+            // imageView.setImageURI(url);
 
-    imageView.setImageDrawable(Drawable.createFromStream((InputStream)new
-            URL((course.get(position)).get("profileUri")).getContent(), "src"));
+            imageView.setImageDrawable(Drawable.createFromStream((InputStream) new
+                    URL((course.get(position)).get("profileUri")).getContent(), "src"));
 
-    } catch (Exception e)
-    {
+        } catch (Exception e) {
 
 
-    }
+        }
 
 
         //        holder.imageView.setTag(profileUri);
 
 //        holder.imageView.setImageResource(R.drawable.dialogs_regions);
-        Log.i("Home-profileUri",(course.get(position)).get("profileUri"));
-  //      holder.imageView.setImageURI(profileUri);
-  //      new DownloadImageTask().execute(imageView);
+        Log.i("Home-profileUri", (course.get(position)).get("profileUri"));
+        //      holder.imageView.setImageURI(profileUri);
+        //      new DownloadImageTask().execute(imageView);
 
 
-     //   holder.mTitle.setText((course.get(position)).get("courseName"));
+        //   holder.mTitle.setText((course.get(position)).get("courseName"));
     }
 
     @Override
@@ -105,7 +96,7 @@ try{
 
         public ViewHolder(View itemView) {
             super(itemView);
-     //       mTitle = itemView.findViewById(R.id.title);
+            //       mTitle = itemView.findViewById(R.id.title);
             imageView = itemView.findViewById(R.id.icon);
         }
     }

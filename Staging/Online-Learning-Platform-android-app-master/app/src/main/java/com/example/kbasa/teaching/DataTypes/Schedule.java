@@ -1,10 +1,5 @@
 package com.example.kbasa.teaching.DataTypes;
 
-import android.util.Log;
-
-import java.util.Date;
-import java.util.TimeZone;
-
 /**
  * Created by kbasa on 2/26/2018.
  */
@@ -20,7 +15,8 @@ public class Schedule {
         this.myDate = myDate;
     }
 
-    public Schedule(){}
+    public Schedule() {
+    }
 
 
     public String getOtherPersonsId() {

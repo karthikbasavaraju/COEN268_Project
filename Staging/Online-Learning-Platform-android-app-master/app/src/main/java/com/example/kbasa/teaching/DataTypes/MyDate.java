@@ -1,8 +1,5 @@
 package com.example.kbasa.teaching.DataTypes;
 
-import android.content.Intent;
-
-import java.math.BigInteger;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -22,9 +19,10 @@ public class MyDate {
     int hour;
     int minute;
 
-    public MyDate(){}
+    public MyDate() {
+    }
 
-    public  MyDate(String mydate){
+    public MyDate(String mydate) {
         String stringSplit[] = mydate.split(" ");
         String dateSplit[] = stringSplit[0].split(":");
         String timeSplit[] = stringSplit[1].split(":");
@@ -33,14 +31,14 @@ public class MyDate {
         this.year = Integer.parseInt(dateSplit[2]);
 
         this.hour = Integer.parseInt(timeSplit[0]);
-        this.minute= Integer.parseInt(timeSplit[0]);
+        this.minute = Integer.parseInt(timeSplit[0]);
 
     }
 
     public MyDate(String s, int hour, int minute) {
-        StringTokenizer stringTokenizer = new StringTokenizer(s,"-");
+        StringTokenizer stringTokenizer = new StringTokenizer(s, "-");
         ArrayList<Integer> arrayList = new ArrayList();
-        while(stringTokenizer.hasMoreElements())
+        while (stringTokenizer.hasMoreElements())
             arrayList.add(Integer.parseInt(stringTokenizer.nextElement().toString()));
         this.month = arrayList.get(0);
         this.day = arrayList.get(1);
@@ -49,8 +47,8 @@ public class MyDate {
         this.minute = minute;
     }
 
-    public String toString(){
-        return month+":"+day+":"+year+" "+hour+":"+minute;
+    public String toString() {
+        return month + "-" + day + "-" + year + " " + hour + ":" + minute;
     }
 
     public int getYear() {
@@ -94,7 +92,7 @@ public class MyDate {
     }
 
 
-    public int compare(int duration){
+    public int compare(int duration) {
 
         Calendar cal = Calendar.getInstance();
         Date date = cal.getTime();
@@ -102,19 +100,19 @@ public class MyDate {
         MyDate now = new MyDate(dateFormat.format(date));
 
         Calendar currentTime = Calendar.getInstance();
-        currentTime.set(now.getYear(), now.getMonth()-1, now.getDay(),now.getHour(),now.getMinute());
+        currentTime.set(now.getYear(), now.getMonth() - 1, now.getDay(), now.getHour(), now.getMinute());
 
         Calendar courseTime = Calendar.getInstance();
-        courseTime.set(this.getYear(), this.getMonth()-1, this.getDay(),this.getHour(),this.getMinute());
+        courseTime.set(this.getYear(), this.getMonth() - 1, this.getDay(), this.getHour(), this.getMinute());
 
         long currentTimeTimeInMillis = currentTime.getTimeInMillis();
         long courseTimeTimeInMillis = courseTime.getTimeInMillis();
-        long interval = currentTimeTimeInMillis-courseTimeTimeInMillis;
-        long intervalInMinutes = interval/(60*1000);
+        long interval = currentTimeTimeInMillis - courseTimeTimeInMillis;
+        long intervalInMinutes = interval / (60 * 1000);
 
-        if(intervalInMinutes<duration && intervalInMinutes>=0)
+        if (intervalInMinutes < duration && intervalInMinutes >= 0)
             return 0;
-        else if(intervalInMinutes<0)
+        else if (intervalInMinutes < 0)
             return 1;
         else
             return -1;

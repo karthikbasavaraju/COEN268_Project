@@ -11,8 +11,6 @@ import android.os.Build;
 import android.support.v4.app.NotificationCompat;
 import android.util.Log;
 
-import com.elevensight.sdk.Constants;
-import com.elevensight.sdk.sdk.IISightSDKManager;
 import com.google.firebase.messaging.FirebaseMessagingService;
 import com.google.firebase.messaging.RemoteMessage;
 
@@ -37,25 +35,17 @@ public class RecevieMessage extends FirebaseMessagingService {
 
             if (/* Check if data needs to be processed by long running job */ true) {
                 // For long-running tasks (10 seconds or more) use Firebase Job Dispatcher.
-               // scheduleJob();
+                // scheduleJob();
             } else {
 
             }
 
         }
-        Log.e(Constants.LOG_TAG, "Response: " + remoteMessage.getData().get("message") + remoteMessage.toString());
-        boolean check = IISightSDKManager.getInstance().isIISightNotification(remoteMessage, RecevieMessage.this);
-
-        if (check) {
-
-            Log.e(Constants.LOG_TAG, "Check is: " + Boolean.toString(check));
-            IISightSDKManager.getInstance().handleIISightNotification(remoteMessage);
-        }
 
         if (remoteMessage.getNotification() != null) {
             Log.d("Token", "Message Notification Body: " + remoteMessage.getNotification().getBody());
 
-            sendNotification(remoteMessage.getFrom(),remoteMessage.getNotification().getBody());
+            sendNotification(remoteMessage.getNotification().getTitle(), remoteMessage.getNotification().getBody());
 
 
         }
@@ -65,13 +55,13 @@ public class RecevieMessage extends FirebaseMessagingService {
 
     private void sendNotification(String from, String messageBody) {
         Intent intent = new Intent(this, TeacherHomeActivity.class);
-        intent.putExtra("user","teacher");
+        intent.putExtra("user", "teacher");
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
         PendingIntent pendingIntent = PendingIntent.getActivity(this, 0 /* Request code */, intent,
                 PendingIntent.FLAG_ONE_SHOT);
 
         String channelId = "lol";
-        Uri defaultSoundUri= RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
+        Uri defaultSoundUri = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
         NotificationCompat.Builder notificationBuilder =
                 new NotificationCompat.Builder(this, channelId)
                         .setSmallIcon(R.mipmap.ic_launcher)

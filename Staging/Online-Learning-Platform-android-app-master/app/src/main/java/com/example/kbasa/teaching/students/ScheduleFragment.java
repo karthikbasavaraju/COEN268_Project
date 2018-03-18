@@ -11,6 +11,7 @@ import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.ListView;
 
+import com.elevensight.sdk.sdk.IISightSDKManager;
 import com.example.kbasa.teaching.DataTypes.MyDate;
 import com.example.kbasa.teaching.DataTypes.Schedule;
 import com.example.kbasa.teaching.ListViewAdapter;
@@ -189,6 +190,9 @@ public class ScheduleFragment extends Fragment {
                 lvProduct.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                     @Override
                     public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                        IISightSDKManager.getInstance().makeCall(
+                                "QgbUY777tZKFDHozZhDEWH6PffGOfwFTZaH42Lpnalhc-xxu21",
+                                getContext());
                     }
                 });
                 return;

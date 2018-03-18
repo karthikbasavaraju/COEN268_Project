@@ -1,11 +1,5 @@
 package com.example.kbasa.teaching.DataTypes;
 
-import android.util.Log;
-
-import com.example.kbasa.teaching.DataTypes.PersonalDetails;
-import com.example.kbasa.teaching.DataTypes.Schedule;
-
-import java.util.LinkedList;
 import java.util.List;
 
 /**
@@ -15,8 +9,34 @@ import java.util.List;
 public class Teacher {
     PersonalDetails personalDetails;
     String aboutYou;
+    String profileUri;
     List<Integer> courseOffered;
     CourseTaken courseTaken;
+
+    public Teacher(PersonalDetails personalDetails, String aboutYou, String profileUri, List<Integer> courseOffered, CourseTaken courseTaken) {
+
+        this.personalDetails = personalDetails;
+        this.aboutYou = aboutYou;
+        this.profileUri = profileUri;
+        this.courseOffered = courseOffered;
+        this.courseTaken = courseTaken;
+    }
+
+    public Teacher(PersonalDetails personalDetails, String aboutYou, List<Integer> courseOffered, CourseTaken courseTaken) {
+
+        this.personalDetails = personalDetails;
+        this.aboutYou = aboutYou;
+        this.courseOffered = courseOffered;
+        this.courseTaken = courseTaken;
+    }
+
+    public String getProfileUri() {
+        return profileUri;
+    }
+
+    public void setProfileUri(String profileUri) {
+        this.profileUri = profileUri;
+    }
 
     public PersonalDetails getPersonalDetails() {
         return personalDetails;
@@ -47,14 +67,6 @@ public class Teacher {
     }
 
     public void setCourseTaken(CourseTaken courseTaken) {
-        this.courseTaken = courseTaken;
-    }
-
-    public Teacher(PersonalDetails personalDetails, String aboutYou, List<Integer> courseOffered, CourseTaken courseTaken) {
-
-        this.personalDetails = personalDetails;
-        this.aboutYou = aboutYou;
-        this.courseOffered = courseOffered;
         this.courseTaken = courseTaken;
     }
 }
