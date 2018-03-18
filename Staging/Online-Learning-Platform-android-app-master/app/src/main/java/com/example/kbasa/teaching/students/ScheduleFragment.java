@@ -45,7 +45,7 @@ public class ScheduleFragment extends Fragment {
     String user;
     private ListView lvProduct;
     private ListViewAdapter adapter;
-
+    String buttonId=null;
     private Vector<Map<String,String>> past;
     private Vector<Map<String,String>> upcoming;
     Map<String,Map<String, String>> vector;
@@ -119,6 +119,7 @@ public class ScheduleFragment extends Fragment {
                             int type = myDate.compare(60);
                             if(type==0){
                                 onGoing = new HashMap(vector.get(dataSnapshot1.getKey()));
+                                buttonId = details.getOtherPersonsId();
                             }
                             else if(type==1){
                                 upcoming.add(vector.get(dataSnapshot1.getKey()));
@@ -190,9 +191,45 @@ public class ScheduleFragment extends Fragment {
                 lvProduct.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                     @Override
                     public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                        IISightSDKManager.getInstance().makeCall(
-                                "QgbUY777tZKFDHozZhDEWH6PffGOfwFTZaH42Lpnalhc-xxu21",
-                                getContext());
+                        // Get teacher/student buttonID from 11Sight
+                        if(user.equals("Teacher") && buttonId!=null){
+
+
+                            DatabaseReference student = FirebaseDatabase.getInstance().getReference("Student").child(buttonId).child("elevenUserName");
+
+                            student.addValueEventListener(new ValueEventListener() {
+                                @Override
+                                public void onDataChange(DataSnapshot dataSnapshot) {
+                                    String otherButtonId =dataSnapshot.getValue(String.class);
+
+
+                                    IISightSDKManager.getInstance().makeCall(otherButtonId,
+                                            getContext());
+                                }
+
+                                @Override
+                                public void onCancelled(DatabaseError databaseError) {
+
+                                }
+                            });
+
+                        }
+                        else if(buttonId!=null){
+                            DatabaseReference student = FirebaseDatabase.getInstance().getReference("Teacher").child(buttonId).child("elevenUserName");
+
+                            student.addValueEventListener(new ValueEventListener() {
+                                @Override
+                                public void onDataChange(DataSnapshot dataSnapshot) {
+                                    String otherButtonId =dataSnapshot.getValue(String.class);
+                                }
+
+                                @Override
+                                public void onCancelled(DatabaseError databaseError) {
+
+                                }
+                            });
+                        }
+
                     }
                 });
                 return;

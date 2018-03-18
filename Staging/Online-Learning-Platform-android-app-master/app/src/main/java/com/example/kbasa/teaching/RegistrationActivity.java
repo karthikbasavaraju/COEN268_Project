@@ -159,10 +159,6 @@ public class RegistrationActivity extends AppCompatActivity {
                                         final Uri profileUri = taskSnapshot.getDownloadUrl();
                                         student.setProfileUri(profileUri.toString());
 
-
-                                        HashMap hm = new HashMap();
-                                        hm.put(auth.getUid(), student);
-                                        databaseReference.updateChildren(hm);
                                         Intent intent = new Intent(RegistrationActivity.this, LoginActivity.class);
                                         startActivity(intent);
 
@@ -206,6 +202,11 @@ public class RegistrationActivity extends AppCompatActivity {
                                                 String strip = json.substring(json.indexOf("button_id"),json.length()-1);
                                                 String strip2 = strip.substring(strip.indexOf(":\"") + 2, strip.length() -1);
                                                 String buttonId = strip2.substring(0, strip2.indexOf("\""));
+                                                student.setElevenUserName(buttonId);
+
+                                                HashMap hm = new HashMap();
+                                                hm.put(auth.getUid(), student);
+                                                databaseReference.updateChildren(hm);
 
                                             }
                                         }, new Response.ErrorListener() {
@@ -290,10 +291,81 @@ public class RegistrationActivity extends AppCompatActivity {
                                         final Uri profileUri = taskSnapshot.getDownloadUrl();
                                         teacher.setProfileUri(profileUri.toString());
 
+                                        final String elevenUsername;
 
-                                        HashMap hm = new HashMap();
-                                        hm.put(auth.getUid(), teacher);
-                                        databaseReference.updateChildren(hm);
+
+
+
+                                        String url = "https://sdktest.11sight.com/api/v2/users.json";
+                                        String u = emailEditText.getText().toString();
+                                        String pwd = passwordEditText.getText().toString();
+
+                                        String fName = firstNameEditText.getText().toString();
+                                        String lName = lastNameEditText.getText().toString();
+
+                                        String jsonString = "{" +
+                                                "\"tos\": \"accepted\"," +
+                                                "\"user\" :{" +
+                                                "\"email\":\"" + u + "\"," +
+                                                "\"password\":\"" + pwd + "\"," +
+
+                                                "\"profile_attributes\": {" +
+                                                "\"first_name\": \"" + fName + "\"," +
+                                                "\"last_name\": \"" + lName + "\"," +
+                                                "\"business_name\": \"SCU\"" +
+                                                "}" +
+
+                                                "}" +
+                                                "}";
+                                        JSONObject json = null;
+                                        try {
+                                            json = new JSONObject(jsonString);
+                                        } catch (JSONException e) {
+                                            e.printStackTrace();
+                                        }
+
+
+                                        JsonObjectRequest req = new JsonObjectRequest(Request.Method.POST, url, json, new Response.Listener<JSONObject>() {
+                                            @Override
+                                            public void onResponse(JSONObject response) {
+                                                Toast.makeText(getApplicationContext(),
+                                                        "SUCCESS_11Sight_REG", Toast.LENGTH_SHORT).show();
+                                                Log.d(Constants.LOG_TAG, response.toString());
+                                                String json = response.toString();
+                                                String strip = json.substring(json.indexOf("button_id"),json.length()-1);
+                                                String strip2 = strip.substring(strip.indexOf(":\"") + 2, strip.length() -1);
+                                                String elevenUsername = strip2.substring(0, strip2.indexOf("\""));
+                                                teacher.setElevenUserName(elevenUsername);
+
+
+
+                                                HashMap hm = new HashMap();
+                                                hm.put(auth.getUid(), teacher);
+                                                databaseReference.updateChildren(hm);
+
+                                            }
+                                        }, new Response.ErrorListener() {
+                                            @Override
+                                            public void onErrorResponse(VolleyError error) {
+                                                Toast.makeText(getApplicationContext(),
+                                                        "ERROR_11Sight_REG", Toast.LENGTH_SHORT).show();
+                                                Log.d(Constants.LOG_TAG, new String(error.networkResponse.data));
+                                            }
+                                        }) {
+                                            /**
+                                             * Passing some request headers
+                                             */
+                                            @Override
+                                            public Map<String, String> getHeaders() throws AuthFailureError {
+                                                HashMap<String, String> headers = new HashMap<String, String>();
+                                                headers.put("S-Auth-Token", "rse75cohhbajx3x4tc3brhca");
+                                                headers.put("Content-Type", "application/json");
+                                                return headers;
+                                            }
+                                        };
+                                        RestApiHelper.getInstance(getApplicationContext()).add(req);
+
+
                                         Intent intent = new Intent(RegistrationActivity.this, LoginActivity.class);
                                         startActivity(intent);
                                         Toast.makeText(RegistrationActivity.this, "Registration successful", Toast.LENGTH_SHORT).show();
@@ -321,7 +393,7 @@ public class RegistrationActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 new MaterialFilePicker().withActivity(RegistrationActivity.this)
-                        .withFilter(Pattern.compile("[a-z]+.(jpg|png|gif|bmp)$"))
+                        //.withFilter(Pattern.compile("[a-z]+.(jpg|png|gif|bmp)$"))
                         .withRequestCode(1)
                         .start();
             }

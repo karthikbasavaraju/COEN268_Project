@@ -69,6 +69,7 @@ public class T_AddCourseActivity extends AppCompatActivity {
     FirebaseAuth user;
     Course course;
     String courseId;
+    DatabaseReference eleven;
     ProgressDialog progressBar;
     StorageReference storageRef;
     FirebaseStorage storage;
@@ -196,6 +197,7 @@ public class T_AddCourseActivity extends AppCompatActivity {
 
 
                     user = FirebaseAuth.getInstance();
+                    eleven = FirebaseDatabase.getInstance().getReference("Teacher").child(user.getUid());
                     teacherDB = FirebaseDatabase.getInstance().getReference("Teacher").child(user.getUid()).child("courseOffered");
                     course = new Course();
                     courseId = teacherDB.push().getKey();

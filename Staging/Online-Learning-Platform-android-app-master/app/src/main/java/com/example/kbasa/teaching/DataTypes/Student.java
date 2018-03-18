@@ -13,6 +13,24 @@ public class Student {
     ArrayList<String> interests;
     String profileUri;
     CourseTaken courseTaken;
+    String elevenUserName;
+
+    public String getElevenUserName() {
+        return elevenUserName;
+    }
+
+    public void setElevenUserName(String elevenUserName) {
+        this.elevenUserName = elevenUserName;
+    }
+
+    public Student(PersonalDetails personalDetails, ArrayList<String> interests, String profileUri, CourseTaken courseTaken, String elevenUserName) {
+
+        this.personalDetails = personalDetails;
+        this.interests = interests;
+        this.profileUri = profileUri;
+        this.courseTaken = courseTaken;
+        this.elevenUserName = elevenUserName;
+    }
 
     public Student(PersonalDetails personalDetails, ArrayList<String> interests, String profileUri, CourseTaken courseTaken) {
 

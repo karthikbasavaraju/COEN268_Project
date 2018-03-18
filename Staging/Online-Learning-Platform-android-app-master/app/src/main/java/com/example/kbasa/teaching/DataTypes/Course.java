@@ -19,6 +19,33 @@ public class Course {
     String profileUri;
     List<MyDate> myDate;
     String professorTokenId;
+    String elevenUserName;
+
+    public String getElevenUserName() {
+        return elevenUserName;
+    }
+
+    public void setElevenUserName(String elevenUserName) {
+        this.elevenUserName = elevenUserName;
+    }
+
+    public Course(String name, String aboutProfessor, String courseName, String courseDetails, boolean available, String courseUri, String profileUri, List<MyDate> myDate, String professorTokenId, String elevenUserName, List<String> tags, String professorId, List<HashMap<String, MyDate>> schedules) {
+
+        this.name = name;
+        this.aboutProfessor = aboutProfessor;
+        this.courseName = courseName;
+        this.courseDetails = courseDetails;
+        this.available = available;
+        this.courseUri = courseUri;
+        this.profileUri = profileUri;
+        this.myDate = myDate;
+        this.professorTokenId = professorTokenId;
+        this.elevenUserName = elevenUserName;
+        this.tags = tags;
+        this.professorId = professorId;
+        this.schedules = schedules;
+    }
+
     List<String> tags;
     String professorId;
     List<HashMap<String, MyDate>> schedules;   //To store students id and their status(enrolled or complete)
