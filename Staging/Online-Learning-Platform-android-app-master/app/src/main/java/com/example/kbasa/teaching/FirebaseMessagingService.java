@@ -13,7 +13,6 @@ import android.util.Log;
 
 import com.elevensight.sdk.Constants;
 import com.elevensight.sdk.sdk.IISightSDKManager;
-import com.google.firebase.messaging.FirebaseMessagingService;
 import com.google.firebase.messaging.RemoteMessage;
 
 
@@ -21,7 +20,7 @@ import com.google.firebase.messaging.RemoteMessage;
  * Created by kbasa on 3/9/2018.
  */
 
-public class RecevieMessage extends FirebaseMessagingService {
+public class FirebaseMessagingService extends com.google.firebase.messaging.FirebaseMessagingService {
 
     @Override
     public void onMessageReceived(RemoteMessage remoteMessage) {
@@ -33,7 +32,7 @@ public class RecevieMessage extends FirebaseMessagingService {
 
         Log.e(Constants.LOG_TAG, "Response: " + remoteMessage.getData().get("message") + remoteMessage.toString());
         boolean check = IISightSDKManager.getInstance().isIISightNotification(remoteMessage,
-                RecevieMessage.this);
+                FirebaseMessagingService.this);
 
         if (check) {
 

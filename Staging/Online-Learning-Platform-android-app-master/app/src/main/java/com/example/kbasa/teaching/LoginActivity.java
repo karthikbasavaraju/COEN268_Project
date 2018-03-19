@@ -11,7 +11,6 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.Toast;
 
-import com.elevensight.sdk.sdk.IISightSDKManager;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.AuthResult;
@@ -21,6 +20,8 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+
+import io.github.abhimanbhau.elevensight.ElevenSightLoginHelper;
 
 public class LoginActivity extends AppCompatActivity {
 
@@ -104,24 +105,9 @@ public class LoginActivity extends AppCompatActivity {
 
                                     if (studentFlag == true && studentFlag1 == true) {
 
-                                        IISightSDKManager.getInstance().loginUser(
-                                                emailEditText.getText().toString(),
+                                        ElevenSightLoginHelper.loginUser(emailEditText.getText().toString(),
                                                 passwordEditText.getText().toString(),
-                                                getApplicationContext(),
-                                                new IISightSDKManager.ICallback() {
-                                                    @Override
-                                                    public void process(Object o) {
-                                                        Toast.makeText(LoginActivity.this,
-                                                                "Login success_ELEVEN_SIGHT", Toast.LENGTH_SHORT).show();
-                                                    }
-                                                }, new IISightSDKManager.ICallback() {
-                                                    @Override
-                                                    public void process(Object o) {
-                                                        Toast.makeText(LoginActivity.this,
-                                                                "Login failed_ELEVEN_SIGHT", Toast.LENGTH_SHORT).show();
-                                                    }
-                                                });
-
+                                                getApplicationContext());
 
                                         Intent intent = new Intent(LoginActivity.this, TeacherHomeActivity.class);
                                         intent.putExtra("user", "student");
@@ -201,23 +187,9 @@ public class LoginActivity extends AppCompatActivity {
                                     }
                                     if (teacherFlag == true && teacherFlag1 == true) {
 
-                                        IISightSDKManager.getInstance().loginUser(
-                                                emailEditText.getText().toString(),
+                                        ElevenSightLoginHelper.loginUser(emailEditText.getText().toString(),
                                                 passwordEditText.getText().toString(),
-                                                getApplicationContext(),
-                                                new IISightSDKManager.ICallback() {
-                                                    @Override
-                                                    public void process(Object o) {
-                                                        Toast.makeText(LoginActivity.this,
-                                                                "Login success_ELEVEN_SIGHT", Toast.LENGTH_SHORT).show();
-                                                    }
-                                                }, new IISightSDKManager.ICallback() {
-                                                    @Override
-                                                    public void process(Object o) {
-                                                        Toast.makeText(LoginActivity.this,
-                                                                "Login failed_ELEVEN_SIGHT", Toast.LENGTH_SHORT).show();
-                                                    }
-                                                });
+                                                getApplicationContext());
 
                                         Intent intent = new Intent(LoginActivity.this, TeacherHomeActivity.class);
                                         intent.putExtra("user", "teacher");

@@ -1,4 +1,4 @@
-package io.github.abhimanbhau;
+package io.github.abhimanbhau.elevensight;
 
 import android.app.Application;
 import android.content.Intent;
@@ -6,6 +6,8 @@ import android.util.Log;
 
 import com.elevensight.sdk.sdk.IISightSDKManager;
 import com.example.kbasa.teaching.LoginActivity;
+
+import io.github.abhimanbhau.utils.Constants;
 
 /**
  * Created by akolte on 3/17/18.

@@ -1,4 +1,4 @@
-package io.github.abhimanbhau;
+package io.github.abhimanbhau.utils;
 
 import android.content.Context;
 import android.util.Log;

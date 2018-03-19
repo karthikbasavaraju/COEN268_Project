@@ -1,4 +1,4 @@
-package io.github.abhimanbhau;
+package io.github.abhimanbhau.utils;
 
 /**
  * Created by akolte on 3/18/18.

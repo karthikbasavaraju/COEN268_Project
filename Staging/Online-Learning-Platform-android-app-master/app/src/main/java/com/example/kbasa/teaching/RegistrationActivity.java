@@ -47,7 +47,7 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.StringTokenizer;
 
-import io.github.abhimanbhau.RestApiHelper;
+import io.github.abhimanbhau.utils.RestApiHelper;
 
 public class RegistrationActivity extends AppCompatActivity {
 
@@ -55,7 +55,6 @@ public class RegistrationActivity extends AppCompatActivity {
     private EditText lastNameEditText;
     private EditText emailEditText;
     private EditText passwordEditText;
-    private EditText repasswordEditText;
     private ToggleButton studentToggleButton;
     private ToggleButton teacherToggleButton;
     private EditText interestsEditText;
@@ -81,7 +80,6 @@ public class RegistrationActivity extends AppCompatActivity {
         lastNameEditText = findViewById(R.id.input_last_name);
         emailEditText = findViewById(R.id.input_email);
         passwordEditText = findViewById(R.id.input_password);
-        repasswordEditText = findViewById(R.id.input_password);
         studentToggleButton = findViewById(R.id.btn_students);
         teacherToggleButton = findViewById(R.id.btn_teachers);
         interestsEditText = findViewById(R.id.input_interests);
