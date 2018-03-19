@@ -96,7 +96,7 @@ public class StudentSearchActivity extends AppCompatActivity {
                 }
                 final SearchPageDisplay adapter = new
                         SearchPageDisplay(StudentSearchActivity.this, tempTag, tempDetails);
-                list = (ListView) findViewById(R.id.wikiLinks);
+                list = findViewById(R.id.wikiLinks);
                 list.setAdapter(adapter);
                 list.setOnItemClickListener(new AdapterView.OnItemClickListener() {
 
@@ -124,7 +124,7 @@ public class StudentSearchActivity extends AppCompatActivity {
                         }
                         SearchPageDisplay adapter1 = new
                                 SearchPageDisplay(StudentSearchActivity.this, tempTag, tempDetails);
-                        list = (ListView) findViewById(R.id.wikiLinks);
+                        list = findViewById(R.id.wikiLinks);
                         list.setAdapter(adapter1);
                         list.setOnItemClickListener(new AdapterView.OnItemClickListener() {
 

@@ -42,7 +42,7 @@
         <activity android:name=".students.CourseIntroductionActivity" />
         <activity android:name=".StudentSearchActivity" />
         <activity android:name=".teachers.ViewCourseActivity" />
-        <activity android:name=".students.EnrollActivity"></activity>
+        <activity android:name=".students.EnrollActivity" />
     </application>
 
 </manifest>

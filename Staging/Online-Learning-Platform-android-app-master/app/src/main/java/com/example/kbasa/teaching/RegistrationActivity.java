@@ -224,7 +224,7 @@ public class RegistrationActivity extends AppCompatActivity {
                                              */
                                             @Override
                                             public Map<String, String> getHeaders() throws AuthFailureError {
-                                                HashMap<String, String> headers = new HashMap<String, String>();
+                                                HashMap<String, String> headers = new HashMap<>();
                                                 headers.put("S-Auth-Token", "rse75cohhbajx3x4tc3brhca");
                                                 headers.put("Content-Type", "application/json");
                                                 return headers;
@@ -355,7 +355,7 @@ public class RegistrationActivity extends AppCompatActivity {
                                              */
                                             @Override
                                             public Map<String, String> getHeaders() throws AuthFailureError {
-                                                HashMap<String, String> headers = new HashMap<String, String>();
+                                                HashMap<String, String> headers = new HashMap<>();
                                                 headers.put("S-Auth-Token", "rse75cohhbajx3x4tc3brhca");
                                                 headers.put("Content-Type", "application/json");
                                                 return headers;

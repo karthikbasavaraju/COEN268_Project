@@ -61,8 +61,8 @@ public class TeacherEditCourseActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_t__edit_course);
 
-        btn_remove = (Button) findViewById(R.id.btn_remove);
-        btn_save = (Button) findViewById(R.id.btn_save);
+        btn_remove = findViewById(R.id.btn_remove);
+        btn_save = findViewById(R.id.btn_save);
 
         // check if the permission is granted
 
@@ -70,13 +70,13 @@ public class TeacherEditCourseActivity extends AppCompatActivity {
         enable_button();
 
         // select date
-        mDateDisplay1 = (TextView) findViewById(R.id.showMyDate1);
-        mDateDisplay2 = (TextView) findViewById(R.id.showMyDate2);
-        mDateDisplay3 = (TextView) findViewById(R.id.showMyDate3);
+        mDateDisplay1 = findViewById(R.id.showMyDate1);
+        mDateDisplay2 = findViewById(R.id.showMyDate2);
+        mDateDisplay3 = findViewById(R.id.showMyDate3);
 
-        mPickDate1 = (Button) findViewById(R.id.myDatePickerButton1);
-        mPickDate2 = (Button) findViewById(R.id.myDatePickerButton2);
-        mPickDate3 = (Button) findViewById(R.id.myDatePickerButton3);
+        mPickDate1 = findViewById(R.id.myDatePickerButton1);
+        mPickDate2 = findViewById(R.id.myDatePickerButton2);
+        mPickDate3 = findViewById(R.id.myDatePickerButton3);
 
         mPickDate1.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {

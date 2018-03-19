@@ -31,7 +31,7 @@
             android:layout_height="200dp"
             android:layout_alignParentTop="true"
             android:layout_centerHorizontal="true"
-            android:background="@mipmap/ic_launcher"></ImageView>
+            android:background="@mipmap/ic_launcher" />
     </android.support.v7.widget.CardView>
     <!-- <ImageView
          android:id="@+id/imageView"

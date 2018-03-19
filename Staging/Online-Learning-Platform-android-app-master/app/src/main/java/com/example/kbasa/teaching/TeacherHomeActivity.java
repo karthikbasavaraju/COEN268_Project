@@ -48,11 +48,11 @@ public class TeacherHomeActivity extends AppCompatActivity {
         role = b.getString("user");
 
         // Search Bar
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         getSupportActionBar().setTitle("Visdum");
         toolbar.setTitleTextColor(Color.parseColor("#FFFFFF"));
-        materialSearchView = (MaterialSearchView) findViewById(R.id.search_view);
+        materialSearchView = findViewById(R.id.search_view);
 
         // Set the default Fragment to HomeFragment
         if (savedInstanceState == null) {
@@ -66,7 +66,7 @@ public class TeacherHomeActivity extends AppCompatActivity {
         }
 
         // Bottom Nav-Bar
-        BottomNavigationView bottomNavigationView = (BottomNavigationView) findViewById(R.id.bottom_navigation);
+        BottomNavigationView bottomNavigationView = findViewById(R.id.bottom_navigation);
         if (role.equals("student")) {
             DatabaseReference db = FirebaseDatabase.getInstance().getReference("Student").child(FirebaseAuth.getInstance().getUid());
             db.updateChildren(new HashMap<String, Object>() {{

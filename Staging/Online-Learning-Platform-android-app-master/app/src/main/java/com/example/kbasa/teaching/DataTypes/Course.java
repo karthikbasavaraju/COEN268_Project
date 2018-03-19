@@ -42,7 +42,7 @@ public class Course {
     }
 
     public Course() {
-        schedules = new LinkedList<HashMap<String, MyDate>>();
+        schedules = new LinkedList<>();
     }
 
     public Course(String name, String aboutProfessor, String courseName, String courseDetails, boolean available, String courseUri, String profileUri, List<MyDate> myDate, String professorTokenId, List<String> tags, String professorId, List<HashMap<String, MyDate>> schedules) {

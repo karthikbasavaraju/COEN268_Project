@@ -29,14 +29,12 @@ public class CardListViewAdapter extends RecyclerView.Adapter<CardListViewAdapte
     Context context;
     Vector<Map<String, String>> course;
     LayoutInflater inflter;
-    private ArrayList<String> dataset;
 
 
     public CardListViewAdapter(ArrayList<String> dataset, Context applicationContext, Vector<Map<String, String>> course) {
         this.context = applicationContext;
         this.course = course;
         inflter = (LayoutInflater.from(applicationContext));
-        this.dataset = dataset;
 
         mOnClickListener = new View.OnClickListener() {
             @Override
@@ -53,8 +51,7 @@ public class CardListViewAdapter extends RecyclerView.Adapter<CardListViewAdapte
 
         View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.teacher_course, parent, false);
         v.setOnClickListener(mOnClickListener);
-        ViewHolder vh = new ViewHolder(v);
-        return vh;
+        return new ViewHolder(v);
     }
 
     @Override

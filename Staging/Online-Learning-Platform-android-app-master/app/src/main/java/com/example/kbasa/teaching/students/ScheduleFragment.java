@@ -137,7 +137,7 @@ public class ScheduleFragment extends Fragment {
 
         // get the past courses from database
 
-        lvProduct = (ListView) view.findViewById(R.id.listview);
+        lvProduct = view.findViewById(R.id.listview);
         adapter = new ListViewAdapter(getContext(), past);
         lvProduct.setAdapter(adapter);
 

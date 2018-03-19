@@ -102,8 +102,8 @@ public class TeacherAddCourseActivity extends AppCompatActivity {
 
         videoText = findViewById(R.id.tv_intro_video_name);
         picText = findViewById(R.id.tv_intro_picture_name);
-        btn_upload_v = (Button) findViewById(R.id.btn_upload_video);
-        btn_upload_pic = (Button) findViewById(R.id.btn_upload_picture);
+        btn_upload_v = findViewById(R.id.btn_upload_video);
+        btn_upload_pic = findViewById(R.id.btn_upload_picture);
 
         // check if the permission is granted
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
@@ -136,13 +136,13 @@ public class TeacherAddCourseActivity extends AppCompatActivity {
         });
 
         // select date
-        mDateDisplay1 = (TextView) findViewById(R.id.showMyDate1);
-        mDateDisplay2 = (TextView) findViewById(R.id.showMyDate2);
-        mDateDisplay3 = (TextView) findViewById(R.id.showMyDate3);
+        mDateDisplay1 = findViewById(R.id.showMyDate1);
+        mDateDisplay2 = findViewById(R.id.showMyDate2);
+        mDateDisplay3 = findViewById(R.id.showMyDate3);
 
-        mPickDate1 = (Button) findViewById(R.id.myDatePickerButton1);
-        mPickDate2 = (Button) findViewById(R.id.myDatePickerButton2);
-        mPickDate3 = (Button) findViewById(R.id.myDatePickerButton3);
+        mPickDate1 = findViewById(R.id.myDatePickerButton1);
+        mPickDate2 = findViewById(R.id.myDatePickerButton2);
+        mPickDate3 = findViewById(R.id.myDatePickerButton3);
 
         mPickDate1.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
@@ -187,7 +187,7 @@ public class TeacherAddCourseActivity extends AppCompatActivity {
             public void onClick(View view) {
 
                 boolean fieldsOK = ValidationHelper.validate(new EditText[]{findViewById(R.id.courseNameTextView), findViewById(R.id.descriptionTextView), findViewById(R.id.tagTextView)});
-                boolean filesOk = ValidationHelper.vlidate(new TextView[]{findViewById(R.id.tv_intro_video_name), findViewById(R.id.tv_intro_picture_name)});
+                boolean filesOk = ValidationHelper.validateFilePicker(new TextView[]{findViewById(R.id.tv_intro_video_name), findViewById(R.id.tv_intro_picture_name)});
                 if (fieldsOK && filesOk) {
 
                     final ProgressDialog dialog = new ProgressDialog(TeacherAddCourseActivity.this);

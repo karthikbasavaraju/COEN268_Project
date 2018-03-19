@@ -18,7 +18,7 @@ public class SDKManager extends Application {
         super.onCreate();
         try {
             Log.d(Constants.LOG_TAG_ELEVEN_SIGHT,
-                    "Instantiating the 11Sight SDK");
+                    "INIT_SDK");
             IISightSDKManager.build("rse75cohhbajx3x4tc3brhca",
                     getApplicationContext(), new IISightSDKManager.ICallback() {
                         @Override
@@ -29,7 +29,7 @@ public class SDKManager extends Application {
                         }
                     });
         } catch (Exception e) {
-            Log.e(Constants.LOG_TAG_ELEVEN_SIGHT, "Failed to build the 11Sight SDKManager");
+            Log.e(Constants.LOG_TAG_ELEVEN_SIGHT, "FAILED_BUILD_SDK");
             e.printStackTrace();
         }
     }
