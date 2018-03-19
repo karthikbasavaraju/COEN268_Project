@@ -43,15 +43,21 @@ public class MyRecylcerViewAdapter extends RecyclerView.Adapter<MyRecylcerViewAd
     @Override
     public void onBindViewHolder(MyRecylcerViewAdapter.ViewHolder holder, int position) {
 
-
         final HashMap<String, String> temp = dataset.get(position);
+
         holder.mTitle.setText(temp.get("courseName"));
         if (card == R.layout.student_category_view) {
             holder.imageView.setImageResource(Integer.parseInt(temp.get("resourceId")));
         } else {
-            Uri uri = Uri.parse(temp.get("profileUri"));
+
+            String str = temp.get("profileUri");
+            if(str == null || str.length() == 0) {
+                str = "http://www.itssu.ie/wp-content/themes/itsligo_wordpress_2013/img/no_image_available.jpg";
+            }
+            Uri uri = Uri.parse(str);
             Picasso.with(context).load(uri).into(holder.imageView);
         }
+
 
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
