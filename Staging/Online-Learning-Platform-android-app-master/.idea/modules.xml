@@ -5,7 +5,6 @@
       <module fileurl="file://$PROJECT_DIR$/Online-Learning-Platform-android-app-master.iml" filepath="$PROJECT_DIR$/Online-Learning-Platform-android-app-master.iml" />
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
       <module fileurl="file://$PROJECT_DIR$/eleven-sight/eleven-sight.iml" filepath="$PROJECT_DIR$/eleven-sight/eleven-sight.iml" />
-      <module fileurl="file://$PROJECT_DIR$/teaching.iml" filepath="$PROJECT_DIR$/teaching.iml" />
     </modules>
   </component>
 </project>
