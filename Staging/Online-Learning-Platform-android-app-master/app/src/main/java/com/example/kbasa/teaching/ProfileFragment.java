@@ -1,6 +1,7 @@
 package com.example.kbasa.teaching;
 
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
@@ -84,9 +85,9 @@ public class ProfileFragment extends Fragment {
                 if (dataSnapshot.child("profilePic").exists()) {
                     String profilePic = dataSnapshot.child("profilePic").getValue(String.class);
                     Picasso.with(getActivity().getApplicationContext()).load(profilePic).into(imageView);
-
                 }
                 if (dataSnapshot.child("personalDetails").child("fullName").getValue(String.class) != null) {
+                    imageView.setBackground(null);
                     name.setText(dataSnapshot.child("personalDetails").child("fullName").getValue(String.class));
                     Picasso.with(getContext()).load(dataSnapshot.child("profileUri").getValue(String.class)).into(imageView);
                     flag2 = true;

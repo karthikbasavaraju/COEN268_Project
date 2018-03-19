@@ -249,6 +249,8 @@ public class ScheduleFragment extends Fragment {
             }
         });
 
+        btn_ongoing.performClick();
+
         return view;
     }
 
