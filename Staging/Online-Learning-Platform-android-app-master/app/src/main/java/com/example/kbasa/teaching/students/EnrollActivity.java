@@ -2,6 +2,7 @@ package com.example.kbasa.teaching.students;
 
 
 import android.content.Intent;
+import android.media.MediaPlayer;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -44,10 +45,11 @@ public class EnrollActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.student_enroll);
 
+
         final String sId = FirebaseAuth.getInstance().getUid();
         Bundle b = getIntent().getExtras();
         final Button enrollButton = findViewById(R.id.btn_enroll);
-
+        enrollButton.setEnabled(false);
 
         if (b != null) {
             courseId = b.getString("courseId");
@@ -67,6 +69,14 @@ public class EnrollActivity extends AppCompatActivity {
                 videoViewLandscape.setVideoURI(uri);
                 videoViewLandscape.requestFocus();
                 videoViewLandscape.start();
+
+                videoViewLandscape.setOnPreparedListener(new MediaPlayer.OnPreparedListener() {
+
+                    public void onPrepared(MediaPlayer mp) {
+                        // TODO Auto-generated method stub
+                        enrollButton.setEnabled(true);
+                    }
+                });
 
                 EditText courseName = findViewById(R.id.courseNameTextView);
                 courseName.setText(course.getCourseName());
@@ -163,7 +173,7 @@ public class EnrollActivity extends AppCompatActivity {
                         }});
 
                         DatabaseReference teacherScheduleUpdate = FirebaseDatabase.getInstance().getReference("Teacher").child(course.getProfessorId()).child("courseTaken").child("schedules");
-                        final Schedule schedule11 = new Schedule(sId, myDate);
+                        final Schedule schedule11 = new Schedule(sId,FirebaseAuth.getInstance().getCurrentUser().getEmail().split("@")[0],myDate);
                         teacherScheduleUpdate.updateChildren(new HashMap<String, Object>() {{
                             put(courseId, schedule11);
                         }});

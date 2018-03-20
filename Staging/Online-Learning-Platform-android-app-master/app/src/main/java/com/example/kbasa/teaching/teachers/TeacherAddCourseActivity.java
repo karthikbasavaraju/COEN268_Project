@@ -268,7 +268,8 @@ public class TeacherAddCourseActivity extends AppCompatActivity {
 
                             TextView date1 = findViewById(R.id.showMyDate1);
                             EditText hour1 = findViewById(R.id.hour1);
-                            hour1.setFilters(new InputFilter[]{new InputFilterMinMax("0", "23")});
+                            InputFilterMinMax inputFilterMinMax = new InputFilterMinMax("0", "23");
+                            hour1.setFilters(new InputFilter[]{inputFilterMinMax});
                             EditText minute1 = findViewById(R.id.min1);
                             minute1.setFilters(new InputFilter[]{new InputFilterMinMax("0", "59")});
                             myDates.add(new MyDate(date1.getText().toString(),
