@@ -40,7 +40,7 @@ public class LoginActivity extends AppCompatActivity {
         setContentView(R.layout.login);
 
         auth = FirebaseAuth.getInstance();
-        //To check if user has logged in
+        /*//To check if user has logged in
         if (auth.getCurrentUser() != null) {
             SharedPreferences sharedPref = LoginActivity.this.getPreferences(Context.MODE_PRIVATE);
             boolean userType = sharedPref.getBoolean("IsTeacher", false);
@@ -60,7 +60,7 @@ public class LoginActivity extends AppCompatActivity {
                 finish();
             }
         }
-
+*/
 
     }
 

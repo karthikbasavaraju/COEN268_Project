@@ -75,6 +75,22 @@ public class EnrollActivity extends AppCompatActivity {
                     public void onPrepared(MediaPlayer mp) {
                         // TODO Auto-generated method stub
                         enrollButton.setEnabled(true);
+                        for (int studentIndex = 0; studentIndex < course.getSchedules().size(); studentIndex++) {
+                            if (((course.getSchedules().get(studentIndex))).containsKey(sId)) {
+                                Log.i("EnrollActivity", "Already Enrolled");
+                                enrollButton.setText("  Already Enrolled  ");
+                                enrollButton.setEnabled(false);
+                                break;
+                            }
+                        }
+
+                        if (!course.isAvailable()) {
+                            Log.i("EnrollActivity", "Course Deleted");
+                            enrollButton.setText("  Course deleted  ");
+                            enrollButton.setEnabled(false);
+
+                        }
+
                     }
                 });
 
@@ -105,21 +121,6 @@ public class EnrollActivity extends AppCompatActivity {
                 }
 
 
-                for (int studentIndex = 0; studentIndex < course.getSchedules().size(); studentIndex++) {
-                    if (((course.getSchedules().get(studentIndex))).containsKey(sId)) {
-                        Log.i("EnrollActivity", "Already Enrolled");
-                        enrollButton.setText("  Already Enrolled  ");
-                        enrollButton.setEnabled(false);
-                        break;
-                    }
-                }
-
-                if (!course.isAvailable()) {
-                    Log.i("EnrollActivity", "Course Deleted");
-                    enrollButton.setText("  Course deleted  ");
-                    enrollButton.setEnabled(false);
-
-                }
 
 
                 Spinner scheduleSpinner = findViewById(R.id.scheduleSpinner);
