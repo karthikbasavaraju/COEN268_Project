@@ -50,7 +50,17 @@ public class ListViewAdapter extends BaseAdapter {
 
         TextView tvName = v.findViewById(R.id.title);
 
-        tvName.setText(details.get("courseName"));
+        String name = details.get("courseName");
+        String otherName = details.get("otherName");
+
+        if(!name.equals("No on-going")) {
+            name += " at " + details.get("time");
+            if(otherName!=null)
+                name += " with "+otherName;
+
+        }
+        tvName.setText(name);
+
 
         return v;
     }

@@ -16,7 +16,7 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         tools:replace="android:name">
-        <activity android:name=".LoginActivity">
+        <activity android:name=".LoginActivity" android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -35,14 +35,14 @@
             </intent-filter>
         </service>
 
-        <activity android:name=".RegistrationActivity" />
-        <activity android:name=".teachers.TeacherAddCourseActivity" />
-        <activity android:name=".TeacherHomeActivity" />
-        <activity android:name=".teachers.TeacherEditCourseActivity" />
-        <activity android:name=".students.CourseIntroductionActivity" />
-        <activity android:name=".StudentSearchActivity" />
-        <activity android:name=".teachers.ViewCourseActivity" />
-        <activity android:name=".students.EnrollActivity" />
+        <activity android:name=".RegistrationActivity" android:screenOrientation="portrait"/>
+        <activity android:name=".teachers.TeacherAddCourseActivity" android:screenOrientation="portrait"/>
+        <activity android:name=".TeacherHomeActivity" android:screenOrientation="portrait"/>
+        <activity android:name=".teachers.TeacherEditCourseActivity" android:screenOrientation="portrait"/>
+        <activity android:name=".students.CourseIntroductionActivity" android:screenOrientation="portrait"/>
+        <activity android:name=".StudentSearchActivity" android:screenOrientation="portrait"/>
+        <activity android:name=".teachers.ViewCourseActivity" android:screenOrientation="portrait"/>
+        <activity android:name=".students.EnrollActivity" android:screenOrientation="portrait"/>
     </application>
 
 </manifest>
