@@ -31,6 +31,7 @@ import java.util.Vector;
 
 public class ScheduleFragment extends Fragment {
 
+    int DURATION=60;
     String user;
     String buttonId = null;
     Map<String, Map<String, String>> vector;
@@ -40,7 +41,6 @@ public class ScheduleFragment extends Fragment {
     private ListViewAdapter adapter;
     private Vector<Map<String, String>> past;
     private Vector<Map<String, String>> upcoming;
-
     public ScheduleFragment() {
         // Required empty public constructor
     }
@@ -109,15 +109,21 @@ public class ScheduleFragment extends Fragment {
                         for (DataSnapshot dataSnapshot1 : scheduleList.getChildren()) {
                             Schedule details = dataSnapshot1.getValue(Schedule.class);
                             MyDate myDate = details.getMyDate();
-                            int type = myDate.compare(60);
+                            int type = myDate.compare(DURATION);
                             if (type == 0) {
-                                onGoing = new HashMap(vector.get(dataSnapshot1.getKey()));
+                                Map<String,String> temp =vector.get(dataSnapshot1.getKey());
+                                temp.put("time",myDate.toString());
+                                onGoing = new HashMap(temp);
                                 buttonId = details.getOtherPersonsId();
                             } else if (type == 1) {
-                                upcoming.add(vector.get(dataSnapshot1.getKey()));
-                            } else
-                                past.add(vector.get(dataSnapshot1.getKey()));
-
+                                Map<String,String> temp =vector.get(dataSnapshot1.getKey());
+                                temp.put("time",myDate.toString());
+                                upcoming.add(temp);
+                            } else {
+                                Map<String,String> temp =vector.get(dataSnapshot1.getKey());
+                                temp.put("time",myDate.toString());
+                                past.add(temp);
+                            }
                         }
                     }
 
@@ -137,7 +143,7 @@ public class ScheduleFragment extends Fragment {
 
         // get the past courses from database
 
-        lvProduct = view.findViewById(R.id.listview);
+        lvProduct = (ListView) view.findViewById(R.id.listview);
         adapter = new ListViewAdapter(getContext(), past);
         lvProduct.setAdapter(adapter);
 
@@ -147,6 +153,7 @@ public class ScheduleFragment extends Fragment {
                 // get the past courses from database
 
                 adapter.clearList();
+                adapter.notifyDataSetChanged();
                 adapter.setList(past);
                 lvProduct.setAdapter(adapter);
 
@@ -173,6 +180,7 @@ public class ScheduleFragment extends Fragment {
             public void onClick(View view) {
                 // get the past courses from database
                 adapter.clearList();
+                adapter.notifyDataSetChanged();
                 adapter.setList(new Vector<Map<String, String>>() {{
                     add(onGoing);
                 }});
@@ -189,17 +197,17 @@ public class ScheduleFragment extends Fragment {
                             student.addValueEventListener(new ValueEventListener() {
                                 @Override
                                 public void onDataChange(DataSnapshot dataSnapshot) {
-                                    String otherButtonId = dataSnapshot.getValue(String.class);
+                                    final String otherButtonId = dataSnapshot.getValue(String.class);
 
-                                    if(!IISightSDKManager.getInstance().isLoggedIn(getContext()))
-                                    {
+                                    new Thread(new Runnable() {
+                                        @Override
+                                        public void run() {
 
-                                    }
+                                            IISightSDKManager.getInstance().makeCall(otherButtonId,
+                                                    getContext());
 
-
-
-                                    IISightSDKManager.getInstance().makeCall(otherButtonId,
-                                            getContext());
+                                        }
+                                    });
                                 }
 
                                 @Override
@@ -214,13 +222,16 @@ public class ScheduleFragment extends Fragment {
                             student.addValueEventListener(new ValueEventListener() {
                                 @Override
                                 public void onDataChange(DataSnapshot dataSnapshot) {
-                                    String otherButtonId = dataSnapshot.getValue(String.class);
-                                    if(!IISightSDKManager.getInstance().isLoggedIn(getContext()))
-                                    {
+                                    final String otherButtonId = dataSnapshot.getValue(String.class);
+                                    new Thread(new Runnable() {
+                                        @Override
+                                        public void run() {
 
-                                    }
-                                    IISightSDKManager.getInstance().makeCall(otherButtonId,
-                                            getContext());
+                                            IISightSDKManager.getInstance().makeCall(otherButtonId,
+                                                    getContext());
+
+                                        }
+                                    });
                                 }
 
                                 @Override
@@ -241,6 +252,7 @@ public class ScheduleFragment extends Fragment {
             public void onClick(View view) {
                 // get the past courses from database
                 adapter.clearList();
+                adapter.notifyDataSetChanged();
                 adapter.setList(upcoming);
                 lvProduct.setAdapter(adapter);
 
@@ -249,11 +261,11 @@ public class ScheduleFragment extends Fragment {
                     public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
                         if (user.equalsIgnoreCase("student")) {
                             Intent intent = new Intent(getActivity().getApplicationContext(), EnrollActivity.class);
-                            intent.putExtra("courseId", (past.get(i)).get("courseId"));
+                            intent.putExtra("courseId", (upcoming.get(i)).get("courseId"));
                             startActivity(intent);
                         } else {
                             Intent intent = new Intent(getActivity().getApplicationContext(), ViewCourseActivity.class);
-                            intent.putExtra("courseId", (past.get(i)).get("courseId"));
+                            intent.putExtra("courseId", (upcoming.get(i)).get("courseId"));
                             startActivity(intent);
                         }
                     }
@@ -261,8 +273,6 @@ public class ScheduleFragment extends Fragment {
                 return;
             }
         });
-
-        btn_ongoing.performClick();
 
         return view;
     }

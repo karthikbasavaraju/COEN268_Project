@@ -24,7 +24,7 @@ import com.google.firebase.database.ValueEventListener;
 
 public class ViewCourseActivity extends AppCompatActivity {
 
-    String courseId = "";
+    String courseId="";
     Course course = null;
     Button enrollButton;
     VideoView videoViewLandscape;
@@ -38,16 +38,16 @@ public class ViewCourseActivity extends AppCompatActivity {
 
         Bundle b = getIntent().getExtras();
         enrollButton = findViewById(R.id.btn_edit);
-        if (b != null) {
+        if(b!=null){
             courseId = b.getString("courseId");
         }
-        Log.i("test courseId", courseId);
+        Log.i("test courseId",courseId);
 
         DatabaseReference courseDB = FirebaseDatabase.getInstance().getReference("Course").child(courseId);
         courseDB.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
-                Log.i("test - editcount : ", String.valueOf(dataSnapshot.getChildrenCount()));
+                Log.i("test - editcount : ",String.valueOf(dataSnapshot.getChildrenCount()));
                 course = dataSnapshot.getValue(Course.class);
 
                 uri = Uri.parse(course.getCourseUri());
@@ -59,21 +59,22 @@ public class ViewCourseActivity extends AppCompatActivity {
 
                 EditText description = findViewById(R.id.descriptionTextView);
                 description.setText(course.getCourseDetails());
-                String tags = "";
+                String tags="";
                 int i;
-                for (i = 0; i < course.getTags().size() - 1; i++) {
-                    tags = tags + course.getTags().get(i) + ", ";
+                for(i=0;i<course.getTags().size()-1;i++){
+                    tags = tags + course.getTags().get(i) +", ";
                 }
                 tags = tags + course.getTags().get(i);
 
                 EditText tagsEditText = findViewById(R.id.tagEditView);
                 tagsEditText.setText(tags);
-                if (!course.isAvailable()) {
-                    Log.i("EnrollActivity", "Course Deleted");
+                if(!course.isAvailable()){
+                    Log.i("EnrollActivity","Course Deleted");
                     enrollButton.setText("  Course deleted  ");
                     enrollButton.setEnabled(false);
 
                 }
+
 
 
             }
@@ -101,7 +102,6 @@ public class ViewCourseActivity extends AppCompatActivity {
     private class StreamVideo extends AsyncTask<Void, Void, Void> {
 
         ProgressDialog dialog;
-
         @Override
         protected void onPreExecute() {
             super.onPreExecute();
@@ -133,7 +133,7 @@ public class ViewCourseActivity extends AppCompatActivity {
                         runOnUiThread(new Runnable() {
                             @Override
                             public void run() {
-                                //          dialog.dismiss();
+                      //          dialog.dismiss();
                                 videoViewLandscape.start();
 
                             }
@@ -141,7 +141,7 @@ public class ViewCourseActivity extends AppCompatActivity {
                     }
                 });
             } catch (Exception e) {
-                //   dialog.dismiss();
+             //   dialog.dismiss();
                 Log.e("Error", e.getMessage());
                 e.printStackTrace();
             }

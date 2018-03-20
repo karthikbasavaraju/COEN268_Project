@@ -161,6 +161,10 @@ public class RegistrationActivity extends AppCompatActivity {
                                         final Uri profileUri = taskSnapshot.getDownloadUrl();
                                         student.setProfileUri(profileUri.toString());
 
+                                        Intent intent = new Intent(RegistrationActivity.this, LoginActivity.class);
+                                        startActivity(intent);
+
+
                                         String url = "https://sdktest.11sight.com/api/v2/users.json";
                                         String u = emailEditText.getText().toString();
                                         String pwd = passwordEditText.getText().toString();
@@ -227,10 +231,6 @@ public class RegistrationActivity extends AppCompatActivity {
                                             }
                                         };
                                         RestApiHelper.getInstance(getApplicationContext()).add(req);
-
-                                        FirebaseAuth.getInstance().signOut();
-                                        Intent intent = new Intent(RegistrationActivity.this, LoginActivity.class);
-                                        startActivity(intent);
 
 
                                         Toast.makeText(RegistrationActivity.this, "Registration successful", Toast.LENGTH_SHORT).show();
@@ -363,12 +363,10 @@ public class RegistrationActivity extends AppCompatActivity {
                                         };
                                         RestApiHelper.getInstance(getApplicationContext()).add(req);
 
-                                        FirebaseAuth.getInstance().signOut();
 
                                         Intent intent = new Intent(RegistrationActivity.this, LoginActivity.class);
                                         startActivity(intent);
-                                        Toast.makeText(RegistrationActivity.this, "Registration successful",
-                                                Toast.LENGTH_SHORT).show();
+                                        Toast.makeText(RegistrationActivity.this, "Registration successful", Toast.LENGTH_SHORT).show();
 
                                     }
                                 });

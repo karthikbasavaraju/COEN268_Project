@@ -24,9 +24,9 @@ import android.widget.Toast;
 
 import com.example.kbasa.teaching.DataTypes.Course;
 import com.example.kbasa.teaching.DataTypes.MyDate;
+import com.example.kbasa.teaching.FieldsOk;
 import com.example.kbasa.teaching.InputFilterMinMax;
 import com.example.kbasa.teaching.R;
-import com.example.kbasa.teaching.ValidationHelper;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
@@ -52,9 +52,10 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.StringTokenizer;
 
-public class TeacherAddCourseActivity extends AppCompatActivity {
+public class T_AddCourseActivity extends AppCompatActivity {
 
 
+    static final int DATE_DIALOG_ID = 0;
     String videoFilePath;
     String picFilePath;
     Button btnUpload;
@@ -68,24 +69,31 @@ public class TeacherAddCourseActivity extends AppCompatActivity {
     FirebaseAuth user;
     Course course;
     String courseId;
+    DatabaseReference eleven;
     ProgressDialog progressBar;
     StorageReference storageRef;
     FirebaseStorage storage;
-    boolean flag=false;
-
-    private Button btn_upload_v;
-    private Button btn_upload_pic;
-
-    private int mYear1, mMonth1, mDay1;
-
-    private TextView mDateDisplay1, mDateDisplay2, mDateDisplay3;
-    private Button mPickDate1, mPickDate2, mPickDate3;
-
-    private int date_id;
-
-    static final int DATE_DIALOG_ID = 0;
+    boolean flag = false;
     TextView videoText;
     TextView picText;
+    private Button btn_upload_v;
+    private Button btn_upload_pic;
+    private int mYear1, mMonth1, mDay1;
+    private TextView mDateDisplay1, mDateDisplay2, mDateDisplay3;
+    private Button mPickDate1, mPickDate2, mPickDate3;
+    private int date_id;
+    private DatePickerDialog.OnDateSetListener mDateSetListener =
+            new DatePickerDialog.OnDateSetListener() {
+                public void onDateSet(DatePicker view, int year,
+                                      int monthOfYear, int dayOfMonth) {
+                    mYear1 = year;
+                    mMonth1 = monthOfYear;
+                    mDay1 = dayOfMonth;
+
+                    updateDisplay();
+
+                }
+            };
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -98,8 +106,8 @@ public class TeacherAddCourseActivity extends AppCompatActivity {
         btn_upload_pic = (Button) findViewById(R.id.btn_upload_picture);
 
         // check if the permission is granted
-        if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-            if(ActivityCompat.checkSelfPermission(this, Manifest.permission.READ_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            if (ActivityCompat.checkSelfPermission(this, Manifest.permission.READ_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
                 requestPermissions(new String[]{Manifest.permission.READ_EXTERNAL_STORAGE}, 100);
                 return;
             }
@@ -110,8 +118,8 @@ public class TeacherAddCourseActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 new MaterialFilePicker()
-                        .withActivity(TeacherAddCourseActivity.this)
-                       // .withFilter(Pattern.compile(".*\\.(mp4|MP4|Mp4|mP4|avi|flv|wmv)$"))
+                        .withActivity(T_AddCourseActivity.this)
+                        // .withFilter(Pattern.compile(".*\\.(mp4|MP4|Mp4|mP4|avi|flv|wmv)$"))
                         .withRequestCode(1)
                         .start();
             }
@@ -120,7 +128,7 @@ public class TeacherAddCourseActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 new MaterialFilePicker()
-                        .withActivity(TeacherAddCourseActivity.this)
+                        .withActivity(T_AddCourseActivity.this)
                         //.withFilter(Pattern.compile(".*\\.(jpg|png|gif|bmp)$"))
                         .withRequestCode(2)
                         .start();
@@ -162,34 +170,34 @@ public class TeacherAddCourseActivity extends AppCompatActivity {
         mDay1 = c.get(Calendar.DAY_OF_MONTH);
 
         // display the current date
-        for(int i=1; i<=3; i++) {
+        for (int i = 1; i <= 3; i++) {
             date_id = i;
             updateDisplay();
         }
-
 
 
         btnUpload = findViewById(R.id.upload);
         storage = FirebaseStorage.getInstance();
         storageRef = storage.getReference();
 
-        progressBar = new ProgressDialog(TeacherAddCourseActivity.this);
+        progressBar = new ProgressDialog(T_AddCourseActivity.this);
 
         btnUpload.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
 
-                boolean fieldsOK = ValidationHelper.validate(new EditText[] { findViewById(R.id.courseNameTextView),findViewById(R.id.descriptionTextView), findViewById(R.id.tagTextView) });
-                boolean filesOk =  ValidationHelper.validateFilePicker(new TextView[] { findViewById(R.id.tv_intro_video_name),findViewById(R.id.tv_intro_picture_name) });
-                if(fieldsOK && filesOk) {
+                boolean fieldsOK = FieldsOk.validate(new EditText[]{findViewById(R.id.courseNameTextView), findViewById(R.id.descriptionTextView), findViewById(R.id.tagTextView)});
+                boolean filesOk = FieldsOk.vlidate(new TextView[]{findViewById(R.id.tv_intro_video_name), findViewById(R.id.tv_intro_picture_name)});
+                if (fieldsOK && filesOk) {
 
-                    final ProgressDialog dialog = new ProgressDialog(TeacherAddCourseActivity.this);
+                    final ProgressDialog dialog = new ProgressDialog(T_AddCourseActivity.this);
                     dialog.setMessage("uploading your course");
                     dialog.setIndeterminate(true);
                     dialog.show();
 
 
                     user = FirebaseAuth.getInstance();
+                    eleven = FirebaseDatabase.getInstance().getReference("Teacher").child(user.getUid());
                     teacherDB = FirebaseDatabase.getInstance().getReference("Teacher").child(user.getUid()).child("courseOffered");
                     course = new Course();
                     courseId = teacherDB.push().getKey();
@@ -226,13 +234,13 @@ public class TeacherAddCourseActivity extends AppCompatActivity {
                         @Override
                         public void onFailure(@NonNull Exception exception) {
                             dialog.dismiss();
-                            Toast.makeText(TeacherAddCourseActivity.this, "Failed", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(T_AddCourseActivity.this, "Failed", Toast.LENGTH_SHORT).show();
                         }
                     }).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
                         @Override
                         public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
                             dialog.dismiss();
-                            Toast.makeText(TeacherAddCourseActivity.this, "success", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(T_AddCourseActivity.this, "success", Toast.LENGTH_SHORT).show();
                             Uri videoUri = taskSnapshot.getDownloadUrl();
                             Log.i("louda upload", videoUri.toString());
 
@@ -259,8 +267,8 @@ public class TeacherAddCourseActivity extends AppCompatActivity {
                             course.setCourseUri(courseUri);
                             course.setTags(tags);
                             course.setProfessorId(user.getUid());
-                            String temp =user.getCurrentUser().getEmail().split("@")[0];
-                            temp = temp.substring(0,1).toUpperCase()+temp.substring(1).toLowerCase();
+                            String temp = user.getCurrentUser().getEmail().split("@")[0];
+                            temp = temp.substring(0, 1).toUpperCase() + temp.substring(1).toLowerCase();
                             course.setName(temp);
                             course.setProfessorTokenId(FirebaseInstanceId.getInstance().getToken());
 
@@ -327,16 +335,15 @@ public class TeacherAddCourseActivity extends AppCompatActivity {
                                 }
                             });
 
-                            Intent intent = new Intent(TeacherAddCourseActivity.this, ViewCourseActivity.class);
+                            Intent intent = new Intent(T_AddCourseActivity.this, ViewCourseActivity.class);
                             intent.putExtra("courseId", courseId);
                             startActivity(intent);
                             finish();
 
                         }
                     });
-                }
-                else
-                    Toast.makeText(TeacherAddCourseActivity.this, "Please fill all the fields", Toast.LENGTH_SHORT).show();
+                } else
+                    Toast.makeText(T_AddCourseActivity.this, "Please fill all the fields", Toast.LENGTH_SHORT).show();
             }
         });
 
@@ -372,19 +379,6 @@ public class TeacherAddCourseActivity extends AppCompatActivity {
 
     }
 
-    private DatePickerDialog.OnDateSetListener mDateSetListener =
-            new DatePickerDialog.OnDateSetListener() {
-                public void onDateSet(DatePicker view, int year,
-                                      int monthOfYear, int dayOfMonth) {
-                    mYear1 = year;
-                    mMonth1 = monthOfYear;
-                    mDay1 = dayOfMonth;
-
-                    updateDisplay();
-
-                }
-            };
-
     @Override
     protected Dialog onCreateDialog(int id) {
         switch (id) {
@@ -398,14 +392,11 @@ public class TeacherAddCourseActivity extends AppCompatActivity {
     }
 
 
-
-
-
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
-        if(requestCode == 100 && (grantResults[0] == PackageManager.PERMISSION_GRANTED)) {
-        }else{
-            if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+        if (requestCode == 100 && (grantResults[0] == PackageManager.PERMISSION_GRANTED)) {
+        } else {
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
                 requestPermissions(new String[]{Manifest.permission.READ_EXTERNAL_STORAGE}, 100);
             }
         }
@@ -422,19 +413,18 @@ public class TeacherAddCourseActivity extends AppCompatActivity {
                 videoText.setText(videoFilePath.substring(lastIndex + 1));
                 Log.i("AddCourse - Video path", videoFilePath);
             }
-        }
-        else {
-                if (data != null) {
-                    File f = new File(data.getStringExtra(FilePickerActivity.RESULT_FILE_PATH));
-                    picFilePath = f.getAbsolutePath();
+        } else {
+            if (data != null) {
+                File f = new File(data.getStringExtra(FilePickerActivity.RESULT_FILE_PATH));
+                picFilePath = f.getAbsolutePath();
 
-                    int lastIndex = picFilePath.lastIndexOf('/');
-                    picText.setText(picFilePath.substring(lastIndex + 1));
-                    Log.i("AddCourse - Video path", picFilePath);
-                }
+                int lastIndex = picFilePath.lastIndexOf('/');
+                picText.setText(picFilePath.substring(lastIndex + 1));
+                Log.i("AddCourse - Video path", picFilePath);
             }
-
         }
+
+    }
 
     private String getMimeType(String path) {
         String extension = MimeTypeMap.getFileExtensionFromUrl(path);

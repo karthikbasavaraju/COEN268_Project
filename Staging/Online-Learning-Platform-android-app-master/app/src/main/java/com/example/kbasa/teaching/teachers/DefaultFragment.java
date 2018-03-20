@@ -38,13 +38,11 @@ public class DefaultFragment extends DialogFragment {
 
                 final String courseId = getArguments().getString("courseId");
                 final DatabaseReference db = FirebaseDatabase.getInstance().getReference("Course").child(courseId);
-                db.updateChildren(new HashMap<String, Object>() {{
-                    put("available", false);
-                }});
+                db.updateChildren(new HashMap<String, Object>(){{put("available",false);}});
 
-                Toast.makeText(getActivity(), "Course deleted", Toast.LENGTH_SHORT).show();
+                Toast.makeText(getActivity(),"Course deleted",Toast.LENGTH_SHORT).show();
                 Intent intent = new Intent(getActivity(), TeacherHomeActivity.class);
-                intent.putExtra("user", "teacher");
+                intent.putExtra("user","teacher");
                 startActivity(intent);
                 getActivity().finish();
 
@@ -56,7 +54,7 @@ public class DefaultFragment extends DialogFragment {
         builder.setNegativeButton("No", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialogInterface, int i) {
-                Toast.makeText(getActivity(), "you clicked on No", Toast.LENGTH_SHORT).show();
+                Toast.makeText(getActivity(),"you clicked on No",Toast.LENGTH_SHORT).show();
             }
         });
 
@@ -64,7 +62,7 @@ public class DefaultFragment extends DialogFragment {
         builder.setNeutralButton("close", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialogInterface, int i) {
-                Toast.makeText(getActivity(), "you clicked on close", Toast.LENGTH_SHORT).show();
+                Toast.makeText(getActivity(),"you clicked on close",Toast.LENGTH_SHORT).show();
             }
         });
 

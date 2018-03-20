@@ -16,8 +16,6 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 
-import com.elevensight.sdk.IISight;
-import com.elevensight.sdk.sdk.IISightSDKManager;
 import com.example.kbasa.teaching.students.HomeFragment;
 import com.example.kbasa.teaching.students.ScheduleFragment;
 import com.example.kbasa.teaching.teachers.TeacherAddCourseActivity;
@@ -67,100 +65,107 @@ public class TeacherHomeActivity extends AppCompatActivity {
             transaction.commit();
         }
 
-        // Bottom Nav-Bar
-        BottomNavigationView bottomNavigationView = findViewById(R.id.bottom_navigation);
-        if (role.equals("student")) {
-            DatabaseReference db = FirebaseDatabase.getInstance().getReference("Student").child(FirebaseAuth.getInstance().getUid());
-            db.updateChildren(new HashMap<String, Object>() {{
-                put("tokenId", FirebaseInstanceId.getInstance().getToken());
-            }});
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
 
 
-            materialSearchView.setOnQueryTextListener(new MaterialSearchView.OnQueryTextListener() {
-                @Override
-                public boolean onQueryTextSubmit(String query) {
-                    Intent intent = new Intent(TeacherHomeActivity.this, StudentSearchActivity.class);
-                    intent.putExtra("tag", query);
-                    startActivity(intent);
+                // Bottom Nav-Bar
+                BottomNavigationView bottomNavigationView = findViewById(R.id.bottom_navigation);
+                if (role.equals("student")) {
+                    DatabaseReference db = FirebaseDatabase.getInstance().getReference("Student").child(FirebaseAuth.getInstance().getUid());
+                    db.updateChildren(new HashMap<String, Object>() {{
+                        put("tokenId", FirebaseInstanceId.getInstance().getToken());
+                    }});
 
 
-                    return false;
+                    materialSearchView.setOnQueryTextListener(new MaterialSearchView.OnQueryTextListener() {
+                        @Override
+                        public boolean onQueryTextSubmit(String query) {
+                            Intent intent = new Intent(TeacherHomeActivity.this, StudentSearchActivity.class);
+                            intent.putExtra("tag", query);
+                            startActivity(intent);
+
+
+                            return false;
+                        }
+
+                        @Override
+                        public boolean onQueryTextChange(String newText) {
+                            return false;
+                        }
+                    });
+
+
+                    bottomNavigationView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
+                        @Override
+                        public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+                            // Change the Fragment based on which button is clicked.
+                            switch (item.getItemId()) {
+                                case R.id.action_home:
+                                    transaction = getSupportFragmentManager().beginTransaction();
+                                    transaction.replace(R.id.Fragment, new HomeFragment());
+                                    transaction.addToBackStack(null);
+                                    transaction.commit();
+                                    break;
+                                case R.id.action_schedule:
+                                    transaction = getSupportFragmentManager().beginTransaction();
+                                    transaction.replace(R.id.Fragment, new ScheduleFragment());
+                                    transaction.addToBackStack(null);
+                                    transaction.commit();
+                                    break;
+                                case R.id.action_profile:
+                                    transaction = getSupportFragmentManager().beginTransaction();
+                                    transaction.replace(R.id.Fragment, new ProfileFragment());
+                                    transaction.addToBackStack(null);
+                                    transaction.commit();
+                                    break;
+                            }
+                            return true;
+                        }
+                    });
+                } else if (role.equals("teacher")) {
+
+                    new Notification().onTokenRefresh();
+
+
+                    DatabaseReference db = FirebaseDatabase.getInstance().getReference("Teacher").child(FirebaseAuth.getInstance().getUid());
+                    db.updateChildren(new HashMap<String, Object>() {{
+                        put("tokenId", FirebaseInstanceId.getInstance().getToken());
+                    }});
+
+
+                    bottomNavigationView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
+                        @Override
+                        public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+                            // Change the Fragment based on which button is clicked.
+                            switch (item.getItemId()) {
+                                case R.id.action_home:
+                                    transaction = getSupportFragmentManager().beginTransaction();
+                                    transaction.replace(R.id.Fragment, new TeacherHomeFragment());
+                                    transaction.addToBackStack(null);
+                                    transaction.commit();
+                                    break;
+                                case R.id.action_schedule:
+                                    transaction = getSupportFragmentManager().beginTransaction();
+                                    transaction.replace(R.id.Fragment, new ScheduleFragment());
+                                    transaction.addToBackStack(null);
+                                    transaction.commit();
+                                    break;
+                                case R.id.action_profile:
+                                    transaction = getSupportFragmentManager().beginTransaction();
+                                    transaction.replace(R.id.Fragment, new ProfileFragment());
+                                    transaction.addToBackStack(null);
+                                    transaction.commit();
+                                    break;
+                            }
+                            return true;
+                        }
+                    });
                 }
 
-                @Override
-                public boolean onQueryTextChange(String newText) {
-                    return false;
-                }
-            });
-
-
-            bottomNavigationView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
-                @Override
-                public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-                    // Change the Fragment based on which button is clicked.
-                    switch (item.getItemId()) {
-                        case R.id.action_home:
-                            transaction = getSupportFragmentManager().beginTransaction();
-                            transaction.replace(R.id.Fragment, new HomeFragment());
-                            transaction.addToBackStack(null);
-                            transaction.commit();
-                            break;
-                        case R.id.action_schedule:
-                            transaction = getSupportFragmentManager().beginTransaction();
-                            transaction.replace(R.id.Fragment, new ScheduleFragment());
-                            transaction.addToBackStack(null);
-                            transaction.commit();
-                            break;
-                        case R.id.action_profile:
-                            transaction = getSupportFragmentManager().beginTransaction();
-                            transaction.replace(R.id.Fragment, new ProfileFragment());
-                            transaction.addToBackStack(null);
-                            transaction.commit();
-                            break;
-                    }
-                    return true;
-                }
-            });
-        } else if (role.equals("teacher")) {
-
-            new Notification().onTokenRefresh();
-
-
-            DatabaseReference db = FirebaseDatabase.getInstance().getReference("Teacher").child(FirebaseAuth.getInstance().getUid());
-            db.updateChildren(new HashMap<String, Object>() {{
-                put("tokenId", FirebaseInstanceId.getInstance().getToken());
-            }});
-
-
-            bottomNavigationView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
-                @Override
-                public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-                    // Change the Fragment based on which button is clicked.
-                    switch (item.getItemId()) {
-                        case R.id.action_home:
-                            transaction = getSupportFragmentManager().beginTransaction();
-                            transaction.replace(R.id.Fragment, new TeacherHomeFragment());
-                            transaction.addToBackStack(null);
-                            transaction.commit();
-                            break;
-                        case R.id.action_schedule:
-                            transaction = getSupportFragmentManager().beginTransaction();
-                            transaction.replace(R.id.Fragment, new ScheduleFragment());
-                            transaction.addToBackStack(null);
-                            transaction.commit();
-                            break;
-                        case R.id.action_profile:
-                            transaction = getSupportFragmentManager().beginTransaction();
-                            transaction.replace(R.id.Fragment, new ProfileFragment());
-                            transaction.addToBackStack(null);
-                            transaction.commit();
-                            break;
-                    }
-                    return true;
-                }
-            });
-        }
-
+            }
+        }).start();
     }
 
     @Override
