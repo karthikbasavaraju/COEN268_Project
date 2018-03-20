@@ -16,6 +16,8 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 
+import com.elevensight.sdk.IISight;
+import com.elevensight.sdk.sdk.IISightSDKManager;
 import com.example.kbasa.teaching.students.HomeFragment;
 import com.example.kbasa.teaching.students.ScheduleFragment;
 import com.example.kbasa.teaching.teachers.TeacherAddCourseActivity;

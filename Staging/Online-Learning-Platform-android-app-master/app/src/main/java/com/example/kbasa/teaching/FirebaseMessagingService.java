@@ -35,7 +35,6 @@ public class FirebaseMessagingService extends com.google.firebase.messaging.Fire
                 FirebaseMessagingService.this);
 
         if (check) {
-
             Log.e(Constants.LOG_TAG, "Check is: " + Boolean.toString(check));
             IISightSDKManager.getInstance().handleIISightNotification(remoteMessage);
         }

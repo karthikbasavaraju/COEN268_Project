@@ -191,6 +191,13 @@ public class ScheduleFragment extends Fragment {
                                 public void onDataChange(DataSnapshot dataSnapshot) {
                                     String otherButtonId = dataSnapshot.getValue(String.class);
 
+                                    if(!IISightSDKManager.getInstance().isLoggedIn(getContext()))
+                                    {
+
+                                    }
+
+
+
                                     IISightSDKManager.getInstance().makeCall(otherButtonId,
                                             getContext());
                                 }
@@ -208,6 +215,12 @@ public class ScheduleFragment extends Fragment {
                                 @Override
                                 public void onDataChange(DataSnapshot dataSnapshot) {
                                     String otherButtonId = dataSnapshot.getValue(String.class);
+                                    if(!IISightSDKManager.getInstance().isLoggedIn(getContext()))
+                                    {
+
+                                    }
+                                    IISightSDKManager.getInstance().makeCall(otherButtonId,
+                                            getContext());
                                 }
 
                                 @Override
