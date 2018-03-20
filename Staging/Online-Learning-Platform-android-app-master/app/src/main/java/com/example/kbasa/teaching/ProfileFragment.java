@@ -111,8 +111,6 @@ public class ProfileFragment extends Fragment {
                 IISightSDKManager.getInstance().logoutUser(new IISightSDKManager.ICallback() {
                     @Override
                     public void process(Object o) {
-                        Toast.makeText(getContext(),
-                                "Logout_Success", Toast.LENGTH_SHORT).show();
                         Intent intent = new Intent(getActivity(), LoginActivity.class);
                         intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                         startActivity(intent);
