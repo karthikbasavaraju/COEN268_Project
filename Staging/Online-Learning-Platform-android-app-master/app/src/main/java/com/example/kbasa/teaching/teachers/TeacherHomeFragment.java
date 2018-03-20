@@ -33,13 +33,12 @@ import java.util.Vector;
  */
 public class TeacherHomeFragment extends Fragment {
 
+    FirebaseAuth user;
+    DatabaseReference db;
     private ArrayList<String> res_list;
     private RecyclerView.LayoutManager layoutManager;
     private RecyclerView recyclerView;
     private CardListViewAdapter adapter;
-    FirebaseAuth user;
-    DatabaseReference db;
-
 
 
     public TeacherHomeFragment() {
@@ -51,19 +50,20 @@ public class TeacherHomeFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        final View view =  inflater.inflate(R.layout.fragment_t__home, container, false);
+        final View view = inflater.inflate(R.layout.fragment_t__home, container, false);
 
         user = FirebaseAuth.getInstance();
-        Log.i("test",user.getUid());
+        Log.i("test", user.getUid());
 
         String f = FirebaseInstanceId.getInstance().getToken();
-        Log.i("Token",f);
+        Log.i("Token", f);
         new Notification().onTokenRefresh();
 
 
-
         db = FirebaseDatabase.getInstance().getReference("Teacher").child(user.getUid());
-        db.updateChildren(new HashMap<String, Object>(){{put("tokenId",FirebaseInstanceId.getInstance().getToken());}});
+        db.updateChildren(new HashMap<String, Object>() {{
+            put("tokenId", FirebaseInstanceId.getInstance().getToken());
+        }});
 
         db = FirebaseDatabase.getInstance().getReference("Teacher").child(user.getUid()).child("courseOffered");
         db.addValueEventListener(new ValueEventListener() {
@@ -81,28 +81,27 @@ public class TeacherHomeFragment extends Fragment {
                 course.addValueEventListener(new ValueEventListener() {
                     @Override
                     public void onDataChange(DataSnapshot dataSnapshot) {
-                        final Vector<Map<String,String>> vector = new Vector<>();
-                        Log.i("please",String.valueOf(dataSnapshot.getChildrenCount()));
-                        for(DataSnapshot dataSnapshot1: dataSnapshot.getChildren()){
+                        final Vector<Map<String, String>> vector = new Vector<>();
+                        Log.i("please", String.valueOf(dataSnapshot.getChildrenCount()));
+                        for (DataSnapshot dataSnapshot1 : dataSnapshot.getChildren()) {
 
                             String temp = dataSnapshot1.getKey();
-                            if(list.contains(temp)){
-                                Map<String,String> v = new HashMap<>();
-                                v.put("courseId",temp);
-                                for(DataSnapshot dataSnapshot2 : dataSnapshot1.getChildren()){
-                                    if(dataSnapshot2.getKey().equals("courseName")){
-                                        v.put(dataSnapshot2.getKey(),dataSnapshot2.getValue(String.class));
-                                    }
-                                    else if(dataSnapshot2.getKey().equals("profileUri")){
-                                        v.put(dataSnapshot2.getKey(),dataSnapshot2.getValue(String.class));
+                            if (list.contains(temp)) {
+                                Map<String, String> v = new HashMap<>();
+                                v.put("courseId", temp);
+                                for (DataSnapshot dataSnapshot2 : dataSnapshot1.getChildren()) {
+                                    if (dataSnapshot2.getKey().equals("courseName")) {
+                                        v.put(dataSnapshot2.getKey(), dataSnapshot2.getValue(String.class));
+                                    } else if (dataSnapshot2.getKey().equals("profileUri")) {
+                                        v.put(dataSnapshot2.getKey(), dataSnapshot2.getValue(String.class));
                                     }
                                 }
                                 vector.add(v);
                             }
                         }
 
-                        ListView simpleGrid= view.findViewById(R.id.list_t_courses);
-                        if(getActivity().getApplicationContext()!=null) {
+                        ListView simpleGrid = view.findViewById(R.id.list_t_courses);
+                        if (getActivity().getApplicationContext() != null) {
                             CustomAdapter customAdapter = new CustomAdapter(getActivity().getApplicationContext(), vector);
                             simpleGrid.setAdapter(customAdapter);
 

@@ -34,19 +34,27 @@ import java.util.StringTokenizer;
 
 public class TeacherEditCourseActivity extends AppCompatActivity {
 
+    static final int DATE_DIALOG_ID = 0;
+    String courseId = "";
+    Course course = null;
     private int mYear1, mMonth1, mDay1;
-
     private TextView mDateDisplay1, mDateDisplay2, mDateDisplay3;
     private Button mPickDate1, mPickDate2, mPickDate3;
-
     private int date_id;
-
-    static final int DATE_DIALOG_ID = 0;
     private Button btn_remove;
     private Button btn_save;
-    String courseId="";
-    Course course = null;
+    private DatePickerDialog.OnDateSetListener mDateSetListener =
+            new DatePickerDialog.OnDateSetListener() {
+                public void onDateSet(DatePicker view, int year,
+                                      int monthOfYear, int dayOfMonth) {
+                    mYear1 = year;
+                    mMonth1 = monthOfYear;
+                    mDay1 = dayOfMonth;
 
+                    updateDisplay();
+
+                }
+            };
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -96,7 +104,7 @@ public class TeacherEditCourseActivity extends AppCompatActivity {
         mDay1 = c.get(Calendar.DAY_OF_MONTH);
 
         // display the current date
-        for(int i=1; i<=3; i++) {
+        for (int i = 1; i <= 3; i++) {
             date_id = i;
             updateDisplay();
         }
@@ -104,16 +112,16 @@ public class TeacherEditCourseActivity extends AppCompatActivity {
 
         Bundle b = getIntent().getExtras();
 
-        if(b!=null){
+        if (b != null) {
             courseId = b.getString("courseId");
         }
-        Log.i("test courseId",courseId);
+        Log.i("test courseId", courseId);
 
         DatabaseReference courseDB = FirebaseDatabase.getInstance().getReference("Course").child(courseId);
         courseDB.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
-                Log.i("test - editcount : ",String.valueOf(dataSnapshot.getChildrenCount()));
+                Log.i("test - editcount : ", String.valueOf(dataSnapshot.getChildrenCount()));
                 course = dataSnapshot.getValue(Course.class);
 
                 EditText courseName = findViewById(R.id.courseNameTextView);
@@ -121,24 +129,24 @@ public class TeacherEditCourseActivity extends AppCompatActivity {
 
                 EditText description = findViewById(R.id.descriptionTextView);
                 description.setText(course.getCourseDetails());
-                String tags="";
+                String tags = "";
                 int i;
-                for(i=0;i<course.getTags().size()-1;i++){
-                    tags = tags + course.getTags().get(i) +", ";
+                for (i = 0; i < course.getTags().size() - 1; i++) {
+                    tags = tags + course.getTags().get(i) + ", ";
                 }
                 tags = tags + course.getTags().get(i);
 
                 mDateDisplay1.setText(course.getMyDate().get(0).toString().split(" ")[0]);
-                ((TextView)findViewById(R.id.hour1)).setText((course.getMyDate().get(0).toString().split(" ")[1]).split(":")[0]);
-                ((TextView)findViewById(R.id.min1)).setText((course.getMyDate().get(0).toString().split(" ")[1]).split(":")[1]);
+                ((TextView) findViewById(R.id.hour1)).setText((course.getMyDate().get(0).toString().split(" ")[1]).split(":")[0]);
+                ((TextView) findViewById(R.id.min1)).setText((course.getMyDate().get(0).toString().split(" ")[1]).split(":")[1]);
 
                 mDateDisplay2.setText(course.getMyDate().get(1).toString().split(" ")[0]);
-                ((TextView)findViewById(R.id.hour2)).setText((course.getMyDate().get(1).toString().split(" ")[1]).split(":")[0]);
-                ((TextView)findViewById(R.id.min2)).setText((course.getMyDate().get(1).toString().split(" ")[1]).split(":")[1]);
+                ((TextView) findViewById(R.id.hour2)).setText((course.getMyDate().get(1).toString().split(" ")[1]).split(":")[0]);
+                ((TextView) findViewById(R.id.min2)).setText((course.getMyDate().get(1).toString().split(" ")[1]).split(":")[1]);
 
                 mDateDisplay3.setText(course.getMyDate().get(2).toString().split(" ")[0]);
-                ((TextView)findViewById(R.id.hour3)).setText((course.getMyDate().get(2).toString().split(" ")[1]).split(":")[0]);
-                ((TextView)findViewById(R.id.min3)).setText((course.getMyDate().get(2).toString().split(" ")[1]).split(":")[1]);
+                ((TextView) findViewById(R.id.hour3)).setText((course.getMyDate().get(2).toString().split(" ")[1]).split(":")[0]);
+                ((TextView) findViewById(R.id.min3)).setText((course.getMyDate().get(2).toString().split(" ")[1]).split(":")[1]);
 
                 EditText tagsEditText = findViewById(R.id.tagTextView);
                 tagsEditText.setText(tags);
@@ -155,8 +163,8 @@ public class TeacherEditCourseActivity extends AppCompatActivity {
         enrollButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                boolean fieldsOK = ValidationHelper.validate(new EditText[] { findViewById(R.id.courseNameTextView),findViewById(R.id.descriptionTextView), findViewById(R.id.tagTextView) });
-                if(fieldsOK) {
+                boolean fieldsOK = ValidationHelper.validate(new EditText[]{findViewById(R.id.courseNameTextView), findViewById(R.id.descriptionTextView), findViewById(R.id.tagTextView)});
+                if (fieldsOK) {
 
                     String courseName = ((EditText) findViewById(R.id.courseNameTextView)).getText().toString();
                     String courseDetails = ((EditText) findViewById(R.id.descriptionTextView)).getText().toString();
@@ -208,8 +216,7 @@ public class TeacherEditCourseActivity extends AppCompatActivity {
                         put(courseId, course);
                     }});
 
-                }
-                else{
+                } else {
                     Toast.makeText(TeacherEditCourseActivity.this, "Please fill all the fields", Toast.LENGTH_SHORT).show();
                 }
 
@@ -227,25 +234,25 @@ public class TeacherEditCourseActivity extends AppCompatActivity {
                 db.addValueEventListener(new ValueEventListener() {
                     @Override
                     public void onDataChange(DataSnapshot dataSnapshot) {
-                        Log.i("kkkk",String.valueOf(dataSnapshot.child(courseId).child("schedules").getChildrenCount()));
+                        Log.i("kkkk", String.valueOf(dataSnapshot.child(courseId).child("schedules").getChildrenCount()));
                         int flag = 0;
-                        for(DataSnapshot dataSnapshot1:dataSnapshot.child(courseId).child("schedules").getChildren()){
-                            for(DataSnapshot dataSnapshot2 : dataSnapshot1.getChildren()){
-                                    MyDate myDate = dataSnapshot2.getValue(MyDate.class);
-                                    int index = myDate.compare(0);
-                                    if(index == 1){
-                                        Toast.makeText(TeacherEditCourseActivity.this,"Students have enrolled. Cannot delete the course",Toast.LENGTH_SHORT).show();
-                                        flag=1;
-                                    }
+                        for (DataSnapshot dataSnapshot1 : dataSnapshot.child(courseId).child("schedules").getChildren()) {
+                            for (DataSnapshot dataSnapshot2 : dataSnapshot1.getChildren()) {
+                                MyDate myDate = dataSnapshot2.getValue(MyDate.class);
+                                int index = myDate.compare(0);
+                                if (index == 1) {
+                                    Toast.makeText(TeacherEditCourseActivity.this, "Students have enrolled. Cannot delete the course", Toast.LENGTH_SHORT).show();
+                                    flag = 1;
+                                }
                             }
                         }
-                        if(flag==0){
+                        if (flag == 0) {
                             Bundle bundle = new Bundle();
                             bundle.putString("courseId", courseId);
                             bundle.putString("professorId", course.getProfessorId());
                             DefaultFragment dialog = new DefaultFragment();
                             dialog.setArguments(bundle);
-                            dialog.show(getSupportFragmentManager(),"my_dia");
+                            dialog.show(getSupportFragmentManager(), "my_dia");
                         }
 
                     }
@@ -261,7 +268,6 @@ public class TeacherEditCourseActivity extends AppCompatActivity {
 
 
     }
-
 
     private void updateDisplay() {
         switch (date_id) {
@@ -292,19 +298,6 @@ public class TeacherEditCourseActivity extends AppCompatActivity {
         }
 
     }
-
-    private DatePickerDialog.OnDateSetListener mDateSetListener =
-            new DatePickerDialog.OnDateSetListener() {
-                public void onDateSet(DatePicker view, int year,
-                                      int monthOfYear, int dayOfMonth) {
-                    mYear1 = year;
-                    mMonth1 = monthOfYear;
-                    mDay1 = dayOfMonth;
-
-                    updateDisplay();
-
-                }
-            };
 
     @Override
     protected Dialog onCreateDialog(int id) {

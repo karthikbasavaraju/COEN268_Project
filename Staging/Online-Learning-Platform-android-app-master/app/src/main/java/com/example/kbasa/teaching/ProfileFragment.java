@@ -1,7 +1,6 @@
 package com.example.kbasa.teaching;
 
 import android.content.Intent;
-import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
@@ -112,8 +111,10 @@ public class ProfileFragment extends Fragment {
                 IISightSDKManager.getInstance().logoutUser(new IISightSDKManager.ICallback() {
                     @Override
                     public void process(Object o) {
-                        Toast.makeText(getContext(),
-                                "Logout_Success", Toast.LENGTH_SHORT).show();
+                        Intent intent = new Intent(getActivity(), LoginActivity.class);
+                        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                        startActivity(intent);
+                        getActivity().finish();
                     }
                 }, new IISightSDKManager.ICallback() {
                     @Override
@@ -122,10 +123,7 @@ public class ProfileFragment extends Fragment {
                 });
 
 
-                Intent intent = new Intent(getActivity(), LoginActivity.class);
-                intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                startActivity(intent);
-                getActivity().finish();
+
             }
         });
 

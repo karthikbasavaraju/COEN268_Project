@@ -31,7 +31,7 @@
             android:layout_marginLeft="43dp"
             android:ems="10"
             android:hint="Email ID"
-            android:inputType="textPersonName" />
+            android:inputType="textEmailAddress" />
 
     </LinearLayout>
 
