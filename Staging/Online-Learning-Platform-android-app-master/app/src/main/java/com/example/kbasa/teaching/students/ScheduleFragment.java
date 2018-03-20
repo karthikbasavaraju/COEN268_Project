@@ -31,7 +31,7 @@ import java.util.Vector;
 
 public class ScheduleFragment extends Fragment {
 
-    int DURATION=60;
+    int DURATION = 60;
     String user;
     String buttonId = null;
     Map<String, Map<String, String>> vector;
@@ -41,6 +41,7 @@ public class ScheduleFragment extends Fragment {
     private ListViewAdapter adapter;
     private Vector<Map<String, String>> past;
     private Vector<Map<String, String>> upcoming;
+
     public ScheduleFragment() {
         // Required empty public constructor
     }
@@ -111,17 +112,17 @@ public class ScheduleFragment extends Fragment {
                             MyDate myDate = details.getMyDate();
                             int type = myDate.compare(DURATION);
                             if (type == 0) {
-                                Map<String,String> temp =vector.get(dataSnapshot1.getKey());
-                                temp.put("time",myDate.toString());
+                                Map<String, String> temp = vector.get(dataSnapshot1.getKey());
+                                temp.put("time", myDate.toString());
                                 onGoing = new HashMap(temp);
                                 buttonId = details.getOtherPersonsId();
                             } else if (type == 1) {
-                                Map<String,String> temp =vector.get(dataSnapshot1.getKey());
-                                temp.put("time",myDate.toString());
+                                Map<String, String> temp = vector.get(dataSnapshot1.getKey());
+                                temp.put("time", myDate.toString());
                                 upcoming.add(temp);
                             } else {
-                                Map<String,String> temp =vector.get(dataSnapshot1.getKey());
-                                temp.put("time",myDate.toString());
+                                Map<String, String> temp = vector.get(dataSnapshot1.getKey());
+                                temp.put("time", myDate.toString());
                                 past.add(temp);
                             }
                         }
@@ -198,16 +199,8 @@ public class ScheduleFragment extends Fragment {
                                 @Override
                                 public void onDataChange(DataSnapshot dataSnapshot) {
                                     final String otherButtonId = dataSnapshot.getValue(String.class);
-
-                                    new Thread(new Runnable() {
-                                        @Override
-                                        public void run() {
-
-                                            IISightSDKManager.getInstance().makeCall(otherButtonId,
-                                                    getContext());
-
-                                        }
-                                    });
+                                    IISightSDKManager.getInstance().makeCall(otherButtonId,
+                                            getContext());
                                 }
 
                                 @Override
@@ -223,15 +216,8 @@ public class ScheduleFragment extends Fragment {
                                 @Override
                                 public void onDataChange(DataSnapshot dataSnapshot) {
                                     final String otherButtonId = dataSnapshot.getValue(String.class);
-                                    new Thread(new Runnable() {
-                                        @Override
-                                        public void run() {
-
-                                            IISightSDKManager.getInstance().makeCall(otherButtonId,
-                                                    getContext());
-
-                                        }
-                                    });
+                                    IISightSDKManager.getInstance().makeCall(otherButtonId,
+                                            getContext());
                                 }
 
                                 @Override
