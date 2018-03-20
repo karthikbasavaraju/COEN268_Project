@@ -115,7 +115,7 @@ public class EnrollActivity extends AppCompatActivity {
                 Spinner scheduleSpinner = findViewById(R.id.scheduleSpinner);
 
 
-                ArrayAdapter<String> adapter = new ArrayAdapter<String>(EnrollActivity.this,
+                ArrayAdapter<String> adapter = new ArrayAdapter<>(EnrollActivity.this,
                         android.R.layout.simple_spinner_item, schedules);
 
                 adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);

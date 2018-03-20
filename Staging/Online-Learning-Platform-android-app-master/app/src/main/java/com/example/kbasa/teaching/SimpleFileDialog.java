@@ -36,7 +36,6 @@ public class SimpleFileDialog {
     private int Select_type = FileSave;
     private String m_sdcardDirectory = "";
     private Context m_context;
-    private TextView m_titleView1;
     private TextView m_titleView;
     private String selected_file_name = default_file_name;
     private EditText input_text;
@@ -48,22 +47,32 @@ public class SimpleFileDialog {
     private boolean m_goToUpper = false;
 
     public SimpleFileDialog(Context context, String file_select_type, SimpleFileDialogListener SimpleFileDialogListener) {
-        if (file_select_type.equals("FileOpen")) {
-            Select_type = FileOpen;
-        } else if (file_select_type.equals("FileSave")) {
-            Select_type = FileSave;
-        } else if (file_select_type.equals("FolderChoose")) {
-            Select_type = FolderChoose;
-        } else if (file_select_type.equals("FileOpen..")) {
-            Select_type = FileOpen;
-            m_goToUpper = true;
-        } else if (file_select_type.equals("FileSave..")) {
-            Select_type = FileSave;
-            m_goToUpper = true;
-        } else if (file_select_type.equals("FolderChoose..")) {
-            Select_type = FolderChoose;
-            m_goToUpper = true;
-        } else Select_type = FileOpen;
+        switch (file_select_type) {
+            case "FileOpen":
+                Select_type = FileOpen;
+                break;
+            case "FileSave":
+                Select_type = FileSave;
+                break;
+            case "FolderChoose":
+                Select_type = FolderChoose;
+                break;
+            case "FileOpen..":
+                Select_type = FileOpen;
+                m_goToUpper = true;
+                break;
+            case "FileSave..":
+                Select_type = FileSave;
+                m_goToUpper = true;
+                break;
+            case "FolderChoose..":
+                Select_type = FolderChoose;
+                m_goToUpper = true;
+                break;
+            default:
+                Select_type = FileOpen;
+                break;
+        }
 
         m_context = context;
         m_sdcardDirectory = Environment.getExternalStorageDirectory().getAbsolutePath();
@@ -168,7 +177,7 @@ public class SimpleFileDialog {
     }
 
     private List<String> getDirectories(String dir) {
-        List<String> dirs = new ArrayList<String>();
+        List<String> dirs = new ArrayList<>();
         try {
             File dirFile = new File(dir);
 
@@ -212,7 +221,7 @@ public class SimpleFileDialog {
         ////////////////////////////////////////////////
         // Create title text showing file select type //
         ////////////////////////////////////////////////
-        m_titleView1 = new TextView(m_context);
+        TextView m_titleView1 = new TextView(m_context);
         m_titleView1.setLayoutParams(new LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT));
         //m_titleView1.setTextAppearance(m_context, android.R.style.TextAppearance_Large);
         //m_titleView1.setTextColor( m_context.getResources().getColor(android.R.color.black) );
@@ -330,6 +339,6 @@ public class SimpleFileDialog {
     // Callback interface for selected directory
     //////////////////////////////////////////////////////
     public interface SimpleFileDialogListener {
-        public void onChosenDir(String chosenDir);
+        void onChosenDir(String chosenDir);
     }
 } 

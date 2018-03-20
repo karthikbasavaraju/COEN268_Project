@@ -47,13 +47,14 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.StringTokenizer;
 
+import io.github.abhimanbhau.utils.RestApiHelper;
+
 public class RegistrationActivity extends AppCompatActivity {
 
     private EditText firstNameEditText;
     private EditText lastNameEditText;
     private EditText emailEditText;
     private EditText passwordEditText;
-    private EditText repasswordEditText;
     private ToggleButton studentToggleButton;
     private ToggleButton teacherToggleButton;
     private EditText interestsEditText;
@@ -79,7 +80,6 @@ public class RegistrationActivity extends AppCompatActivity {
         lastNameEditText = findViewById(R.id.input_last_name);
         emailEditText = findViewById(R.id.input_email);
         passwordEditText = findViewById(R.id.input_password);
-        repasswordEditText = findViewById(R.id.input_password);
         studentToggleButton = findViewById(R.id.btn_students);
         teacherToggleButton = findViewById(R.id.btn_teachers);
         interestsEditText = findViewById(R.id.input_interests);
@@ -117,7 +117,7 @@ public class RegistrationActivity extends AppCompatActivity {
 
     public void studentRegister() {
 
-        boolean fieldsOK = FieldsOk.validate(new EditText[]{findViewById(R.id.input_first_name), findViewById(R.id.input_last_name), findViewById(R.id.input_password), findViewById(R.id.input_interests), findViewById(R.id.input_email)});
+        boolean fieldsOK = ValidationHelper.validate(new EditText[]{findViewById(R.id.input_first_name), findViewById(R.id.input_last_name), findViewById(R.id.input_password), findViewById(R.id.input_interests), findViewById(R.id.input_email)});
         if (fieldsOK && profile != null) {
             auth.createUserWithEmailAndPassword(emailEditText.getText().toString(), passwordEditText.getText().toString())
                     .addOnSuccessListener(new OnSuccessListener<AuthResult>() {
@@ -224,7 +224,7 @@ public class RegistrationActivity extends AppCompatActivity {
                                              */
                                             @Override
                                             public Map<String, String> getHeaders() throws AuthFailureError {
-                                                HashMap<String, String> headers = new HashMap<String, String>();
+                                                HashMap<String, String> headers = new HashMap<>();
                                                 headers.put("S-Auth-Token", "rse75cohhbajx3x4tc3brhca");
                                                 headers.put("Content-Type", "application/json");
                                                 return headers;
@@ -254,7 +254,7 @@ public class RegistrationActivity extends AppCompatActivity {
 
     public void teacherRegister() {
 
-        boolean fieldsOK = FieldsOk.validate(new EditText[]{findViewById(R.id.input_first_name), findViewById(R.id.input_last_name), findViewById(R.id.input_password), findViewById(R.id.input_interests), findViewById(R.id.input_email)});
+        boolean fieldsOK = ValidationHelper.validate(new EditText[]{findViewById(R.id.input_first_name), findViewById(R.id.input_last_name), findViewById(R.id.input_password), findViewById(R.id.input_interests), findViewById(R.id.input_email)});
         if (fieldsOK && profile != null) {
             auth.createUserWithEmailAndPassword(emailEditText.getText().toString(), passwordEditText.getText().toString())
                     .addOnSuccessListener(new OnSuccessListener<AuthResult>() {
@@ -355,7 +355,7 @@ public class RegistrationActivity extends AppCompatActivity {
                                              */
                                             @Override
                                             public Map<String, String> getHeaders() throws AuthFailureError {
-                                                HashMap<String, String> headers = new HashMap<String, String>();
+                                                HashMap<String, String> headers = new HashMap<>();
                                                 headers.put("S-Auth-Token", "rse75cohhbajx3x4tc3brhca");
                                                 headers.put("Content-Type", "application/json");
                                                 return headers;

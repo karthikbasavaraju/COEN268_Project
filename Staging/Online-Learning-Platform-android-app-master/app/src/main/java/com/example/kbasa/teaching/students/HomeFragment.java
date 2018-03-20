@@ -141,7 +141,7 @@ public class HomeFragment extends Fragment {
                             }
                         }
 
-                        recyclerView = (RecyclerView) view.findViewById(R.id.recycler_view_ongoing);
+                        recyclerView = view.findViewById(R.id.recycler_view_ongoing);
                         recyclerView.setHasFixedSize(true);
                         layoutManager = new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false);
                         recyclerView.setLayoutManager(layoutManager);

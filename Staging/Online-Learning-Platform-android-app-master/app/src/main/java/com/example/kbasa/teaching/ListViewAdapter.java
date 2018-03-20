@@ -48,7 +48,7 @@ public class ListViewAdapter extends BaseAdapter {
         View v = View.inflate(context, R.layout.item, null);
         Map<String, String> details = list.get(position);
 
-        TextView tvName = (TextView) v.findViewById(R.id.title);
+        TextView tvName = v.findViewById(R.id.title);
 
         tvName.setText(details.get("courseName"));
 

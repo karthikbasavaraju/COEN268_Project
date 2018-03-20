@@ -1,47 +1,37 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical">
 
 
-    <Button
-        android:id="@+id/logout"
-        android:layout_width="104dp"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="10dp"
-        android:layout_marginTop="30dp"
-        android:text="LogOut" />
-
     <android.support.v7.widget.CardView
-        android:id="@+id/view2"
-        android:layout_width="200dp"
-        android:layout_height="200dp"
-        android:layout_gravity="center_horizontal"
+        android:layout_width="180dp"
+        android:layout_height="240dp"
         android:layout_marginTop="30dp"
         android:elevation="12dp"
+        android:id="@+id/view2"
+        app:cardCornerRadius="40dp"
+        android:layout_gravity="center_horizontal"
         android:innerRadius="0dp"
         android:shape="ring"
         android:thicknessRatio="1.9"
-        app:cardCornerRadius="40dp">
+        android:layout_marginBottom="20dp">
 
         <ImageView
-            android:id="@+id/imageView"
+            android:layout_height="match_parent"
             android:layout_width="match_parent"
-            android:layout_height="200dp"
+            android:id="@+id/imageView"
+            android:background="@mipmap/ic_launcher"
+            android:scaleType="fitXY"
+            android:adjustViewBounds="true"
+            android:layout_gravity="center"
             android:layout_alignParentTop="true"
-            android:layout_centerHorizontal="true"
-            android:background="@mipmap/ic_launcher"></ImageView>
+            android:layout_centerHorizontal="true">
+        </ImageView>
+
     </android.support.v7.widget.CardView>
-    <!-- <ImageView
-         android:id="@+id/imageView"
-         android:layout_width="300dp"
-         android:layout_height="300dp"
-         android:layout_gravity="center"
-         android:layout_marginVertical="30dp"
-         android:background="@mipmap/ic_launcher"
-         android:contentDescription="@string/profile_picture" />
- -->
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -54,18 +44,18 @@
         <TextView
             android:layout_width="60dp"
             android:layout_height="wrap_content"
-            android:text="Name"
-            android:textAlignment="center"
             android:textColor="@color/cardview_dark_background"
-            android:textSize="20sp" />
+            android:textSize="20sp"
+            android:textAlignment="center"
+            android:text="Name" />
 
         <TextView
             android:id="@+id/tv_name"
             android:layout_width="220dp"
             android:layout_height="wrap_content"
-            android:textAlignment="center"
             android:textColor="@color/cardview_dark_background"
-            android:textSize="20sp" />
+            android:textSize="20sp"
+            android:textAlignment="center"/>
 
     </LinearLayout>
 
@@ -81,19 +71,28 @@
         <TextView
             android:layout_width="60dp"
             android:layout_height="wrap_content"
-            android:text="Email"
-            android:textAlignment="center"
             android:textColor="@color/cardview_dark_background"
-            android:textSize="20sp" />
+            android:textSize="20sp"
+            android:textAlignment="center"
+            android:text="Email" />
 
         <TextView
             android:id="@+id/tv_email"
             android:layout_width="220dp"
             android:layout_height="wrap_content"
-            android:textAlignment="center"
             android:textColor="@color/cardview_dark_background"
-            android:textSize="20sp" />
+            android:textSize="20sp"
+            android:textAlignment="center" />
 
     </LinearLayout>
+
+    <Button
+        android:id="@+id/logout"
+        android:layout_width="104dp"
+        android:layout_height="wrap_content"
+        android:text="Log Out"
+        android:layout_marginTop="30dp"
+        android:background="@color/colorPrimaryLight"
+        android:layout_gravity="center"/>
 
 </LinearLayout>

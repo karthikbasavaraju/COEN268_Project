@@ -64,8 +64,7 @@ public class ImageLoaderAsync extends AsyncTask<Void, Void, Bitmap> {
                 });
             }
 
-            Bitmap myBitmap = BitmapFactory.decodeFile(url);
-            return myBitmap;
+            return BitmapFactory.decodeFile(url);
         } catch (Exception e) {
             e.printStackTrace();
         }
