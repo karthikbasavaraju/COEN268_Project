@@ -109,20 +109,26 @@ public class ScheduleFragment extends Fragment {
 
                         for (DataSnapshot dataSnapshot1 : scheduleList.getChildren()) {
                             Schedule details = dataSnapshot1.getValue(Schedule.class);
+                            String otherName;
+                            otherName = details.getOtherName();
                             MyDate myDate = details.getMyDate();
                             int type = myDate.compare(DURATION);
                             if (type == 0) {
-                                Map<String, String> temp = vector.get(dataSnapshot1.getKey());
-                                temp.put("time", myDate.toString());
+
+                                Map<String,String> temp =vector.get(dataSnapshot1.getKey());
+                                temp.put("time",myDate.toString());
+                                temp.put("otherName",otherName);
                                 onGoing = new HashMap(temp);
                                 buttonId = details.getOtherPersonsId();
                             } else if (type == 1) {
-                                Map<String, String> temp = vector.get(dataSnapshot1.getKey());
-                                temp.put("time", myDate.toString());
+                                Map<String,String> temp =vector.get(dataSnapshot1.getKey());
+                                temp.put("time",myDate.toString());
+                                temp.put("otherName",otherName);
                                 upcoming.add(temp);
                             } else {
-                                Map<String, String> temp = vector.get(dataSnapshot1.getKey());
-                                temp.put("time", myDate.toString());
+                                Map<String,String> temp =vector.get(dataSnapshot1.getKey());
+                                temp.put("time",myDate.toString());
+                                temp.put("otherName",otherName);
                                 past.add(temp);
                             }
                         }

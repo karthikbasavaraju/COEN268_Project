@@ -30,6 +30,8 @@ import com.nbsp.materialfilepicker.ui.FilePickerActivity;
 import java.io.File;
 import java.util.HashMap;
 
+import io.github.abhimanbhau.utils.Constants;
+
 import static com.example.kbasa.teaching.ProfileFragment.picFilePath;
 
 public class TeacherHomeActivity extends AppCompatActivity {
@@ -43,7 +45,7 @@ public class TeacherHomeActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
 
-        Log.i("please", "pleasae");
+        Log.i(Constants.LOG_TAG_VISDUM, "please");
         Bundle b = this.getIntent().getExtras();
         role = b.getString("user");
 
@@ -73,7 +75,8 @@ public class TeacherHomeActivity extends AppCompatActivity {
                 // Bottom Nav-Bar
                 BottomNavigationView bottomNavigationView = findViewById(R.id.bottom_navigation);
                 if (role.equals("student")) {
-                    DatabaseReference db = FirebaseDatabase.getInstance().getReference("Student").child(FirebaseAuth.getInstance().getUid());
+                    DatabaseReference db = FirebaseDatabase.getInstance().getReference("Student")
+                            .child(FirebaseAuth.getInstance().getUid());
                     db.updateChildren(new HashMap<String, Object>() {{
                         put("tokenId", FirebaseInstanceId.getInstance().getToken());
                     }});
@@ -129,7 +132,8 @@ public class TeacherHomeActivity extends AppCompatActivity {
                     new Notification().onTokenRefresh();
 
 
-                    DatabaseReference db = FirebaseDatabase.getInstance().getReference("Teacher").child(FirebaseAuth.getInstance().getUid());
+                    DatabaseReference db = FirebaseDatabase.getInstance().getReference("Teacher")
+                            .child(FirebaseAuth.getInstance().getUid());
                     db.updateChildren(new HashMap<String, Object>() {{
                         put("tokenId", FirebaseInstanceId.getInstance().getToken());
                     }});
