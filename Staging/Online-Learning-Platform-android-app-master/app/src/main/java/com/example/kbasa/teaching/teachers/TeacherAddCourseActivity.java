@@ -55,6 +55,7 @@ import java.util.StringTokenizer;
 public class TeacherAddCourseActivity extends AppCompatActivity {
 
 
+    static final int DATE_DIALOG_ID = 0;
     String videoFilePath;
     String picFilePath;
     Button btnUpload;
@@ -71,21 +72,27 @@ public class TeacherAddCourseActivity extends AppCompatActivity {
     ProgressDialog progressBar;
     StorageReference storageRef;
     FirebaseStorage storage;
-    boolean flag=false;
-
-    private Button btn_upload_v;
-    private Button btn_upload_pic;
-
-    private int mYear1, mMonth1, mDay1;
-
-    private TextView mDateDisplay1, mDateDisplay2, mDateDisplay3;
-    private Button mPickDate1, mPickDate2, mPickDate3;
-
-    private int date_id;
-
-    static final int DATE_DIALOG_ID = 0;
+    boolean flag = false;
     TextView videoText;
     TextView picText;
+    private Button btn_upload_v;
+    private Button btn_upload_pic;
+    private int mYear1, mMonth1, mDay1;
+    private TextView mDateDisplay1, mDateDisplay2, mDateDisplay3;
+    private Button mPickDate1, mPickDate2, mPickDate3;
+    private int date_id;
+    private DatePickerDialog.OnDateSetListener mDateSetListener =
+            new DatePickerDialog.OnDateSetListener() {
+                public void onDateSet(DatePicker view, int year,
+                                      int monthOfYear, int dayOfMonth) {
+                    mYear1 = year;
+                    mMonth1 = monthOfYear;
+                    mDay1 = dayOfMonth;
+
+                    updateDisplay();
+
+                }
+            };
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -98,8 +105,8 @@ public class TeacherAddCourseActivity extends AppCompatActivity {
         btn_upload_pic = (Button) findViewById(R.id.btn_upload_picture);
 
         // check if the permission is granted
-        if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-            if(ActivityCompat.checkSelfPermission(this, Manifest.permission.READ_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            if (ActivityCompat.checkSelfPermission(this, Manifest.permission.READ_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
                 requestPermissions(new String[]{Manifest.permission.READ_EXTERNAL_STORAGE}, 100);
                 return;
             }
@@ -111,7 +118,7 @@ public class TeacherAddCourseActivity extends AppCompatActivity {
             public void onClick(View v) {
                 new MaterialFilePicker()
                         .withActivity(TeacherAddCourseActivity.this)
-                       // .withFilter(Pattern.compile(".*\\.(mp4|MP4|Mp4|mP4|avi|flv|wmv)$"))
+                        // .withFilter(Pattern.compile(".*\\.(mp4|MP4|Mp4|mP4|avi|flv|wmv)$"))
                         .withRequestCode(1)
                         .start();
             }
@@ -162,11 +169,10 @@ public class TeacherAddCourseActivity extends AppCompatActivity {
         mDay1 = c.get(Calendar.DAY_OF_MONTH);
 
         // display the current date
-        for(int i=1; i<=3; i++) {
+        for (int i = 1; i <= 3; i++) {
             date_id = i;
             updateDisplay();
         }
-
 
 
         btnUpload = findViewById(R.id.upload);
@@ -179,9 +185,9 @@ public class TeacherAddCourseActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
 
-                boolean fieldsOK = ValidationHelper.validate(new EditText[] { findViewById(R.id.courseNameTextView),findViewById(R.id.descriptionTextView), findViewById(R.id.tagTextView) });
-                boolean filesOk =  ValidationHelper.validateFilePicker(new TextView[] { findViewById(R.id.tv_intro_video_name),findViewById(R.id.tv_intro_picture_name) });
-                if(fieldsOK && filesOk) {
+                boolean fieldsOK = ValidationHelper.validate(new EditText[]{findViewById(R.id.courseNameTextView), findViewById(R.id.descriptionTextView), findViewById(R.id.tagTextView)});
+                boolean filesOk = ValidationHelper.validateFilePicker(new TextView[]{findViewById(R.id.tv_intro_video_name), findViewById(R.id.tv_intro_picture_name)});
+                if (fieldsOK && filesOk) {
 
                     final ProgressDialog dialog = new ProgressDialog(TeacherAddCourseActivity.this);
                     dialog.setMessage("uploading your course");
@@ -259,8 +265,8 @@ public class TeacherAddCourseActivity extends AppCompatActivity {
                             course.setCourseUri(courseUri);
                             course.setTags(tags);
                             course.setProfessorId(user.getUid());
-                            String temp =user.getCurrentUser().getEmail().split("@")[0];
-                            temp = temp.substring(0,1).toUpperCase()+temp.substring(1).toLowerCase();
+                            String temp = user.getCurrentUser().getEmail().split("@")[0];
+                            temp = temp.substring(0, 1).toUpperCase() + temp.substring(1).toLowerCase();
                             course.setName(temp);
                             course.setProfessorTokenId(FirebaseInstanceId.getInstance().getToken());
 
@@ -334,8 +340,7 @@ public class TeacherAddCourseActivity extends AppCompatActivity {
 
                         }
                     });
-                }
-                else
+                } else
                     Toast.makeText(TeacherAddCourseActivity.this, "Please fill all the fields", Toast.LENGTH_SHORT).show();
             }
         });
@@ -372,19 +377,6 @@ public class TeacherAddCourseActivity extends AppCompatActivity {
 
     }
 
-    private DatePickerDialog.OnDateSetListener mDateSetListener =
-            new DatePickerDialog.OnDateSetListener() {
-                public void onDateSet(DatePicker view, int year,
-                                      int monthOfYear, int dayOfMonth) {
-                    mYear1 = year;
-                    mMonth1 = monthOfYear;
-                    mDay1 = dayOfMonth;
-
-                    updateDisplay();
-
-                }
-            };
-
     @Override
     protected Dialog onCreateDialog(int id) {
         switch (id) {
@@ -398,14 +390,11 @@ public class TeacherAddCourseActivity extends AppCompatActivity {
     }
 
 
-
-
-
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
-        if(requestCode == 100 && (grantResults[0] == PackageManager.PERMISSION_GRANTED)) {
-        }else{
-            if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+        if (requestCode == 100 && (grantResults[0] == PackageManager.PERMISSION_GRANTED)) {
+        } else {
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
                 requestPermissions(new String[]{Manifest.permission.READ_EXTERNAL_STORAGE}, 100);
             }
         }
@@ -422,19 +411,18 @@ public class TeacherAddCourseActivity extends AppCompatActivity {
                 videoText.setText(videoFilePath.substring(lastIndex + 1));
                 Log.i("AddCourse - Video path", videoFilePath);
             }
-        }
-        else {
-                if (data != null) {
-                    File f = new File(data.getStringExtra(FilePickerActivity.RESULT_FILE_PATH));
-                    picFilePath = f.getAbsolutePath();
+        } else {
+            if (data != null) {
+                File f = new File(data.getStringExtra(FilePickerActivity.RESULT_FILE_PATH));
+                picFilePath = f.getAbsolutePath();
 
-                    int lastIndex = picFilePath.lastIndexOf('/');
-                    picText.setText(picFilePath.substring(lastIndex + 1));
-                    Log.i("AddCourse - Video path", picFilePath);
-                }
+                int lastIndex = picFilePath.lastIndexOf('/');
+                picText.setText(picFilePath.substring(lastIndex + 1));
+                Log.i("AddCourse - Video path", picFilePath);
             }
-
         }
+
+    }
 
     private String getMimeType(String path) {
         String extension = MimeTypeMap.getFileExtensionFromUrl(path);
