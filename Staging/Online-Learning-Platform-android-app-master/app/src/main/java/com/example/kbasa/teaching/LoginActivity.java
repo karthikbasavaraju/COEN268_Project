@@ -122,16 +122,15 @@ public class LoginActivity extends AppCompatActivity {
                                         editor.commit();
                                         dialog.dismiss();
                                         finish();
-                                    } else {
-                                        if (studentFlag || studentFlag1) {
+                                    } else if (studentFlag1 && !studentFlag) {
                                             dialog.dismiss();
+                                            FirebaseAuth.getInstance().signOut();
                                             Toast.makeText(LoginActivity.this, "Login failed", Toast.LENGTH_SHORT).show();
                                             studentFlag = false;
                                             studentFlag1 = false;
                                         }
                                     }
 
-                                }
 
                                 @Override
                                 public void onCancelled(DatabaseError databaseError) {
@@ -143,7 +142,7 @@ public class LoginActivity extends AppCompatActivity {
                     .addOnFailureListener(new OnFailureListener() {
                         @Override
                         public void onFailure(@NonNull Exception e) {
-                            if (studentFlag || studentFlag1) {
+                            if (studentFlag1) {
                                 dialog.dismiss();
                                 Toast.makeText(LoginActivity.this, "Login failed", Toast.LENGTH_SHORT).show();
                                 studentFlag = false;
@@ -205,8 +204,9 @@ public class LoginActivity extends AppCompatActivity {
                                         dialog.dismiss();
                                         finish();
                                     } else {
-                                        if (teacherFlag || teacherFlag1) {
+                                        if (!teacherFlag || teacherFlag1) {
                                             dialog.dismiss();
+                                            FirebaseAuth.getInstance().signOut();
                                             Toast.makeText(LoginActivity.this, "Login failed", Toast.LENGTH_SHORT).show();
                                             teacherFlag1 = false;
                                             teacherFlag = false;
@@ -224,7 +224,7 @@ public class LoginActivity extends AppCompatActivity {
                     .addOnFailureListener(new OnFailureListener() {
                         @Override
                         public void onFailure(@NonNull Exception e) {
-                            if (teacherFlag || teacherFlag1) {
+                            if (teacherFlag1) {
                                 dialog.dismiss();
                                 Toast.makeText(LoginActivity.this, "Login failed", Toast.LENGTH_SHORT).show();
                                 teacherFlag1 = false;

@@ -2,6 +2,8 @@ package com.example.kbasa.teaching;
 
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
@@ -12,6 +14,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.Toast;
 import android.widget.ToggleButton;
 
@@ -35,6 +38,7 @@ import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
 import com.nbsp.materialfilepicker.MaterialFilePicker;
 import com.nbsp.materialfilepicker.ui.FilePickerActivity;
+import com.squareup.picasso.Picasso;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -413,7 +417,9 @@ public class RegistrationActivity extends AppCompatActivity {
         if (requestCode == 1 && resultCode == -1) {
             File f = new File(data.getStringExtra(FilePickerActivity.RESULT_FILE_PATH));
             profile = f.getAbsolutePath();
-
+            ImageView imageView = findViewById(R.id.profileImageView);
+            Bitmap mBitmap = BitmapFactory.decodeFile(profile);
+            imageView.setImageBitmap(mBitmap);
         }
     }
 

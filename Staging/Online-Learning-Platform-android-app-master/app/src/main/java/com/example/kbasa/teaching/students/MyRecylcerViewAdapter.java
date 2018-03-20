@@ -3,6 +3,7 @@ package com.example.kbasa.teaching.students;
 import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
+import android.support.annotation.UiThread;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -45,14 +46,16 @@ public class MyRecylcerViewAdapter extends RecyclerView.Adapter<MyRecylcerViewAd
     @Override
     public void onBindViewHolder(MyRecylcerViewAdapter.ViewHolder holder, int position) {
 
-
+        final MyRecylcerViewAdapter.ViewHolder holder1 = holder;
         final HashMap<String, String> temp = dataset.get(position);
         String name = temp.get("courseName");
         holder.mTitle.setText(name);
         if (card == R.layout.student_category_view) {
-            holder.imageView.setImageResource(Integer.parseInt(temp.get("resourceId")));
-        } else {
+                    Picasso.with(context).load(Integer.parseInt(temp.get("resourceId"))).into(holder.imageView);
+//                    holder1.imageView.setImageResource(Integer.parseInt(temp.get("resourceId")));
+           } else {
             String str = temp.get("profileUri");
+            holder.professor.setText(temp.get("name"));
             if (str == null || str.length() == 0) {
                 str = "http://www.itssu.ie/wp-content/themes/itsligo_wordpress_2013/img/no_image_available.jpg";
             }
