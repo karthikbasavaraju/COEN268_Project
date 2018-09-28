@@ -47,19 +47,19 @@ public class ProfileFragment extends Fragment {
         final TextView name = view.findViewById(R.id.tv_name);
         TextView email = view.findViewById(R.id.tv_email);
         imageView = view.findViewById(R.id.imageView);
+        if(auth.getEmail()!=null) {
+            email.setText(auth.getEmail());
+            imageView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    new MaterialFilePicker().withActivity(getActivity())
+                            .withFilter(Pattern.compile("[a-z]+.(jpg|png|gif|bmp)$"))
+                            .withRequestCode(1)
+                            .start();
 
-        email.setText(auth.getEmail());
-        imageView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                new MaterialFilePicker().withActivity(getActivity())
-                        .withFilter(Pattern.compile("[a-z]+.(jpg|png|gif|bmp)$"))
-                        .withRequestCode(1)
-                        .start();
-
-            }
-        });
-
+                }
+            });
+        }
         DatabaseReference courseDB = FirebaseDatabase.getInstance().getReference("Teacher").child(auth.getUid());
         courseDB.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override

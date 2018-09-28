@@ -42,25 +42,27 @@ public class LoginActivity extends AppCompatActivity {
         auth = FirebaseAuth.getInstance();
 
         //To check if user has logged in
-//        if (auth.getCurrentUser() != null) {
-//            SharedPreferences sharedPref = LoginActivity.this.getPreferences(Context.MODE_PRIVATE);
-//            boolean userType = sharedPref.getBoolean("IsTeacher", false);
-//            //Which type of user
-//            //Teacher
-//            if (userType == true) {
-//                Intent intent = new Intent(this, TeacherHomeActivity.class);
-//                intent.putExtra("user", "teacher");
-//                startActivity(intent);
-//                finish();
-//            }
-//            //Student
-//            else {
-//                Intent intent = new Intent(this, TeacherHomeActivity.class);
-//                intent.putExtra("user", "student");
-//                startActivity(intent);
-//                finish();
-//            }
-//        }
+
+        if (auth.getCurrentUser() != null) {
+            SharedPreferences sharedPref = LoginActivity.this.getPreferences(Context.MODE_PRIVATE);
+            boolean userType = sharedPref.getBoolean("IsTeacher", false);
+            //Which type of user
+            //Teacher
+           if (userType == true) {
+                Intent intent = new Intent(this, TeacherHomeActivity.class);
+                intent.putExtra("user", "teacher");
+                startActivity(intent);
+                finish();
+            }
+            //Student
+            else {
+                Intent intent = new Intent(this, TeacherHomeActivity.class);
+                intent.putExtra("user", "student");
+                startActivity(intent);
+                finish();
+            }
+        }
+
 
 
     }

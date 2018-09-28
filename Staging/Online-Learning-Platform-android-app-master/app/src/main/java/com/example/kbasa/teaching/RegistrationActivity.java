@@ -422,7 +422,6 @@ public class RegistrationActivity extends AppCompatActivity {
             imageView.setImageBitmap(mBitmap);
         }
     }
-
 }
 
 

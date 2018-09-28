@@ -232,10 +232,8 @@ public class ScheduleFragment extends Fragment {
                                 }
                             });
                         }
-
                     }
                 });
-                return;
             }
         });
 
@@ -265,9 +263,6 @@ public class ScheduleFragment extends Fragment {
                 return;
             }
         });
-
         return view;
     }
-
-
 }
